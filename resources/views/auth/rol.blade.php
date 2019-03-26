@@ -7,6 +7,7 @@
             {{ csrf_field() }}
             <div class="input-group">
                 <div class="form-line">
+                    
                     {!! Form::select('grupo',$grupos,null,['class'=>'form-control show-tick','placeholder'=>'-- Seleccione Rol Para Continuar --','required']) !!}
                 </div>
             </div>
