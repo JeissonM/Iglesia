@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Modulo;
+use App\Http\Requests\ModuloRequest;
 use Illuminate\Http\Request;
 
-class ModuloController extends Controller
-{
+class ModuloController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $modulos = Modulo::all();
+        return view('usuarios.modulos.list')
+                        ->with('location', 'usuarios')
+                        ->with('modulos', $modulos);
     }
 
     /**
@@ -22,8 +25,7 @@ class ModuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,8 +35,7 @@ class ModuloController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +45,7 @@ class ModuloController extends Controller
      * @param  \App\Modulo  $modulo
      * @return \Illuminate\Http\Response
      */
-    public function show(Modulo $modulo)
-    {
+    public function show(Modulo $modulo) {
         //
     }
 
@@ -55,8 +55,7 @@ class ModuloController extends Controller
      * @param  \App\Modulo  $modulo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Modulo $modulo)
-    {
+    public function edit(Modulo $modulo) {
         //
     }
 
@@ -67,8 +66,7 @@ class ModuloController extends Controller
      * @param  \App\Modulo  $modulo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Modulo $modulo)
-    {
+    public function update(Request $request, Modulo $modulo) {
         //
     }
 
@@ -78,8 +76,8 @@ class ModuloController extends Controller
      * @param  \App\Modulo  $modulo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Modulo $modulo)
-    {
+    public function destroy(Modulo $modulo) {
         //
     }
+
 }

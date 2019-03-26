@@ -21,26 +21,22 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('modulo.create') }}">Agregar Nuevo Módulo</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong>Los módulos generales del sistema son las aplicaciones generales representadas en las opciones del menú. Ejemplo de módulo general: MOD_INICIO, MOD_USUARIOS.
-                    <br/><strong>Nota: </strong> No modifique los nombres de los módulos ya creados ya que puede ocasionar fallas en el sistema.
-                </div>
                 <div class="responsive-table">
                     <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Módulo</th>
-                                <th>Descripción</th>
-                                <th>Creado</th>
-                                <th>Modificado</th>
-                                <th>Acciones</th>
+                                <th>ID</th>
+                                <th>MÓDULO</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>CREADO</th>
+                                <th>MODIFICADO</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,6 +55,23 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-brown">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS MÓDULOS</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong>Los módulos generales del sistema son las aplicaciones generales representadas en las opciones del menú. Ejemplo de módulo general: MOD_INICIO, MOD_USUARIOS.
+                <br/><strong>Nota: </strong> No modifique los nombres de los módulos ya creados ya que puede ocasionar fallas en el sistema.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
