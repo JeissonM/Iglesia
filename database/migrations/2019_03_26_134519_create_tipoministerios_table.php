@@ -16,7 +16,6 @@ class CreateTipoministeriosTable extends Migration {
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('descripcion')->nullable();
-            $table->string('user_change', 50);
             $table->timestamps();
         });
     }

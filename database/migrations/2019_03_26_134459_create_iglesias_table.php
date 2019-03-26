@@ -22,7 +22,6 @@ class CreateIglesiasTable extends Migration {
             $table->string('activa')->default('1')->nullable();
             $table->string('sitioweb')->nullable();
             $table->string('tipo', 50)->default('IGLESIA');
-            $table->string('user_change', 50);
             $table->bigInteger('ciudad_id')->unsigned();
             $table->foreign('ciudad_id')->references('id')->on('ciudads')->onDelete('cascade');
             $table->bigInteger('distrito_id')->unsigned();

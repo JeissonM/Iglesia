@@ -17,7 +17,6 @@ class CreateEstadosTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo_dane')->nullable();
             $table->string('nombre');
-            $table->string('user_change', 50);
             $table->bigInteger('pais_id')->unsigned();
             $table->foreign('pais_id')->references('id')->on('pais')->onDelete('cascade');
             $table->timestamps();
