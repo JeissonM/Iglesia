@@ -53,9 +53,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('pais/{id}/delete', 'PaisController@destroy')->name('pais.delete');
     Route::get('pais/{id}/estados', 'PaisController@estados')->name('pais.estados');
     //ESTADOS
-    Route::resource('estado', 'DepartamentoController');
-    Route::get('estado/{id}/delete', 'DepartamentoController@destroy')->name('estado.delete');
-    Route::get('estado/{id}/ciudades', 'DepartamentoController@ciudades')->name('estado.ciudades');
+    Route::resource('estado', 'EstadoController');
+    Route::get('estado/{id}/delete', 'EstadoController@destroy')->name('estado.delete');
+    Route::get('estado/{id}/ciudades', 'EstadoController@ciudades')->name('estado.ciudades');
     //CIUDADES  
     Route::resource('ciudad', 'CiudadController');
     Route::get('ciudad/{id}/delete', 'CiudadController@destroy')->name('ciudad.delete');
