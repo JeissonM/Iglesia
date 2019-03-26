@@ -19,8 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
 //TODOS LOS MENUS
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
