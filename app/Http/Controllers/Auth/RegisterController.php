@@ -63,7 +63,6 @@ use RegistersUsers;
                     'nombres' => 'JORGE JEISSON',
                     'apellidos' => 'MANDON ARENGAS',
                     'estado' => 'ACTIVO',
-                    'user_change' => '1065633143',
                     'email' => $data['email'],
                     'password' => Hash::make($data['password']),
         ]);
