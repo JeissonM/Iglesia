@@ -18,10 +18,6 @@
                 </h2>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Agregue nuevos países.</strong> Los países son usados en el registro de feligreses, iglesias y diferentes procesos del aplicativo.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -29,29 +25,46 @@
                 <h1 class="card-inside-title">DATOS DEL PAÍS</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>'pais.store','method'=>'POST','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <label class="control-label">Código País</label>
-                                    {!! Form::text('codigo',null,['class'=>'form-control','placeholder'=>'Ejemplo: para colombia el código sería COL, abrebiatura de 3 caracteres','required']) !!}
+                        <form class="form" role='form' method="POST" action="{{route('pais.store')}}">
+                            @csrf
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Código País</label>
+                                        <input class="form-control" type="text" placeholder="Ejemplo: para colombia el código sería COL, abrebiatura de 3 caracteres" required="required" name="codigo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Nombre País</label>
+                                        <input class="form-control" type="text" placeholder="Nombre oficial del país" required="required" name="nombre">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('pais.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <label class="control-label">Nombre País</label>
-                                    {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre oficial del país']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('pais.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-indigo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS PAISES</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong>Agregue nuevos países. Los países son usados en el registro de feligreses, iglesias y diferentes procesos del aplicativo.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
