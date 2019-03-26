@@ -16,7 +16,10 @@ class CreateCiudadsTable extends Migration {
             $table->bigIncrements('id');
             $table->string('codigo_dane')->nullable();
             $table->string('nombre');
-            $table->string('user_change', 50);
+            $table->integer('estado_dpto')->default(1);
+            $table->string('codigo_pais', 5)->nullable();
+            $table->string('distrito')->nullable();
+            $table->bigInteger('poblacion')->nullable();
             $table->bigInteger('estado_id')->unsigned();
             $table->foreign('estado_id')->references('id')->on('estados')->onDelete('cascade');
             $table->timestamps();

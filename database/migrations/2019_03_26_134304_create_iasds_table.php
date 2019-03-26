@@ -20,7 +20,6 @@ class CreateIasdsTable extends Migration
             $table->string('ubicacion')->nullable();
             $table->string('actual', 2)->default('0');
             $table->string('sitioweb')->nullable();
-            $table->string('user_change', 50);
             $table->timestamps();
         });
     }

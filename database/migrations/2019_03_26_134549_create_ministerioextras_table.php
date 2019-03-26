@@ -16,7 +16,6 @@ class CreateMinisterioextrasTable extends Migration {
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('descripcion')->nullable();
-            $table->string('user_change', 50);
             $table->bigInteger('tipoministerio_id')->unsigned();
             $table->foreign('tipoministerio_id')->references('id')->on('tipoministerios')->onDelete('cascade');
             $table->timestamps();

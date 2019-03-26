@@ -19,7 +19,6 @@ class CreateZonasTable extends Migration {
             $table->string('ubicacion')->nullable();
             $table->string('email')->nullable();
             $table->string('sitioweb')->nullable();
-            $table->string('user_change', 50);
             $table->bigInteger('ciudad_id')->unsigned();
             $table->foreign('ciudad_id')->references('id')->on('ciudads')->onDelete('cascade');
             $table->bigInteger('asociacion_id')->unsigned();
