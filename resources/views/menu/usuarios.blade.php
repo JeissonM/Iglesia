@@ -71,20 +71,21 @@
             </div>
             <div class="body">
                 <div class="row clearfix">
-                    {!! Form::open(['route'=>'usuario.operaciones','method'=>'POST','class'=>'form-horizontal form-label-left'])!!}
-                    <div class="col-md-12">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {!! Form::text('id',null,['class'=>'form-control','placeholder'=>'Escriba la identificación a consultar','id'=>'id']) !!}
+                    <form class="form-horizontal" method="POST" action="{{route('usuario.operaciones')}}" name="form-privilegios" id="form-privilegios">
+                        @csrf
+                        <div class="col-md-12">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="id" class="form-control" placeholder="Escriba la identificación a consultar" name="id"/>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn bg-brown waves-effect btn-block">CONSULTAR USUARIO</button>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            {!! Form::submit('CONSULTAR USUARIO',['class'=>'btn bg-deep-orange waves-effect btn-block']) !!}
-                        </div>
-                    </div>
-                    {!! Form::close() !!}
+                    </form>
                 </div>
             </div>
         </div>

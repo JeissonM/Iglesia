@@ -14,13 +14,18 @@
                 <h2>
                     USUARIOS DEL SISTEMA - PRIVILEGIOS A PÁGINAS
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    Los privilegios a páginas son los permisos que se deben asignar a los grupos de usuarios o roles para acceder a las funciones específicas de los módulos, es decir, sus páginas. En este sentido, si añade páginas a un grupo de usuario usted le estaría concediendo permisos al grupo para actuar sobre dichas páginas.<br/>
-                    <strong>Modo de Operar:</strong> Seleccione un grupo de usuario y agregue permisos de izquierda a derecha o elimine privilegios del grupo pasando de derecha a izquierda.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -30,7 +35,12 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                                <br/>{!! Form::select('grupousuario_id',$grupos,null,['class'=>'form-control','placeholder'=>'Seleccione Grupo o Rol de Usuario','onchange="traerData()"','id'=>'grupousuario_id']) !!}
+                                <br/><select class="form-control show-tick" name="grupousuario_id" id="grupousuario_id" onchange="traerData()">
+                                    <option value="0">Seleccione Grupo o Rol de Usuario</option>
+                                    @foreach($grupos as $key=>$value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -44,7 +54,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                {!! Form::select('paginas[]',$paginas,null,['class'=>'form-control','placeholder'=>'-- Seleccione una opción --','multiple','size="20"','id'=>'paginas']) !!}
+                                <select class="form-control show-tick" name="paginas[]" id="paginas" multiple="" size="23">
+                                    @foreach($paginas as $key=>$value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -70,21 +84,39 @@
                                 </div>
                             </div>
                         </div>
-                        {!! Form::open(['route'=>'grupousuario.guardar','method'=>'POST','class'=>'form-horizontal','name'=>'form-privilegios','id'=>'form-privilegios'])!!}
-                        {!! Form::hidden('id',null,['class'=>'form-control','id'=>'id']) !!}
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select name="privilegios[]" id="privilegios" class="form-control" multiple="" size="20" required="required"></select>
+                        <form class="form-horizontal" method="POST" action="{{route('grupousuario.guardar')}}" name="form-privilegios" id="form-privilegios">
+                            @csrf
+                            <input type="hidden" name="id" id="id" />
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control show-tick" name="privilegios[]" id="privilegios" required="" multiple="" size="20"></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <br/><button type="submit" id="btn-enviar" class="btn bg-teal waves-effect btn-block">Guardar los Cambios Para el Grupo Seleccionado</button>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <br/><button type="submit" id="btn-enviar" class="btn bg-teal waves-effect btn-block">Guardar los Cambios Para el Grupo Seleccionado</button>
+                                </div>
                             </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-brown">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS PRIVILEGIOS</h4>
+            </div>
+            <div class="modal-body">
+                Los privilegios a páginas son los permisos que se deben asignar a los grupos de usuarios o roles para acceder a las funciones específicas de los módulos, es decir, sus páginas. En este sentido, si añade páginas a un grupo de usuario usted le estaría concediendo permisos al grupo para actuar sobre dichas páginas.<br/>
+                <strong>Modo de Operar:</strong> Seleccione un grupo de usuario y agregue permisos de izquierda a derecha o elimine privilegios del grupo pasando de derecha a izquierda.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>

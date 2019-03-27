@@ -145,7 +145,7 @@ class GrupousuarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $grupousuario= Grupousuario::find($id);
+        $grupousuario = Grupousuario::find($id);
         if (count($grupousuario->paginas) > 0 || count($grupousuario->modulos) > 0 || count($grupousuario->users) > 0) {
             flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> no pudo ser eliminado porque tiene permisos o usuarios asociados.")->warning();
             return redirect()->route('grupousuario.index');
@@ -168,6 +168,60 @@ class GrupousuarioController extends Controller {
                 flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> no pudo ser eliminado. Error: " . $result)->error();
                 return redirect()->route('grupousuario.index');
             }
+        }
+    }
+
+    /**
+     * Show the view privilegios.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function privilegios() {
+        $grupos = Grupousuario::all()->sortBy('nombre')->pluck('nombre', 'id');
+        $paginas2 = Pagina::all()->sortBy('nombre');
+        $paginas = null;
+        foreach ($paginas2 as $p) {
+            $paginas[$p->id] = $p->nombre . " ==> " . $p->descripcion;
+        }
+        return view('usuarios.privilegios.list')
+                        ->with('location', 'usuarios')
+                        ->with('grupos', $grupos)
+                        ->with('paginas', $paginas);
+    }
+
+    /**
+     * Show the view privilegios.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPrivilegios($id) {
+        $grupo = Grupousuario::find($id);
+        $paginas = $grupo->paginas;
+        $array = null;
+        foreach ($paginas as $value) {
+            $obj["id"] = $value->id;
+            $obj["value"] = $value->nombre . " ==> " . $value->descripcion;
+            $array[] = $obj;
+        }
+        return json_encode($array);
+    }
+
+    /**
+     * Show the view privilegios.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function setPrivilegios() {
+        if (!isset($_POST["privilegios"])) {
+            DB::table('grupousuario_pagina')->where('grupousuario_id', '=', $_POST["id"])->delete();
+            flash("<strong>Privilegios </strong> eliminados de forma exitosa!")->success();
+            return redirect()->route('grupousuario.privilegios');
+        } else {
+            $grupo = Grupousuario::find($_POST["id"]);
+            $grupo->paginas()->sync($_POST["privilegios"]);
+            $grupo->paginas;
+            flash("<strong>Privilegios </strong> asignados de forma exitosa!")->success();
+            return redirect()->route('grupousuario.privilegios');
         }
     }
 
