@@ -26,7 +26,7 @@
                         </ul>
                     </li>
                 </ul>
-            </div>
+            </div> 
             <div class="body">
                 <div class="col-md-12">
                     @component('layouts.errors')

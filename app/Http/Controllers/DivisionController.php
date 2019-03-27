@@ -29,7 +29,7 @@ class DivisionController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create() { 
         $ciudades = Ciudad::all()->pluck('nombre', 'id');
         return view('feligresia.estructura_eclesiastica.divisiones.create')
                         ->with('location', 'feligresia')
