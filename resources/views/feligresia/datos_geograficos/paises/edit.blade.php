@@ -35,7 +35,7 @@
                 <h1 class="card-inside-title">DATOS DEL PAÍS: {{$pais->nombre}}</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form" role='form' method="POST" action="{{route('pais.update',$pais->id)}}">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('pais.update',$pais->id)}}">
                             @csrf
                             <input name="_method" type="hidden" value="PUT" />
                             <div class="col-md-12">
@@ -51,6 +51,8 @@
                                         <input class="form-control" type="text" required="required" name="nombre" value="{{$pais->nombre}}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('pais.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>

@@ -35,7 +35,7 @@
                 <h1 class="card-inside-title">DATOS DEL DEPARTAMENTO/ESTADO</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form" role='form' method="POST" action="{{route('estado.store')}}">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('estado.store')}}">
                             @csrf
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -61,6 +61,8 @@
                                         </select> 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('estado.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>

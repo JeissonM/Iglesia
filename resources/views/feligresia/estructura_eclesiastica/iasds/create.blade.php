@@ -35,7 +35,7 @@
                 <h1 class="card-inside-title">DATOS DE LA ASOCIACIÓN</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form" role='form' method="POST" action="{{route('iasd.store')}}">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('iasd.store')}}">
                             @csrf 
                             <div class="col-md-6">
                                 <div class="form-group">
