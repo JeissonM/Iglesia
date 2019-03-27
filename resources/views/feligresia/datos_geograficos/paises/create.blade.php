@@ -14,8 +14,18 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    GESTIÓN DE PAÍSES - CREAR UN NUEVO PAÍS
+                    GESTIÓN DE PAÍSES - CREAR UN NUEVO PAÍS<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
                 <div class="col-md-12">

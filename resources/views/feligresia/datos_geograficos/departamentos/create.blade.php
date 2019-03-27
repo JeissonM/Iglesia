@@ -14,14 +14,20 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    ESTADOS/DEPARTAMENTOS - CREAR UN NUEVO DEPARTAMENTO/ESTADO
+                    ESTADOS/DEPARTAMENTOS - CREAR UN NUEVO DEPARTAMENTO/ESTADO<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Agregue nuevos Departamentos/Estados.</strong> Los Departamentos/Estados son usados en el registro de feligreses, iglesias y diferentes procesos del aplicativo.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -29,35 +35,57 @@
                 <h1 class="card-inside-title">DATOS DEL DEPARTAMENTO/ESTADO</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>'estado.store','method'=>'POST','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <label class="control-label">Código Estado/Departamento</label>
-                                    {!! Form::text('codigo_dane',null,['class'=>'form-control','placeholder'=>'Código del estado (en el caso de colombia equivale al código que el DANE asigna al Estado)']) !!}
+                        <form class="form" role='form' method="POST" action="{{route('estado.store')}}">
+                            @csrf
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Código Estado/Departamento</label>
+                                        <input class="form-control" type="text" placeholder="Código del estado (en el caso de colombia equivale al código que el DANE asigna al Estado)" required="required" name="codigo_dane">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Nombre Estado/Departamento</label>
+                                        <input class="form-control" type="text" placeholder="Nombre oficial del Departamento" required="required" name="nombre">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">País</label>
+                                        <select class="form-control"  style="width: 100%;" name="pais_id" required="required">
+                                            <option value="0">-- Seleccione una opción --</option>
+                                            @foreach($paises as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('estado.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <label class="control-label">Nombre Estado/Departamento</label>
-                                    {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre oficial del Estado/Departamento','required']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <label class="control-label">País</label>
-                                    {!! Form::select('pais_id',$paises,null,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --','required']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('estado.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-indigo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS CIUDADES</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles:</strong> Agregue nuevos Departamentos/Estados. Los Departamentos/Estados son usados en el registro de feligreses, iglesias y diferentes procesos del aplicativo.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>

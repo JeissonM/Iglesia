@@ -79,8 +79,8 @@ class PaisController extends Controller {
      * @param  \App\Pais  $pais
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pais $pais) {
-        dd($pais);
+    public function edit($id) {
+        $pais = Pais::find($id);
         return view('feligresia.datos_geograficos.paises.edit')
                         ->with('location', 'feligresia')
                         ->with('pais', $pais);
@@ -93,8 +93,8 @@ class PaisController extends Controller {
      * @param  \App\Pais  $pais
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pais $pais) {
-        //$pais = Pais::find($id);
+    public function update(Request $request, $id) {
+        $pais = Pais::find($id);
         $m = new Pais($pais->attributesToArray());
         foreach ($pais->attributesToArray() as $key => $value) {
             if (isset($request->$key)) {
@@ -131,9 +131,9 @@ class PaisController extends Controller {
      * @param  \App\Pais  $pais
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pais $pais) {
-        //$pais = Pais::find($id);
-        if (count($pais->departamentos) > 0) {
+    public function destroy($id) {
+        $pais = Pais::find($id);
+        if (count($pais->estados) > 0) {
             flash("El Pais <strong>" . $pais->nombre . "</strong> no pudo ser eliminado porque tiene estados/departamentos asociados.")->warning();
             return redirect()->route('pais.index');
         } else {
