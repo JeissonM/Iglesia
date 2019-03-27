@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Division;
 use Illuminate\Http\Request;
+use App\Http\Requests\DivisionRequest;
+use App\Ciudad;
 
-class DivisionController extends Controller
-{
+class DivisionController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $divisiones = Division::all();
+        $divisiones->each(function($item) {
+            $item->ciudad;
+        });
+        return view('feligresia.estructura_eclesiastica.divisiones.list')
+                        ->with('location', 'feligresia')
+                        ->with('divisiones', $divisiones);
     }
 
     /**
@@ -22,9 +29,11 @@ class DivisionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $ciudades = Ciudad::all()->pluck('nombre', 'id');
+        return view('feligresia.estructura_eclesiastica.divisiones.create')
+                        ->with('location', 'feligresia')
+                        ->with('ciudades', $ciudades);
     }
 
     /**
@@ -33,8 +42,7 @@ class DivisionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +52,7 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function show(Division $division)
-    {
+    public function show(Division $division) {
         //
     }
 
@@ -55,8 +62,7 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function edit(Division $division)
-    {
+    public function edit(Division $division) {
         //
     }
 
@@ -67,8 +73,7 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Division $division)
-    {
+    public function update(Request $request, Division $division) {
         //
     }
 
@@ -78,8 +83,8 @@ class DivisionController extends Controller
      * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Division $division)
-    {
+    public function destroy(Division $division) {
         //
     }
+
 }

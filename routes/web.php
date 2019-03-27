@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'usuarios'], function() {
     Route::resource('usuario', 'UsuarioController');
     Route::get('usuario/{id}/delete', 'UsuarioController@destroy')->name('usuario.delete');
     Route::post('operaciones', 'UsuarioController@operaciones')->name('usuario.operaciones');
+    Route::post('usuario/contrasenia/cambiar/admin/finalizar', 'UsuarioController@cambiarPass')->name('usuario.cambiarPass');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DEL MÓDULO DE FELIGRESÍA
