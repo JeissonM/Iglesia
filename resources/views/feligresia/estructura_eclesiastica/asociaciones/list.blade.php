@@ -22,27 +22,24 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('asociacion.create') }}">Agregar Nueva Asociación</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong>Gestione la información de las asociaciones de los adventistas de todo el mundo. Las asociaciones o misiones son campos que componen a las uniones y que comprenden varios estados, provincias o departamentos de un país. Es Asociación cuando su administración es autosostenible y misión cuando no lo es; en ese caso su sostenibilidad depende de la unión a la que pertenece.
-                </div>
                 <div class="responsive-table">
                     <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Dirección</th>
-                                <th>E-mail</th>
-                                <th>Sitio Web</th>
-                                <th>Ciudad</th>
-                                <th>Unión</th>
-                                <th>Acciones</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>DIRECCIÓN</th>
+                                <th>E-MAIL</th>
+                                <th>SITIO WEB</th>
+                                <th>CIUDAD</th>
+                                <th>UNIÓN</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +61,22 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LA ASOCIACIÓN</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong>Gestione la información de las asociaciones de los adventistas de todo el mundo. Las asociaciones o misiones son campos que componen a las uniones y que comprenden varios estados, provincias o departamentos de un país. Es Asociación cuando su administración es autosostenible y misión cuando no lo es; en ese caso su sostenibilidad depende de la unión a la que pertenece.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>

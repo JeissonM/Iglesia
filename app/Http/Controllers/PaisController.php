@@ -158,4 +158,26 @@ class PaisController extends Controller {
         }
     }
 
+    /**
+     * show all resource from a pais.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function estados($id) {
+        $pais = Pais::find($id);
+        $estados = $pais->estados;
+        if (count($estados) > 0) {
+            $estadosf = null;
+            foreach ($estados as $value) {
+                $obj["id"] = $value->id;
+                $obj["value"] = $value->nombre;
+                $estadosf[] = $obj;
+            }
+            return json_encode($estadosf);
+        } else {
+            return "null";
+        }
+    }
+
 }

@@ -63,7 +63,8 @@
                                             <option value="{{$key}}">{{$value}}</option>
                                             @endif
                                             @endforeach
-                                        </select></div>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('estado.index')}}" class="btn bg-red waves-effect">Cancelar</a>

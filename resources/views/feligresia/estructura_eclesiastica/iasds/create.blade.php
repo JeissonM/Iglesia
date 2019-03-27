@@ -14,14 +14,20 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    GESTIÓN DE LA ASOCIACIÓN GENERAL - CREAR UNA NUEVA ASOCIACIÓN GENERAL
+                    GESTIÓN DE LA ASOCIACIÓN GENERAL - CREAR UNA NUEVA ASOCIACIÓN GENERAL<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Agregue nuevas asociaciones.</strong> Gestione la información de la asociación general de los adventistas de todo el mundo. Usted puede crear varios registros de asociación general, pero solo uno debe estar marcado como actual; recuerdelo!
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -29,73 +35,101 @@
                 <h1 class="card-inside-title">DATOS DE LA ASOCIACIÓN</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>'iasd.store','method'=>'POST','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Nombre Asociación General</label>
-                                        {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre oficial de la conferencia general','required']) !!}
+                        <form class="form" role='form' method="POST" action="{{route('iasd.store')}}">
+                            @csrf 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Nombre Asociación General</label>
+                                            <input class="form-control" type="text" placeholder="Nombre oficial de la conferencia general" required="required" name="nombre">    
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Descripción</label>
+                                            <input class="form-control" type="text" placeholder="Descripción de la asociación" name="descripcion">    
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Descripción</label>
-                                        {!! Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Descripción de la asociación']) !!}
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">País de Ubicación</label>
+                                            <select class="form-control"  style="width: 100%;" name="pais_id" id="pais_id" onchange="getEstados()">
+                                                <option value="0">-- Seleccione una opción --</option>
+                                                @foreach($paises as $key=>$value)
+                                                <option value="{{$key}}">{{$value}}</option>
+                                                @endforeach
+                                            </select> 
+                                        </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Departamento/Estado</label>
+                                            <select class="form-control"  style="width: 100%;" name="ciudad_id" id="departamento_id" onchange="getCiudades()">
+                                            </select> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Ciudad de Ubicación</label>
+                                            <select class="form-control"  style="width: 100%;" name="ciudad_id" id="ciudad_id">
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Dirección de Ubicación</label>
+                                            <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="direccion">    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Definir la Asociación General Como Actual (Todas las demás deben estar señaladas como NO en su campo Actual)</label>
+                                            <select class="form-control"  style="width: 100%;" name="actual">
+                                                <option>-- Seleccione una opción --</option>
+                                                <option value="1">SI</option>
+                                                <option value="0">NO</option>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-line">
+                                            <label class="control-label">Sitio Web de la Asociación</label>
+                                            <input class="form-control" type="text" placeholder="Sitio web oficial de la asociación" name="sitioweb">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('iasd.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">País de Ubicación</label>
-                                        {!! Form::select('pais_id',$paises,null,['class'=>'form-control','placeholder'=>'-- Seleccione una opción --','id'=>'pais_id','onchange'=>'getEstados()']) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Departamento/Estado</label>
-                                        {!! Form::select('departamento_id',[],null,['class'=>'form-control','placeholder'=>'-- Seleccione una opción --','id'=>'departamento_id','onchange'=>'getCiudades()']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Ciudad de Ubicación</label>
-                                        {!! Form::select('ciudad_id',[],null,['class'=>'form-control','placeholder'=>'-- Seleccione una opción --','id'=>'ciudad_id']) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Dirección de Ubicación</label>
-                                        {!! Form::text('direccion',null,['class'=>'form-control','placeholder'=>'Dirección de ubicación de la asociación']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Definir la Asociación General Como Actual (Todas las demás deben estar señaladas como NO en su campo Actual)</label>
-                                        {!! Form::select('actual',['1'=>'SI','0'=>'NO'],null,['class'=>'form-control','placeholder'=>'-- Seleccione una opción --']) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Sitio Web de la Asociación</label>
-                                        {!! Form::text('sitioweb',null,['class'=>'form-control','placeholder'=>'Sitio web oficial de la asociación']) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('iasd.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LA ASOCIACIÓN GENERAL</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Agregue nuevas asociaciones.</strong> Gestione la información de la asociación general de los adventistas de todo el mundo. Usted puede crear varios registros de asociación general, pero solo uno debe estar marcado como actual; recuerdelo!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
