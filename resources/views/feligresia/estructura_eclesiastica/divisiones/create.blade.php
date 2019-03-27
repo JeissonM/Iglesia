@@ -40,40 +40,39 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Nombre de la División</label>
-                                        {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre oficial de la división','required']) !!}
+                                        <br/><input type="text" class="form-control" placeholder="Nombre oficial de la división" name="nombre" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Descripción</label>
-                                        {!! Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Descripción de la división']) !!}
+                                        <br/><input type="text" class="form-control" placeholder="Descripción de la división" name="descripcion" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Ciudad de Ubicación</label>
-                                        {!! Form::select('ciudad_id',$ciudades,null,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
+                                        <br/><select class="form-control show-tick select2" name="ciudad_id">
+                                            @foreach($ciudades as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Ubicación</label>
-                                        {!! Form::text('ubicacion',null,['class'=>'form-control','placeholder'=>'Dirección de ubicación de la división']) !!}
+                                        <br/><input type="text" class="form-control" placeholder="Dirección de ubicación de la división" name="ubicacion" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Correo Electrónico</label>
-                                        {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Dirección de correo de la división']) !!}
+                                        <br/><input type="email" class="form-control" placeholder="Dirección de correo de la división" name="email" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Sitio Web de la División</label>
-                                        {!! Form::text('sitioweb',null,['class'=>'form-control','placeholder'=>'Sitio web oficial de la división']) !!}
+                                        <br/><input type="text" class="form-control" placeholder="Sitio web oficial de la división" name="sitioweb" />
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +80,7 @@
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('division.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                    {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
                         </form>
@@ -110,6 +109,6 @@
 @endsection
 @section('script')
 <script>
-    $(".chosen-select").chosen({});
+    $('.select2').select2();
 </script>
 @endsection

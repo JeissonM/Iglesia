@@ -28,15 +28,11 @@
                 </ul>
             </div>
             <div class="body">
-                <div class="responsive-table">
+                <div class="table-responsive">
                     <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>NOMBRE</th>
-                                <th>DESCRIPCIÓN</th>
-                                <th>DIRECCIÓN</th>
-                                <th>CORREO</th>
-                                <th>SITIO WEB</th>
                                 <th>CIUDAD</th>
                                 <th>CREADO</th>
                                 <th>MODIFICADO</th>
@@ -47,15 +43,12 @@
                             @foreach($divisiones as $d)
                             <tr>
                                 <td>{{$d->nombre}}</td>
-                                <td>{{$d->descripcion}}</td>
-                                <td>{{$d->ubicacion}}</td>
-                                <td>{{$d->email}}</td>
-                                <td>{{$d->sitioweb}}</td>
                                 <td>{{$d->ciudad->nombre}}</td>
                                 <td>{{$d->created_at}}</td>
                                 <td>{{$d->updated_at}}</td>
                                 <td>
                                     <a href="{{ route('division.edit',$d->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar División"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('division.show',$d->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Datos de la División"><i class="material-icons">remove_red_eye</i></a>
                                     <a href="{{ route('division.delete',$d->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar División"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
