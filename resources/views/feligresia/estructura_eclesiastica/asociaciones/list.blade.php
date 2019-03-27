@@ -28,7 +28,7 @@
                 </ul>
             </div>
             <div class="body">
-                <div class="responsive-table">
+                <div class="table-responsive">
                     <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
                         <thead>
                             <tr>

@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Dirección de Ubicación</label>
-                                        <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="direccion" value="{{$iasd->ubicacion}}">    
+                                        <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="ubicacion" value="{{$iasd->ubicacion}}">    
                                     </div>
                                 </div>
                             </div>
