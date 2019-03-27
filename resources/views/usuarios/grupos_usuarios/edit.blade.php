@@ -15,12 +15,18 @@
                 <h2>
                     USUARIOS DEL SISTEMA - GRUPOS DE USUARIOS O ROLES
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-deep-orange alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Edite los datos de los grupos,</strong> Los grupos de usuarios son los roles o agrupaciones de usuarios que permite asignarle privilegios a todo un conglomerado de usuarios que comparte funciones. Ejemplo de grupos de usuarios: ADMINISTRADOR, FELIGRES, ESCUELA SABATICA, MAYORDOMIA, MINISTERIO JUVENIL, ETC.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -28,32 +34,70 @@
                 <h1 class="card-inside-title">DATOS DEL GRUPO: {{$grupo->nombre}}</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>['grupousuario.update',$grupo],'method'=>'PUT','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <br/>{!! Form::text('nombre',$grupo->nombre,['class'=>'form-control','placeholder'=>'Escriba el nombre del grupo o rol de usuario','required']) !!}
+                        <form class="form-horizontal" method="POST" action="{{route('grupousuario.update',$grupo->id)}}">
+                            @csrf
+                            <input name="_method" type="hidden" value="PUT" />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input type="text" value="{{$grupo->nombre}}" class="form-control" placeholder="Escriba el nombre del grupo o rol de usuario" name="nombre" required="required" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input type="text" value="{{$grupo->descripcion}}" class="form-control" placeholder="Descripción del grupo (Opcional)" name="descripcion"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/>
+                                        <label>Seleccione los Módulos a los que el Grupo Tendrá Acceso</label>
+                                        <select class="form-control show-tick select2" name="modulos[]" placeholder="Seleccione los Módulos a los que el Grupo Tendrá Acceso" required="" multiple="">
+                                            @foreach($modulos as $key=>$value)
+                                            <?php
+                                            $existe = false;
+                                            ?>
+                                            @foreach($grupo->modulos as $m)
+                                            @if($m->id==$key)
+                                            <?php
+                                            $existe = true;
+                                            ?>
+                                            @endif
+                                            @endforeach
+                                            @if($existe)
+                                            <option value="{{$key}}" selected>{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('grupousuario.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <br/>{!! Form::text('descripcion',$grupo->descripcion,['class'=>'form-control','placeholder'=>'Descripción del grupo (Opcional)']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <br/>{!! Form::select('modulos[]',$modulos,$grupo->modulos,['class'=>'form-control chosen-select','placeholder'=>'Seleccione los Módulos a los que el Grupo Tendrá Acceso','required','multiple']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('grupousuario.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
-                            </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-brown">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS GRUPOS DE USUARIOS(ROLES)</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Edite los datos de los grupos,</strong> Los grupos de usuarios son los roles o agrupaciones de usuarios que permite asignarle privilegios a todo un conglomerado de usuarios que comparte funciones. Ejemplo de grupos de usuarios: ADMINISTRADOR, FELIGRES, ESCUELA SABATICA, MAYORDOMIA, MINISTERIO JUVENIL, ETC.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
@@ -61,6 +105,6 @@
 @endsection
 @section('script')
 <script>
-    $(".chosen-select").chosen({});
+    $('.select2').select2();
 </script>
 @endsection

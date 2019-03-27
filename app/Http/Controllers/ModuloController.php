@@ -84,7 +84,9 @@ class ModuloController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Modulo $modulo) {
-        dd($modulo);
+        return view('usuarios.modulos..edit')
+                        ->with('location', 'usuarios')
+                        ->with('modulo', $modulo);
     }
 
     /**
@@ -95,7 +97,36 @@ class ModuloController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Modulo $modulo) {
-        //
+        $m = new Modulo($modulo->attributesToArray());
+        foreach ($modulo->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $modulo->$key = strtoupper($request->$key);
+            }
+        }
+        if (mb_stristr($modulo->nombre, "MOD_") === false) {
+            flash("El nombre del modulo <strong>" . $modulo->nombre . "</strong> es incorrecto, recuerde que debe tener la estructura MOD_ seguido del nombre que ud desee.")->warning();
+            return redirect()->route('modulo.edit', $modulo->id);
+        }
+        $u = Auth::user();
+        $result = $modulo->save();
+        if ($result) {
+            $aud = new Auditoriausuario();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "EDICION DE MODULO. DATOS NUEVOS: ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($modulo->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            flash("El modulo <strong>" . $modulo->nombre . "</strong> fue modificado de forma exitosa!")->success();
+            return redirect()->route('modulo.index');
+        } else {
+            flash("El modulo <strong>" . $modulo->nombre . "</strong> no pudo ser modificado. Error: " . $result)->error();
+            return redirect()->route('modulo.index');
+        }
     }
 
     /**

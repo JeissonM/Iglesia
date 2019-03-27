@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Grupousuario;
 use Illuminate\Http\Request;
+use App\Http\Requests\GrupousuarioRequest;
+use App\Modulo;
+use App\Auditoriausuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Pagina;
 
-class GrupousuarioController extends Controller
-{
+class GrupousuarioController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $grupos = Grupousuario::all()->sortBy('nombre');
+        return view('usuarios.grupos_usuarios.list')
+                        ->with('location', 'usuarios')
+                        ->with('grupos', $grupos);
     }
 
     /**
@@ -22,9 +30,11 @@ class GrupousuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $modulos = Modulo::all()->pluck('nombre', 'id');
+        return view('usuarios.grupos_usuarios.create')
+                        ->with('location', 'usuarios')
+                        ->with('modulos', $modulos);
     }
 
     /**
@@ -33,9 +43,30 @@ class GrupousuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(GrupousuarioRequest $request) {
+        $grupo = new Grupousuario($request->all());
+        foreach ($grupo->attributesToArray() as $key => $value) {
+            $grupo->$key = strtoupper($value);
+        }
+        $u = Auth::user();
+        $result = $grupo->save();
+        $grupo->modulos()->sync($request->modulos);
+        if ($result) {
+            $aud = new Auditoriausuario();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE GRUPO DE USUARIO. DATOS: ";
+            foreach ($grupo->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El Grupo de usuario <strong>" . $grupo->nombre . "</strong> fue almacenado de forma exitosa!")->success();
+            return redirect()->route('grupousuario.index');
+        } else {
+            flash("El Grupo de usuario <strong>" . $grupo->nombre . "</strong> no pudo ser almacenado. Error: " . $result)->error();
+            return redirect()->route('grupousuario.index');
+        }
     }
 
     /**
@@ -44,9 +75,13 @@ class GrupousuarioController extends Controller
      * @param  \App\Grupousuario  $grupousuario
      * @return \Illuminate\Http\Response
      */
-    public function show(Grupousuario $grupousuario)
-    {
-        //
+    public function show(Grupousuario $grupousuario) {
+        $grupousuario->modulos;
+        $total = count($grupousuario->users);
+        return view('usuarios.grupos_usuarios.show')
+                        ->with('location', 'usuarios')
+                        ->with('grupo', $grupousuario)
+                        ->with('total', $total);
     }
 
     /**
@@ -55,9 +90,13 @@ class GrupousuarioController extends Controller
      * @param  \App\Grupousuario  $grupousuario
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grupousuario $grupousuario)
-    {
-        //
+    public function edit(Grupousuario $grupousuario) {
+        $grupousuario->modulos;
+        $modulos = Modulo::all()->pluck('nombre', 'id');
+        return view('usuarios.grupos_usuarios.edit')
+                        ->with('location', 'usuarios')
+                        ->with('grupo', $grupousuario)
+                        ->with('modulos', $modulos);
     }
 
     /**
@@ -67,9 +106,36 @@ class GrupousuarioController extends Controller
      * @param  \App\Grupousuario  $grupousuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grupousuario $grupousuario)
-    {
-        //
+    public function update(Request $request, Grupousuario $grupousuario) {
+        $m = new Grupousuario($grupousuario->attributesToArray());
+        foreach ($grupousuario->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $grupousuario->$key = strtoupper($request->$key);
+            }
+        }
+        $u = Auth::user();
+        $result = $grupousuario->save();
+        $grupousuario->modulos()->sync($request->modulos);
+        if ($result) {
+            $aud = new Auditoriausuario();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "EDICION DE GRUPO DE USUARIOS. DATOS NUEVOS: ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($grupousuario->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str . " - " . $str2;
+            $aud->save();
+            flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> fue modificado de forma exitosa!")->success();
+            return redirect()->route('grupousuario.index');
+        } else {
+            flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> no pudo ser modificado. Error: " . $result)->error();
+            return redirect()->route('grupousuario.index');
+        }
     }
 
     /**
@@ -78,8 +144,31 @@ class GrupousuarioController extends Controller
      * @param  \App\Grupousuario  $grupousuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grupousuario $grupousuario)
-    {
-        //
+    public function destroy($id) {
+        $grupousuario= Grupousuario::find($id);
+        if (count($grupousuario->paginas) > 0 || count($grupousuario->modulos) > 0 || count($grupousuario->users) > 0) {
+            flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> no pudo ser eliminado porque tiene permisos o usuarios asociados.")->warning();
+            return redirect()->route('grupousuario.index');
+        } else {
+            $result = $grupousuario->delete();
+            if ($result) {
+                $aud = new Auditoriausuario();
+                $u = Auth::user();
+                $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+                $aud->operacion = "ELIMINAR";
+                $str = "ELIMINACIÓN DE GRUPOS DE USUARIOS. DATOS ELIMINADOS: ";
+                foreach ($grupousuario->attributesToArray() as $key => $value) {
+                    $str = $str . ", " . $key . ": " . $value;
+                }
+                $aud->detalles = $str;
+                $aud->save();
+                flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> fue eliminado de forma exitosa!")->success();
+                return redirect()->route('grupousuario.index');
+            } else {
+                flash("El Grupo de usuario <strong>" . $grupousuario->nombre . "</strong> no pudo ser eliminado. Error: " . $result)->error();
+                return redirect()->route('grupousuario.index');
+            }
+        }
     }
+
 }

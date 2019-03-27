@@ -13,6 +13,8 @@
         <link href="{{asset('css/plugins/node-waves/waves.css')}}" rel="stylesheet" />
         <link href="{{asset('css/plugins/animate-css/animate.css')}}" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="{{asset('js/chosen/chosen.css')}}"/>
+        <!-- Select2 -->
+        <link rel="stylesheet" href="{{ asset('select2/dist/css/select2.min.css')}}">
         <link href="{{asset('css/style.css')}}" rel="stylesheet">
         <link href="{{asset('css/themes/all-themes.css')}}" rel="stylesheet" />
         <!-- JQuery DataTable Css -->
@@ -381,6 +383,8 @@
         <script src="{{ asset('plugins/pnotify/dist/pnotify.js')}}"></script>
         <script src="{{ asset('plugins/pnotify/dist/pnotify.buttons.js')}}"></script>
         <script src="{{ asset('plugins/pnotify/dist/pnotify.nonblock.js')}}"></script>
+        <!-- Select2 -->
+        <script src="{{ asset('select2/dist/js/select2.full.min.js')}}"></script>
         <script type="text/javascript">
                                 var url = "<?php echo config('app.url'); ?>";
 
