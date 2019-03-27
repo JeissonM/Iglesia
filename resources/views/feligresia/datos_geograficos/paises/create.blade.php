@@ -35,7 +35,7 @@
                 <h1 class="card-inside-title">DATOS DEL PAÍS</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form" role='form' method="POST" action="{{route('pais.store')}}">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('pais.store')}}">
                             @csrf
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -50,6 +50,9 @@
                                         <input class="form-control" type="text" placeholder="Nombre oficial del país" required="required" name="nombre">
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('pais.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>

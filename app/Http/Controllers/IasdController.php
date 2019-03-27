@@ -52,12 +52,16 @@ class IasdController extends Controller {
         }
         $iasd = new Iasd($request->all());
         foreach ($iasd->attributesToArray() as $key => $value) {
-            $iasd->$key = strtoupper($value);
+            if ($key == 'sitioweb') {
+                $iasd->$key = $value;
+            } else {
+                $iasd->$key = strtoupper($value);
+            }
         }
         if (isset($request->ciudad_id)) {
             $c = Ciudad::find($request->ciudad_id);
             $ubicacion = "NO DEFINIDA";
-            if (count($c) > 0) {
+            if ($c != null) {
                 $c->estado->pais;
                 if (isset($request->direccion)) {
                     $ubicacion = strtoupper($request->direccion) . " - " . $c->nombre . " - " . $c->estado->nombre . " - " . $c->estado->pais->nombre;
@@ -120,18 +124,28 @@ class IasdController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+        $bandera = false;
         if ($request->actual == "1") {
-            $iasd = count(Iasd::where('actual', 1)->get());
-            if ($iasd > 0) {
-                flash("Ya existe una conferencia general definida como ACTUAL y no pueden existir dos con dicho estado. Debe modificar la conferencia definida como ACTUAL a su estado NO ACTUAL para continuar.")->warning();
-                return redirect()->route('iasd.index');
+            $iasd = Iasd::where('actual', 1)->first();
+            if ($iasd != null) {
+                if ($iasd->id == $id) {
+                    $bandera = false;
+                } else {
+                    $iasd->actual = 0;
+                    $iasd->save();
+                    $bandera = true;
+                }
             }
         }
         $iasd = Iasd::find($id);
         $m = new Iasd($iasd->attributesToArray());
         foreach ($iasd->attributesToArray() as $key => $value) {
             if (isset($request->$key)) {
-                $iasd->$key = strtoupper($request->$key);
+                if ($key == 'sitioweb') {
+                    $iasd->$key = $request->$key;
+                } else {
+                    $iasd->$key = strtoupper($request->$key);
+                }
             }
         }
         $result = $iasd->save();
@@ -150,8 +164,13 @@ class IasdController extends Controller {
             }
             $aud->detalles = $str . " - " . $str2;
             $aud->save();
-            flash("La conferencia <strong>" . $iasd->nombre . "</strong> fue modificada de forma exitosa!")->success();
-            return redirect()->route('iasd.index');
+            if ($bandera == true) {
+                flash("La conferencia <strong>" . $iasd->nombre . "</strong> fue modificada de forma exitosa!, Ya existia una conferencia general definida como ACTUAL la cual fue modificada. ")->success();
+                return redirect()->route('iasd.index');
+            } else {
+                flash("La conferencia <strong>" . $iasd->nombre . "</strong> fue modificada de forma exitosa!")->success();
+                return redirect()->route('iasd.index');
+            }
         } else {
             flash("La conferencia <strong>" . $iasd->nombre . "</strong> no pudo ser modificada. Error: " . $result)->error();
             return redirect()->route('iasd.index');
@@ -164,7 +183,7 @@ class IasdController extends Controller {
      * @param  \App\Iasd  $iasd
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Iasd $iasd) {
+    public function destroy($id) {
         $iasd = Iasd::find($id);
         $result = $iasd->delete();
         if ($result) {

@@ -35,90 +35,87 @@
                 <h1 class="card-inside-title">DATOS DE LA ASOCIACIÓN: {{$asociacion->nombre}}</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form" role='form' method="POST" action="{{route('asociacion.update',$asociacion->id)}}">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('asociacion.update',$asociacion->id)}}">
                             @csrf
                             <input name="_method" type="hidden" value="PUT" />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Nombre de la Asociación</label>
+                                        <input class="form-control" type="text" placeholder="Nombre oficial de la asociación" required="required" name="nombre" value="{{$asociacion->nombre}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Descripción</label>
+                                        <input class="form-control" type="text" placeholder="Descripción de la asociación" name="descripcion" value="{{$asociacion->descripcion}}">  
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Ciudad de Ubicación</label>
+                                        <select class="form-control"  style="width: 100%;" name="ciudad_id" required="required">
+                                            <option value="0">-- Seleccione una opción --</option>
+                                            @foreach($ciudades as $key=>$value)
+                                            @if($asociacion->ciudad_id == $key)
+                                            <option value="{{$key}}" selected>{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Dirección de Ubicación</label>
+                                        <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="ubicacion" value="{{$asociacion->ubicacion}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Dirección de Correo Electrónico</label>
+                                        <input class="form-control" type="email" placeholder="Dirección de correo de la asociación" name="email" value="{{$asociacion->email}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Sitio Web de la Asociación</label>
+                                        <input class="form-control" type="text" placeholder="Sitio web oficial de la asociación" name="sitioweb" value="{{$asociacion->sitioweb}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Unión</label>
+                                        <select class="form-control"  style="width: 100%;" name="union_id" required="required">
+                                            <option value="0">-- Seleccione una opción --</option>
+                                            @foreach($uniones as $key=>$value)
+                                            @if($asociacion->union_id == $key)
+                                            <option value="{{$key}}" selected>{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Nombre de la Asociación</label>
-                                            <input class="form-control" type="text" placeholder="Nombre oficial de la asociación" required="required" name="nombre" value="{{$asociacion->nombre}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Descripción</label>
-                                            <input class="form-control" type="text" placeholder="Descripción de la asociación" name="descripcion" value="{{$asociacion->descripcion}}">  
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Ciudad de Ubicación</label>
-                                            <select class="form-control"  style="width: 100%;" name="ciudad_id" required="required">
-                                                <option value="0">-- Seleccione una opción --</option>
-                                                @foreach($ciudades as $key=>$value)
-                                                @if($asociacion->ciudad_id == $key)
-                                                <option value="{{$key}}" selected>{{$value}}</option>
-                                                @else
-                                                <option value="{{$key}}">{{$value}}</option>
-                                                @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Dirección de Ubicación</label>
-                                            <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="ubicacion" value="{{$asociacion->ubicacion}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Dirección de Correo Electrónico</label>
-                                            <input class="form-control" type="email" placeholder="Dirección de correo de la asociación" name="email" value="{{$asociacion->email}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-line">
-                                            <label class="control-label">Sitio Web de la Asociación</label>
-                                            <input class="form-control" type="text" placeholder="Sitio web oficial de la asociación" name="sitioweb" value="{{$asociacion->sitioweb}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="form-line">
-                                            <label class="control-label">Unión</label>
-                                            <select class="form-control"  style="width: 100%;" name="union_id" required="required">
-                                                <option value="0">-- Seleccione una opción --</option>
-                                                @foreach($uniones as $key=>$value)
-                                                @if($asociacion->union_id == $key)
-                                                <option value="{{$key}}" selected>{{$value}}</option>
-                                                @else
-                                                <option value="{{$key}}">{{$value}}</option>
-                                                @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('asociacion.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
                                     <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
