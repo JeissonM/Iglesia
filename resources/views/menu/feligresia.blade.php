@@ -87,6 +87,11 @@
                                         <div><span>IGLESIAS</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
+                                    @if(session()->exists('PAG_PERIODOS'))
+                                    <a href="{{route('periodo.index')}}" class="btn bg-green waves-effect">
+                                        <div><span>PERÍODOS ECLESIÁSTICOS</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane animated flipInX" id="ministerios_animation_1">
@@ -113,9 +118,6 @@
                                         <div><span>CARGOS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    <a href="{{route('pais.index')}}" class="btn bg-blue-grey waves-effect">
-                                        <div><span>PERÍODOS ECLESIÁSTICOS</span><span class="ink animate"></span></div>
-                                    </a>
                                     <a href="{{route('pais.index')}}" class="btn bg-blue-grey waves-effect">
                                         <div><span>JUNTAS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>

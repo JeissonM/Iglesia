@@ -22,25 +22,22 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('ministerio.create') }}">Agregar Nuevo Ministerio</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong>Los ministerios oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia y que hacen parte de su estructura organizacional. Ente ellos están: ministerio musical, ministerio de mayordomía, ministerio de educación, ministerio juvenil, etc. 
-                </div>
-                <div class="responsive-table">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
+                <div class="table-responsive">
+                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Creado</th>
-                                <th>Modificado</th>
-                                <th>Acciones</th>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>CREADO</th>
+                                <th>MODIFICADO</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,11 +61,27 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-grey">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS MINISTERIOS OFICIALES DE LA IGLESIA(DEPARTAMENTOS)</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong>Los ministerios oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia y que hacen parte de su estructura organizacional. Ente ellos están: ministerio musical, ministerio de mayordomía, ministerio de educación, ministerio juvenil, etc. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabla').DataTable();
+        //$('#tabla').DataTable();
     });
 </script>
 @endsection

@@ -24,4 +24,8 @@ class Ministerioextra extends Model {
             //
     ];
 
+    public function tipoministerio() {
+        return $this->belongsTo('App\Tipoministerio');
+    }
+
 }

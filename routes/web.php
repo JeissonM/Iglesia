@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'usuarios'], function() {
     Route::post('operaciones', 'UsuarioController@operaciones')->name('usuario.operaciones');
     Route::post('usuario/contrasenia/cambiar/admin/finalizar', 'UsuarioController@cambiarPass')->name('usuario.cambiarPass');
 });
- 
+
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DEL MÓDULO DE FELIGRESÍA
 Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //PAISES
@@ -90,4 +90,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //MINISTERIOS EXTRAOFICIALES DE LA IGLESIA
     Route::resource('ministerioextra', 'MinisterioextraController');
     Route::get('ministerioextra/{id}/delete', 'MinisterioextraController@destroy')->name('ministerioextra.delete');
+    //PERIODO
+    Route::resource('periodo', 'PeriodoController');
+    Route::get('periodo/{id}/delete', 'PeriodoController@destroy')->name('periodo.delete');
 });

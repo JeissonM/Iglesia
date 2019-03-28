@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tipoministerio extends Model {
-
+class Periodo extends Model
+{
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'created_at', 'updated_at'
+        'id', 'etiqueta', 'fechainicio', 'fechafin', 'created_at', 'updated_at'
     ];
 
     /**
@@ -23,9 +23,4 @@ class Tipoministerio extends Model {
     protected $hidden = [
             //
     ];
-
-    public function ministerioextras() {
-        return $this->hasMany('App\Ministerioextra');
-    }
-
 }

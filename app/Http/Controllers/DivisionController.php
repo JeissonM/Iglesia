@@ -55,7 +55,7 @@ class DivisionController extends Controller {
             $aud = new Auditoriafeligresia();
             $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
             $aud->operacion = "INSERTAR";
-            $str = "CREACIÓN DE CONFERENCIA GENERAL. DATOS: ";
+            $str = "CREACIÓN DE DIVISIÓN. DATOS: ";
             foreach ($division->attributesToArray() as $key => $value) {
                 $str = $str . ", " . $key . ": " . $value;
             }
@@ -115,7 +115,7 @@ class DivisionController extends Controller {
             $u = Auth::user();
             $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
             $aud->operacion = "ACTUALIZAR DATOS";
-            $str = "EDICION DE IASD. DATOS NUEVOS: ";
+            $str = "EDICION DE DIVISIÓN. DATOS NUEVOS: ";
             $str2 = " DATOS ANTIGUOS: ";
             foreach ($m->attributesToArray() as $key => $value) {
                 $str2 = $str2 . ", " . $key . ": " . $value;
@@ -151,7 +151,7 @@ class DivisionController extends Controller {
                 $u = Auth::user();
                 $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
                 $aud->operacion = "ELIMINAR";
-                $str = "ELIMINACIÓN DE IASD. DATOS ELIMINADOS: ";
+                $str = "ELIMINACIÓN DE DIVISIÓN. DATOS ELIMINADOS: ";
                 foreach ($division->attributesToArray() as $key => $value) {
                     $str = $str . ", " . $key . ": " . $value;
                 }

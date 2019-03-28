@@ -22,25 +22,23 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('ministerioextra.create') }}">Agregar Nuevo Ministerio Extra-Oficial</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong>Los ministerios extra-oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia pero que no hacen parte de su estructura organizacional ni responden legalmente a nombre de la iglesia. Ente ellos están: ministerio musical, ministerio de mayordomía, ministerio de educación, ministerio juvenil, clubes (los clubes si responden legalmente a la iglesia y son ministerios oficiales de la organización), etc. 
-                </div>
-                <div class="responsive-table">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
+                <div class="table-responsive">
+                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Creado</th>
-                                <th>Modificado</th>
-                                <th>Acciones</th>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>TIPO MINISTERIO</th>
+                                <th>CREADO</th>
+                                <th>MODIFICADO</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,6 +47,7 @@
                                 <td>{{$ministerio->id}}</td>
                                 <td>{{$ministerio->nombre}}</td>
                                 <td>{{$ministerio->descripcion}}</td>
+                                <td>{{$ministerio->tipoministerio->nombre}}</td>
                                 <td>{{$ministerio->created_at}}</td>
                                 <td>{{$ministerio->updated_at}}</td>
                                 <td>
@@ -64,11 +63,27 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-grey">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS MINISTERIOS EXTRA-OFICIALES DE LA IGLESIA(MINISTERIOS INDEPENDIENTES)</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong>Los ministerios extra-oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia pero que no hacen parte de su estructura organizacional ni responden legalmente a nombre de la iglesia. Ente ellos están: ministerios musicales, ministerios de servicios comunitarios, ministerios independientes, etc. 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabla').DataTable();
+        //$('#tabla').DataTable();
     });
 </script>
 @endsection
