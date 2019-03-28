@@ -138,9 +138,9 @@ class UnionController extends Controller {
             $str = "EDICION DE UNIÓN. DATOS NUEVOS: ";
             $str2 = " DATOS ANTIGUOS: ";
             foreach ($m->attributesToArray() as $key => $value) {
-                if ($key == 'division_id') {
+                if ($key == 'ciudad_id') {
                     $str2 = $str2 . ", " . $key . ": " . $value . ", ciudad:" . $m->ciudad->nombre;
-                } elseif ($key == 'ciudad_id') {
+                } elseif ($key == 'division_id') {
                     $str2 = $str2 . ", " . $key . ": " . $value . ", division:" . $m->division->nombre;
                 } else {
                     $str2 = $str2 . ", " . $key . ": " . $value;

@@ -22,27 +22,24 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('zona.create') }}">Agregar Nueva Zona</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong> Las zonas son campos que componen a las asociaciones o misiones y que comprenden parte de uno o varios estados, provincias o departamentos de un país. Las zonas contienen distritos.
-                </div>
                 <div class="responsive-table">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
+                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Dirección</th>
-                                <th>E-mail</th>
-                                <th>Sitio Web</th>
-                                <th>Ciudad</th>
-                                <th>Asociación</th>
-                                <th>Acciones</th>
+                                <th>NOMBRE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>DIRECCIÓN</th>
+                                <th>E-MAIL</th>
+                                <th>SITIO WEB</th>
+                                <th>CIUDAD</th>
+                                <th>ASOCIACIÓN</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,11 +65,26 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS ZONAS</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong> Las zonas son campos que componen a las asociaciones o misiones y que comprenden parte de uno o varios estados, provincias o departamentos de un país. Las zonas contienen distritos.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabla').DataTable();
     });
 </script>
 @endsection

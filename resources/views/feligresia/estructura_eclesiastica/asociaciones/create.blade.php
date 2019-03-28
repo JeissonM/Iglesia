@@ -40,14 +40,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Nombre de la Asociación</label>
-                                        <input class="form-control" type="text" placeholder="Nombre oficial de la asociación" required="required" name="nombre">
+                                        <br/><input class="form-control" type="text" placeholder="Nombre oficial de la asociación" required="required" name="nombre">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Descripción</label>
-                                        <input class="form-control" type="text" placeholder="Descripción de la asociación" name="descripcion">
+                                        <br/><input class="form-control" type="text" placeholder="Descripción de la asociación" name="descripcion">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -63,22 +61,19 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Ubicación</label>
-                                        <input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="ubicacion">
+                                        <br/><input class="form-control" type="text" placeholder="Dirección de ubicación de la asociación" name="ubicacion">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Correo Electrónico</label>
-                                        <input class="form-control" type="email" placeholder="Dirección de correo de la asociación" name="email">
+                                        <br/><input class="form-control" type="email" placeholder="Dirección de correo de la asociación" name="email">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Sitio Web de la Asociación</label>
-                                        <input class="form-control" type="text" placeholder="Sitio web oficial de la asociación" name="sitioweb">
+                                        <br/><input class="form-control" type="text" placeholder="Sitio web oficial de la asociación" name="sitioweb">
                                     </div>
                                 </div>
                                 <div class="form-group">

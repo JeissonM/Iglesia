@@ -51,7 +51,11 @@ class AsociacionController extends Controller {
     public function store(AsociacionRequest $request) {
         $asociacion = new Asociacion($request->all());
         foreach ($asociacion->attributesToArray() as $key => $value) {
-            $asociacion->$key = strtoupper($value);
+            if ($key == 'sitioweb') {
+                $asociacion->$key = $value;
+            } else {
+                $asociacion->$key = strtoupper($value);
+            }
         }
         $result = $asociacion->save();
         if ($result) {
@@ -61,7 +65,13 @@ class AsociacionController extends Controller {
             $aud->operacion = "INSERTAR";
             $str = "CREACIÓN DE ASOCIACIÓN. DATOS: ";
             foreach ($asociacion->attributesToArray() as $key => $value) {
-                $str = $str . ", " . $key . ": " . $value;
+                if ($key == 'ciudad_id') {
+                    $str = $str . ", " . $key . ": " . $value . ", ciudad:" . $asociacion->ciudad->nombre;
+                } else if ($key == 'union_id') {
+                    $str = $str . ", " . $key . ": " . $value . ", union:" . $asociacion->union->nombre;
+                } else {
+                    $str = $str . ", " . $key . ": " . $value;
+                }
             }
             $aud->detalles = $str;
             $aud->save();
@@ -112,7 +122,11 @@ class AsociacionController extends Controller {
         $m = new Asociacion($asociacion->attributesToArray());
         foreach ($asociacion->attributesToArray() as $key => $value) {
             if (isset($request->$key)) {
-                $asociacion->$key = strtoupper($request->$key);
+                if ($key == 'sitioweb') {
+                    $asociacion->$key = $request->$key;
+                } else {
+                    $asociacion->$key = strtoupper($request->$key);
+                }
             }
         }
         $result = $asociacion->save();
@@ -124,10 +138,22 @@ class AsociacionController extends Controller {
             $str = "EDICION DE ASOCIACIÓN. DATOS NUEVOS: ";
             $str2 = " DATOS ANTIGUOS: ";
             foreach ($m->attributesToArray() as $key => $value) {
-                $str2 = $str2 . ", " . $key . ": " . $value;
+                if ($key == 'ciudad_id') {
+                    $str2 = $str2 . ", " . $key . ": " . $value . ", ciudad:" . $m->ciudad->nombre;
+                } elseif ($key == 'union_id') {
+                    $str2 = $str2 . ", " . $key . ": " . $value . ", union:" . $m->union->nombre;
+                } else {
+                    $str2 = $str2 . ", " . $key . ": " . $value;
+                }
             }
             foreach ($asociacion->attributesToArray() as $key => $value) {
-                $str = $str . ", " . $key . ": " . $value;
+                if ($key == 'ciudad_id') {
+                    $str = $str . ", " . $key . ": " . $value . ", ciudad:" . $asociacion->ciudad->nombre;
+                } else if ($key == 'union_id') {
+                    $str = $str . ", " . $key . ": " . $value . ", union:" . $asociacion->union->nombre;
+                } else {
+                    $str = $str . ", " . $key . ": " . $value;
+                }
             }
             $aud->detalles = $str . " - " . $str2;
             $aud->save();
@@ -159,7 +185,13 @@ class AsociacionController extends Controller {
                 $aud->operacion = "ELIMINAR";
                 $str = "ELIMINACIÓN DE ASOCIACIÓN. DATOS ELIMINADOS: ";
                 foreach ($asociacion->attributesToArray() as $key => $value) {
-                    $str = $str . ", " . $key . ": " . $value;
+                    if ($key == 'ciudad_id') {
+                        $str = $str . ", " . $key . ": " . $value . ", ciudad:" . $asociacion->ciudad->nombre;
+                    } else if ($key == 'union_id') {
+                        $str = $str . ", " . $key . ": " . $value . ", union:" . $asociacion->union->nombre;
+                    } else {
+                        $str = $str . ", " . $key . ": " . $value;
+                    }
                 }
                 $aud->detalles = $str;
                 $aud->save();

@@ -46,21 +46,21 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                            <br/><input class="form-control" type="text" placeholder="Descripción de la unión" name="descripcion" value="{{$union->descripcion}}">
-                                        </div>
+                                        <br/><input class="form-control" type="text" placeholder="Descripción de la unión" name="descripcion" value="{{$union->descripcion}}">
                                     </div>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <label class="control-label">Ciudad de Ubicación</label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Ciudad de Ubicación</label>
                                         <select class="form-control"  style="width: 100%;" required="required" name="ciudad_id">
-                                        @foreach($ciudades as $key=>$value)
+                                            @foreach($ciudades as $key=>$value)
                                             @if($union->ciudad_id == $key)
-                                                <option value="{{$key}}" selected>{{$value}}</option>
-                                                @else
-                                                <option value="{{$key}}">{{$value}}</option>
-                                                @endif
-                                                @endforeach
-                                            </select>
+                                            <option value="{{$key}}" selected>{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

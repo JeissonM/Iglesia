@@ -14,14 +14,20 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    GESTIÓN DE LAS ZONAS - CREAR UNA NUEVA ZONA
+                    GESTIÓN DE LAS ZONAS - CREAR UNA NUEVA ZONA<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Agregue nuevas zonas.</strong> Las zonas son campos que componen a las asociaciones o misiones y que comprenden parte de uno o varios estados, provincias o departamentos de un país. Las zonas contienen distritos.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -29,67 +35,86 @@
                 <h1 class="card-inside-title">DATOS DE LA ZONA</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>'zona.store','method'=>'POST','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="col-md-6">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('zona.store')}}">
+                            @csrf 
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Nombre de la Zona</label>
-                                        {!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Nombre oficial de la zona','required']) !!}
+                                        <br/><input class="form-control" type="text" placeholder="Nombre oficial de la zona" required="required" name="nombre">    
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Descripción</label>
-                                        {!! Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Descripción de la zona']) !!}
+                                        <br/><input class="form-control" type="text" placeholder="Descripción de la zona" name="descripcion">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Ciudad de Ubicación</label>
-                                        {!! Form::select('ciudad_id',$ciudades,null,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-line">
-                                        <label class="control-label">Dirección de Ubicación</label>
-                                        {!! Form::text('ubicacion',null,['class'=>'form-control','placeholder'=>'Dirección de ubicación de la zona']) !!}
+                                        <select class="form-control"  style="width: 100%;" required="required" name="ciudad_id">
+                                            @foreach($ciudades as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Correo Electrónico</label>
-                                        {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'Dirección de correo de la zona']) !!}
+                                        <br/><input class="form-control" type="text" placeholder="Dirección de ubicación de la zona" name="ubicacion">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input class="form-control" type="email" placeholder="Dirección de correo de la zona" name="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Sitio Web de la Zona</label>
-                                        {!! Form::text('sitioweb',null,['class'=>'form-control','placeholder'=>'Sitio web oficial de la zona']) !!}
+                                        <br/><input class="form-control" type="text" placeholder="Sitio web oficial de la zona" name="sitioweb">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Asociación</label>
-                                        {!! Form::select('asociacion_id',$asociaciones,null,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
+                                        <select class="form-control"  style="width: 100%;" required="required" name="asociacion_id">
+                                            @foreach($asociaciones as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('zona.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('zona.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
+                                </div>
                             </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS UNIONES</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Agregue nuevas zonas.</strong> Las zonas son campos que componen a las asociaciones o misiones y que comprenden parte de uno o varios estados, provincias o departamentos de un país. Las zonas contienen distritos.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
