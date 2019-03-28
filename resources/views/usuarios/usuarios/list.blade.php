@@ -17,7 +17,7 @@
             </div>
             <div class="body">
                 <div class="table-responsive">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
+                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Identificación</th>
@@ -56,7 +56,7 @@
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabla').DataTable();
+        //$('#tabla').DataTable();
     });
 </script>
 @endsection
