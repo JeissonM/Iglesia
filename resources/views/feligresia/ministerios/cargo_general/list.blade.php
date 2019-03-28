@@ -4,7 +4,7 @@
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
-    <li class="active"><a href="{{route('tipoministerio.index')}}">Categorías de Ministerios</a></li>
+    <li class="active"><a href="{{route('cargogeneral.index')}}">Cargo de Iglesia</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,7 +13,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    CATEGORÍAS DE MINISTERIOS<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
+                    CARGOS DE IGLESIA<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -21,7 +21,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ route('tipoministerio.create') }}">Agregar Nuevo Tipo o Categoría</a></li>
+                            <li><a href="{{ route('tipoministerio.create') }}">Agregar Nuevo Cargo de Iglesia</a></li>
                             <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
@@ -41,16 +41,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($tipos as $tipo)
+                            @foreach($cargos as $cargo)
                             <tr>
-                                <td>{{$tipo->id}}</td>
-                                <td>{{$tipo->nombre}}</td>
-                                <td>{{$tipo->descripcion}}</td>
-                                <td>{{$tipo->created_at}}</td>
-                                <td>{{$tipo->updated_at}}</td>
+                                <td>{{$cargo->id}}</td>
+                                <td>{{$cargo->nombre}}</td>
+                                <td>{{$cargo->descripcion}}</td>
+                                <td>{{$cargo->created_at}}</td>
+                                <td>{{$cargo->updated_at}}</td>
                                 <td>
-                                    <a href="{{ route('tipoministerio.edit',$tipo->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Tipo de Ministerio"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('tipoministerio.delete',$tipo->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Tipo de Ministerio"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('cargogeneral.edit',$cargo->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Cargo"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('cargogeneral.delete',$cargo->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Cargo"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -66,10 +66,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TIPOS DE MINISTERIOS</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS CARGOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Las categorías de ministerios o tipos de ministerios son única y exclusivamente para el funcionamiento de los ministerios extraoficiales de la iglesia y describen el grupo al cual pertenece el ministerio que puede ser: ministerios musicales, ministerios evangelísticos, ministerios de ayuda humanitaria, ministerios de servicio, ministerios de publicaciones, clubes juveniles, entre otros.
+                <strong>Detalles: </strong>Administre los cargos o responsabilidades que han de tener los feligreses dentro de las directivas de las iglesias. Un ejemplo de cargo puede ser director de jovenes, director de escuela sabatica, subdirector canto, etc.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

@@ -23,5 +23,4 @@ class Ministerioextra extends Model {
     protected $hidden = [
             //
     ];
-
 }

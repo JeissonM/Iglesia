@@ -22,26 +22,23 @@
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('iglesia.create') }}">Agregar Nueva Iglesia</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <div class="alert bg-teal alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Detalles: </strong> Las iglesias representan las congregaciones locales de miembros y sus templos. Las iglesias están clasificadas en IGLESIA si es capaz de auto sostenerse en liderazgo, logística, etc. Y en GRUPO que son pequeñas congregaciones asistidas por un distrito y que en materia de sostenibilidad dependen de la asociación/misión a la que pertenece.
-                </div>
-                <div class="responsive-table">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed" width="100%" cellspacing="0">
+                <div class="table-responsive">
+                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                                <th>Tipo</th>
-                                <th>Ciudad</th>
-                                <th>Zona</th>
-                                <th>Distrito</th>
-                                <th>Acciones</th>
+                                <th>NOMBRE</th>
+                                <th>ESTADO</th>
+                                <th>TIPO</th>
+                                <th>CIUDAD</th>
+                                <th>ZONA</th>
+                                <th>DISTRITO</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,11 +54,15 @@
                                 </td>
                                 <td>{{$d->tipo}}</td>
                                 <td>{{$d->ciudad->nombre}}</td>
+                                @if($d->zona_id == null)
+                                <td> -- </td>
+                                @else
                                 <td>{{$d->zona->nombre}}</td>
+                                @endif
                                 <td>{{$d->distrito->nombre}}</td>
                                 <td>
                                     <a href="{{ route('iglesia.edit',$d->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Iglesia"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('iglesia.show',$d->id)}}" class="btn bg-teal waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Iglesia"><i class="material-icons">more</i></a>
+                                    <a href="{{ route('iglesia.show',$d->id)}}" class="btn bg-teal waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Iglesia"><i class="material-icons">remove_red_eye</i></a>
                                     <a href="{{ route('iglesia.delete',$d->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Iglesia"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
@@ -73,11 +74,26 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS IGLESIAS</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Detalles: </strong> Las iglesias representan las congregaciones locales de miembros y sus templos. Las iglesias están clasificadas en IGLESIA si es capaz de auto sostenerse en liderazgo, logística, etc. Y en GRUPO que son pequeñas congregaciones asistidas por un distrito y que en materia de sostenibilidad dependen de la asociación/misión a la que pertenece.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabla').DataTable();
     });
 </script>
 @endsection

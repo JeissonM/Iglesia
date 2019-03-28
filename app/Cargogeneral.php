@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tipoministerio extends Model {
+class Cargogeneral extends Model {
 
     /**
      * The attributes that are mass assignable.
@@ -23,4 +23,5 @@ class Tipoministerio extends Model {
     protected $hidden = [
             //
     ];
+
 }

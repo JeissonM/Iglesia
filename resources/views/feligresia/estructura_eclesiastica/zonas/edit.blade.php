@@ -37,7 +37,8 @@
                     <div class="col-md-12">
                         <form class="form-horizontal" role='form' method="POST" action="{{route('zona.update',$zona->id)}}">
                             @csrf
-                            <input name="_method" type="hidden" value="PUT" />  <div class="col-md-12">
+                            <input name="_method" type="hidden" value="PUT" /> 
+                            <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="form-line">
