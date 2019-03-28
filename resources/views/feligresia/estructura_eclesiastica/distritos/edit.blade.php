@@ -16,12 +16,18 @@
                 <h2>
                     GESTIÓN DE LOS DISTRITOS - EDITAR UN DISTRITO
                 </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="body">
-                <div class="alert bg-deep-orange alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong>Edite los datos del distrito.</strong> Los distritos son agrupaciones de iglesias dentro de una ciudad, municipio, pueblo, aldea o veredas.
-                </div>
                 <div class="col-md-12">
                     @component('layouts.errors')
                     @endcomponent
@@ -29,73 +35,106 @@
                 <h1 class="card-inside-title">DATOS DEL DISTRITO: {{$distrito->nombre}}</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        {!! Form::open(['route'=>['distrito.update',$distrito],'method'=>'PUT','class'=>'form-horizontal'])!!}
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="col-md-6">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('distrito.update',$distrito->id)}}">
+                            @csrf 
+                            <input name="_method" type="hidden" value="PUT" />
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Nombre del Distrito</label>
-                                        {!! Form::text('nombre',$distrito->nombre,['class'=>'form-control','placeholder'=>'Nombre oficial del distrito','required']) !!}
+                                        <br/><input type="text" value="{{$distrito->nombre}}" class="form-control" name="nombre" placeholder="Nombre oficial del distrito" required="" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Descripción</label>
-                                        {!! Form::text('descripcion',$distrito->descripcion,['class'=>'form-control','placeholder'=>'Descripción del distrito']) !!}
+                                        <br/><input type="text" value="{{$distrito->descripcion}}" class="form-control" name="descripcion" placeholder="Descripción del distrito" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Ciudad de Ubicación</label>
-                                        {!! Form::select('ciudad_id',$ciudades,$distrito->ciudad_id,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
+                                        <br/><select class="form-control show-tick select2" name="ciudad_id">
+                                            @foreach($ciudades as $key=>$value)
+                                            @if($distrito->ciudad_id==$key)
+                                            <option value="{{$key}}" selected="">{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Ubicación</label>
-                                        {!! Form::text('ubicacion',$distrito->ubicacion,['class'=>'form-control','placeholder'=>'Dirección de ubicación del distrito']) !!}
+                                        <br/><input type="text" value="{{$distrito->ubicacion}}" class="form-control" placeholder="Dirección de ubicación del distrito" name="ubicacion" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Dirección de Correo Electrónico</label>
-                                        {!! Form::email('email',$distrito->email,['class'=>'form-control','placeholder'=>'Dirección de correo del distrito']) !!}
+                                        <br/><input type="email"  value="{{$distrito->email}}" class="form-control" placeholder="Dirección de correo de la división" name="email" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Sitio Web del Distrito</label>
-                                        {!! Form::text('sitioweb',$distrito->sitioweb,['class'=>'form-control','placeholder'=>'Sitio web oficial del distrito']) !!}
+                                        <br/><input type="text" value="{{$distrito->sitioweb}}" class="form-control" placeholder="Sitio web oficial de la división" name="sitioweb" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Zona</label>
-                                        {!! Form::select('zona_id',$zonas,$distrito->zona_id,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
+                                        <br/><select class="form-control show-tick select2" name="zona_id">
+                                            @foreach($zonas as $key=>$value)
+                                            @if($distrito->zona_id==$key)
+                                            <option value="{{$key}}" selected="">{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Asociación</label>
-                                        {!! Form::select('asociacion_id',$asociaciones,$distrito->asociacion_id,['class'=>'form-control chosen-select','placeholder'=>'-- Seleccione una opción --']) !!}
+                                        <br/><select class="form-control show-tick select2" name="asociacion_id">
+                                            @foreach($asociaciones as $key=>$value)
+                                            @if($distrito->asociacion_id==$key)
+                                            <option value="{{$key}}" selected="">{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <br/><br/><a href="{{route('distrito.index')}}" class="btn bg-red waves-effect">Cancelar</a>
-                                <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                                {!! Form::submit('Guardar',['class'=>'btn bg-green waves-effect']) !!}
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('distrito.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
+                                </div>
                             </div>
-                        </div>
-                        {!! Form::close() !!}
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS DISTRITOS</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Edite los datos del distrito.</strong> Los distritos son agrupaciones de iglesias dentro de una ciudad, municipio, pueblo, aldea o veredas.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
             </div>
         </div>
     </div>
@@ -103,6 +142,6 @@
 @endsection
 @section('script')
 <script>
-    $(".chosen-select").chosen({});
+    $('.select2').select2();
 </script>
 @endsection

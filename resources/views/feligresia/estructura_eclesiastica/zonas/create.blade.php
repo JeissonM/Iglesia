@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Ciudad de Ubicación</label>
-                                        <select class="form-control"  style="width: 100%;" required="required" name="ciudad_id">
+                                        <select class="form-control select2"  style="width: 100%;" required="required" name="ciudad_id">
                                             @foreach($ciudades as $key=>$value)
                                             <option value="{{$key}}">{{$value}}</option>
                                             @endforeach
@@ -122,6 +122,6 @@
 @endsection
 @section('script')
 <script>
-    $(".chosen-select").chosen({});
+    $('.select2').select2();
 </script>
 @endsection

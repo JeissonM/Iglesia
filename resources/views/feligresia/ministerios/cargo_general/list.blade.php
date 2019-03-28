@@ -21,7 +21,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ route('tipoministerio.create') }}">Agregar Nuevo Cargo de Iglesia</a></li>
+                            <li><a href="{{ route('cargogeneral.create') }}">Agregar Nuevo Cargo de Iglesia</a></li>
                             <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>

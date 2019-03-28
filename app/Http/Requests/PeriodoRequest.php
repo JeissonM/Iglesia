@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CargogeneralRequest extends FormRequest {
+class PeriodoRequest extends FormRequest {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class CargogeneralRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'nombre' => 'required|min:5'
+            'etiqueta' => 'required|max:250|min:6',
+            'fechainicial' => 'required',
+            'fechafinal' => 'required'
         ];
     }
 

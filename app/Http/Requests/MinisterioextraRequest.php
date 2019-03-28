@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CargogeneralRequest extends FormRequest {
+class MinisterioextraRequest extends FormRequest {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class CargogeneralRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'nombre' => 'required|min:5'
+            'nombre' => 'required|max:255|min:5',
+            'tipoministerio_id' => 'required'
         ];
     }
 

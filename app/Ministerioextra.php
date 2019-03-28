@@ -23,4 +23,9 @@ class Ministerioextra extends Model {
     protected $hidden = [
             //
     ];
+
+    public function tipoministerio() {
+        return $this->belongsTo('App\Tipoministerio');
+    }
+
 }
