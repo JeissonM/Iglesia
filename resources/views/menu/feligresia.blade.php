@@ -113,32 +113,42 @@
                                         <div><span>MINISTERIOS EXTRA-OFICIALES</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    @if(session()->exists('PAG_CARGOS-IGELSIA'))
+                                    @if(session()->exists('PAG_CARGOS-IGLESIA'))
                                     <a href="{{route('cargogeneral.index')}}" class="btn bg-blue-grey waves-effect">
                                         <div><span>CARGOS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    <a href="{{route('pais.index')}}" class="btn bg-blue-grey waves-effect">
+                                    @if(session()->exists('PAG_JUNTA-IGLESIA'))
+                                    <a disabled='disabled' class="btn bg-blue-grey waves-effect">
                                         <div><span>JUNTAS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
+                                    @endif
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane animated flipInX" id="feligresia_animation_1">
                                 <b>FELIGRESÍA</b>
                                 <br/><br/>
                                 <div class="button-demo">
-                                    <a href="{{route('pais.index')}}" class="btn bg-deep-orange waves-effect">
+                                   @if(session()->exists('PAG_PASTORES'))
+                                     <a disabled='disabled' class="btn bg-deep-orange waves-effect">
                                         <div><span>PASTORES</span><span class="ink animate"></span></div>
                                     </a>
-                                    <a href="{{route('pais.index')}}" class="btn bg-deep-orange waves-effect">
+                                    @endif
+                                    @if(session()->exists('PAG_MIEMBROS'))
+                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
                                         <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
-                                    <a href="{{route('pais.index')}}" class="btn bg-deep-orange waves-effect">
+                                    @endif
+                                    @if(session()->exists('PAG_CATEGORIA-LABOR'))
+                                    <a href="{{route('categorialabor.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>CATEGORÍA DE LABOR</span><span class="ink animate"></span></div>
                                     </a>
-                                    <a href="{{route('pais.index')}}" class="btn bg-deep-orange waves-effect">
+                                    @endif
+                                    @if(session()->exists('PAG_LABOR'))
+                                    <a href="{{route('labor.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>LABORES</span><span class="ink animate"></span></div>
                                     </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -96,4 +96,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //CARGO IGLESIA
     Route::resource('cargogeneral', 'CargogeneralController');
     Route::get('cargogeneral/{id}/delete', 'CargogeneralController@destroy')->name('cargogeneral.delete');
+    //CATEGORÍA DE LABOR
+    Route::resource('categorialabor', 'CategorialaborController');
+    Route::get('categorialabor/{id}/delete', 'CategorialaborController@destroy')->name('categorialabor.delete');
+    //LABOR
+    Route::resource('labor', 'LaborController');
+    Route::get('labor/{id}/delete', 'LaborController@destroy')->name('labor.delete');
 });
