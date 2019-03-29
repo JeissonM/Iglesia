@@ -53,7 +53,7 @@
                                     <div class="form-group">
                                         <div class="form-line">
                                             <label class="control-label">Ciudad de Ubicación</label>
-                                            <select class="form-control"  style="width: 100%;" required="required" name="ciudad_id" value="{{$zona->descripcion}}">
+                                            <select class="form-control"  style="width: 100%;" required="required" name="ciudad_id">
                                                 @foreach($ciudades as $key=>$value)
                                                 @if($zona->ciudad_id == $key)
                                                 <option value="{{$key}}" selected>{{$value}}</option>

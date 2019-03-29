@@ -120,7 +120,7 @@ class CargogeneralController extends Controller {
             flash("El cargo <strong>" . $cargo->nombre . "</strong> fue modificado de forma exitosa!")->success();
             return redirect()->route('cargogeneral.index');
         } else {
-            flash("El tipo de ministerio <strong>" . $cargo->nombre . "</strong> no pudo ser modificado. Error: " . $result)->error();
+            flash("El cargo <strong>" . $cargo->nombre . "</strong> no pudo ser modificado. Error: " . $result)->error();
             return redirect()->route('cargogeneral.index');
         }
     }
