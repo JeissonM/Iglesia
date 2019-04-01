@@ -80,7 +80,7 @@ class TipodocumentoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $tipos = Tipodocumento::find($id);
+        $tipo = Tipodocumento::find($id);
         return view('feligresia.feligresia.tipodoc.edit')
                         ->with('location', 'feligresia')
                         ->with('tipo', $tipo);
@@ -93,8 +93,36 @@ class TipodocumentoController extends Controller {
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tipodocumento $tipodocumento) {
-        //
+    public function update(Request $request, $id) {
+        $tipo = Tipodocumento::find($id);
+        $m = new Tipodocumento($tipo->attributesToArray());
+        foreach ($tipo->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $tipo->$key = strtoupper($request->$key);
+            }
+        }
+        $result = $tipo->save();
+        if ($result) {
+            $aud = new Auditoriafeligresia();
+            $u = Auth::user();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "EDICION DE TIPO DE DOCUMENTO. DATOS NUEVOS: ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($tipo->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str . " - " . $str2;
+            $aud->save();
+            flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> fue modificado de forma exitosa!")->success();
+            return redirect()->route('tipodoc.index');
+        } else {
+            flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> no pudo ser modificado. Error: " . $result)->error();
+            return redirect()->route('tipodoc.index');
+        }
     }
 
     /**
@@ -103,8 +131,31 @@ class TipodocumentoController extends Controller {
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tipodocumento $tipodocumento) {
-        //
+    public function destroy($id) {
+        $tipo = Tipodocumento::find($id);
+        if (count($tipo->personas) > 0) {
+            flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> no pudo ser eliminado porque tiene personas asociadss.")->warning();
+            return redirect()->route('tipodoc.index');
+        } else {
+            $result = $tipo->delete();
+            if ($result) {
+                $u = Auth::user();
+                $aud = new Auditoriafeligresia();
+                $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+                $aud->operacion = "ELIMINAR";
+                $str = "ELIMINACIÓN DE TIPO DE DOCUMENTO. DATOS: ";
+                foreach ($tipo->attributesToArray() as $key => $value) {
+                    $str = $str . ", " . $key . ": " . $value;
+                }
+                $aud->detalles = $str;
+                $aud->save();
+                flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> fue eliminado de forma exitosa!")->success();
+                return redirect()->route('tipodoc.index');
+            } else {
+                flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> no pudo ser eliminado. Error: " . $result)->error();
+                return redirect()->route('tipodoc.index');
+            }
+        }
     }
 
 }
