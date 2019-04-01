@@ -6,6 +6,7 @@ use App\Pastor;
 use App\Persona;
 use App\Personanatural;
 use App\Feligres;
+use App\Asociacion;
 use App\Ciudad;
 use App\Pais;
 use App\Estado;
@@ -13,6 +14,9 @@ use App\Iglesia;
 use App\Distrito;
 use App\Tipodocumento;
 use App\Estadocivil;
+use App\Auditoriafeligresia;
+use App\Http\Requests\PastorRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PastorController extends Controller {
@@ -55,8 +59,32 @@ class PastorController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        //
+    public function store(PastorRequest $request) {
+        $pastor = new Pastor($request->all());
+        foreach ($pastor->attributesToArray() as $key => $value) {
+            $pastor->$key = strtoupper($value);
+        }
+        if ($pastor->fecha_jubilacion == "") {
+            $pastor->fecha_jubilacion = null;
+        }
+        $result = $pastor->save();
+        if ($result) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE PASTOR. DATOS: ";
+            foreach ($pastor->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El pastor <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->primer_apellido . "</strong> fue almacenado de forma exitosa!")->success();
+            return redirect()->route('pastor.index');
+        } else {
+            flash("El estado civil <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->apellido_apellido . "</strong> no pudo ser almacenado. Error: " . $result)->error();
+            return redirect()->route('pastor.index');
+        }
     }
 
     /**
@@ -65,8 +93,11 @@ class PastorController extends Controller {
      * @param  \App\Pastor  $pastor
      * @return \Illuminate\Http\Response
      */
-    public function show(Pastor $pastor) {
-        //
+    public function show($id) {
+        $pastor = Pastor::find($id);
+        return view('feligresia.feligresia.pastores.show')
+                        ->with('location', 'feligresia')
+                        ->with('pastor', $pastor);
     }
 
     /**
@@ -75,8 +106,13 @@ class PastorController extends Controller {
      * @param  \App\Pastor  $pastor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pastor $pastor) {
-        //
+    public function edit($id) {
+        $pastor = Pastor::find($id);
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        return view('feligresia.feligresia.pastores.edit')
+                        ->with('location', 'feligresia')
+                        ->with('pastor', $pastor)
+                        ->with('asociaciones', $asociaciones);
     }
 
     /**
@@ -86,8 +122,39 @@ class PastorController extends Controller {
      * @param  \App\Pastor  $pastor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pastor $pastor) {
-        //
+    public function update(Request $request, $id) {
+        $pastor = Pastor::find($id);
+        $m = new Pastor($pastor->attributesToArray());
+        foreach ($pastor->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $pastor->$key = strtoupper($request->$key);
+            }
+        }
+        if ($pastor->fecha_jubilacion == "") {
+            $pastor->fecha_jubilacion = null;
+        }
+        $result = $pastor->save();
+        if ($result) {
+            $aud = new Auditoriafeligresia();
+            $u = Auth::user();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "EDICION DE PASTOR. DATOS NUEVOS: ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($pastor->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str . " - " . $str2;
+            $aud->save();
+            flash("El pastor <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->primer_apellido . "</strong> fue modificado de forma exitosa!")->success();
+            return redirect()->route('pastor.index');
+        } else {
+            flash("El pastor <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->primer_apellido . "</strong> no pudo ser modificado. Error: " . $result)->error();
+            return redirect()->route('pastor.index');
+        }
     }
 
     /**
@@ -96,8 +163,31 @@ class PastorController extends Controller {
      * @param  \App\Pastor  $pastor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pastor $pastor) {
-        //
+    public function destroy($id) {
+        $pastor = Pastor::find($id);
+//        if (count($pastor->personanaturals) > 0) {
+//            flash("El estado civil <strong>" . $pastor->descripcion . "</strong> no pudo ser eliminado porque tiene personas asociadss.")->warning();
+//            return redirect()->route('estadocivil.index');
+//        } else {
+        $result = $pastor->delete();
+        if ($result) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE PASTOR. DATOS: ";
+            foreach ($pastor->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El pastor <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->primer_apellido . "</strong> fue eliminado de forma exitosa!")->success();
+            return redirect()->route('pastor.index');
+        } else {
+            flash("El pastor <strong>" . $pastor->personanatural->primer_nombre . " " . $pastor->personanatural->primer_apellido . "</strong> no pudo ser eliminado. Error: " . $result)->error();
+            return redirect()->route('pastor.index');
+        }
+        //       }
     }
 
     /**
@@ -123,18 +213,11 @@ class PastorController extends Controller {
             return redirect()->route('pastor.index');
         }
         $feligres->personanatural;
-        $iglesias = Iglesia::all()->pluck('nombre', 'id');
-        $paises = Pais::all()->pluck('nombre', 'id');
-        $distritos = Distrito::all()->pluck('nombre', 'id');
-        $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
-        $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
         return view('feligresia.feligresia.pastores.create')
                         ->with('location', 'feligresia')
-                        ->with('iglesias', $iglesias)
-                        ->with('estadosc', $estadosciviles)
-                        ->with('paises', $paises)
-                        ->with('distritos', $distritos)
-                        ->with('tipodoc', $tiposdoc);
+                        ->with('feligres', $feligres)
+                        ->with('asociaciones', $asociaciones);
     }
 
 }
