@@ -33,6 +33,7 @@
                     @endcomponent
                 </div>
                 <h1 class="card-inside-title">DATOS DEL MIEMBRO</h1>
+                <h4>Los campos con asterísco (*) son obligatorios</h4>
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <form class="form-horizontal" role='form' method="POST" action="{{route('feligres.store')}}">
@@ -40,12 +41,102 @@
                             <div id="wizard_vertical">
                                 <h2>Información Personal</h2>
                                 <section>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nulla nunc. Maecenas
-                                        arcu sem, hendrerit a tempor quis, sagittis accumsan tellus. In hac habitasse platea
-                                        dictumst. Donec a semper dui. Nunc eget quam libero. Nam at felis metus. Nam tellus
-                                        dolor, tristique ac tempus nec, iaculis quis nisi.
-                                    </p>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Tipo Documento*</label>
+                                                <select class="form-control"  style="width: 100%;" required="required" name="tipodocumento_id">
+                                                    @foreach($tipodoc as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Lugar de Expedición" name="lugar_expedicion">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Primer Nombre*" required="required" name="primer_nombre">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Primer Apellido*" required="required" name="primer_apellido">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Sexo*</label>
+                                                <select class="form-control"  style="width: 100%;" required="required" name="sexo">
+                                                    <option value="M">MASCULINO</option>
+                                                    <option value="F">FEMENINO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Estado Civil</label>
+                                                <select class="form-control"  style="width: 100%;" name="estadocivil_id">
+                                                    @foreach($estadosc as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Escriba el número del documento de identidad*" required="required" name="numero_documento">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><label>Fecha de Expedición</label>
+                                                <input class="form-control" type="date" placeholder="Fecha de Expedición" name="fecha_expedicion">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Segundo Nombre" name="segundo_nombre">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Segundo Apellido" name="segundo_apellido">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Tipo Sanguíneo y RH</label>
+                                                <select class="form-control"  style="width: 100%;" name="rh">
+                                                    <option value="A+">A +</option>
+                                                    <option value="A-">A -</option>
+                                                    <option value="O+">O +</option>
+                                                    <option value="O-">O -</option>
+                                                    <option value="B-">B -</option>
+                                                    <option value="B+">B +</option>
+                                                    <option value="AB+">AB +</option>
+                                                    <option value="AB-">AB -</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <h2>Información De Procedencia</h2>
+                                <section>
+
+                                </section>
+                                <h2>Información de Residencia y Ubicación</h2>
+                                <section>
+
+                                </section>
+                                <h2>Información Familiar</h2>
+                                <section>
+
                                 </section>
                                 <h2>Información Académica y Profesional</h2>
                                 <section>
