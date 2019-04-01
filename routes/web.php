@@ -114,4 +114,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //PASTORES
     Route::resource('pastor', 'PastorController');
     Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');
+    Route::post('pastor/operaciones', 'PastorController@operaciones')->name('pastor.operaciones');
 });

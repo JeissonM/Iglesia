@@ -150,7 +150,7 @@
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_PASTORES'))
-                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                    <a href="{{route('pastor.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>PASTORES</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
