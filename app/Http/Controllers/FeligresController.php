@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Feligres;
 use Illuminate\Http\Request;
+use App\Http\Requests\FeligresRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Iglesia;
+use App\Pais;
+use App\Estadocivil;
+use App\Tipodocumento;
 
-class FeligresController extends Controller
-{
+class FeligresController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $feligreses = Feligres::all();
+        return view('feligresia.feligresia.feligres.list')
+                        ->with('location', 'feligresia')
+                        ->with('feligreses', $feligreses);
     }
 
     /**
@@ -22,9 +30,17 @@ class FeligresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $iglesias = Iglesia::all()->pluck('nombre', 'id');
+        $paises = Pais::all()->pluck('nombre', 'id');
+        $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
+        $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
+        return view('feligresia.feligresia.feligres.create')
+                        ->with('location', 'feligresia')
+                        ->with('iglesias', $iglesias)
+                        ->with('estadosc', $estadosciviles)
+                        ->with('paises', $paises)
+                        ->with('tipodoc', $tiposdoc);
     }
 
     /**
@@ -33,8 +49,7 @@ class FeligresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +59,7 @@ class FeligresController extends Controller
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function show(Feligres $feligres)
-    {
+    public function show(Feligres $feligres) {
         //
     }
 
@@ -55,8 +69,7 @@ class FeligresController extends Controller
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function edit(Feligres $feligres)
-    {
+    public function edit(Feligres $feligres) {
         //
     }
 
@@ -67,8 +80,7 @@ class FeligresController extends Controller
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feligres $feligres)
-    {
+    public function update(Request $request, Feligres $feligres) {
         //
     }
 
@@ -78,8 +90,8 @@ class FeligresController extends Controller
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Feligres $feligres)
-    {
+    public function destroy(Feligres $feligres) {
         //
     }
+
 }

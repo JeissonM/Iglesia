@@ -392,6 +392,11 @@
         <script src="{{ asset('js/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
         <!-- Select2 -->
         <script src="{{ asset('select2/dist/js/select2.full.min.js')}}"></script>
+        <!-- Jquery Validation Plugin Css -->
+        <script src="{{ asset('js/jquery-validation/jquery.validate.js')}}"></script>
+        <!-- JQuery Steps Plugin Js -->
+        <script src="{{ asset('js/jquery-steps/jquery.steps.js')}}"></script>
+        <script src="{{ asset('js/pages/forms/form-wizard.js')}}"></script>
         <script type="text/javascript">
                                 var url = "<?php echo config('app.url'); ?>/";
 

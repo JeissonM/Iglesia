@@ -155,7 +155,7 @@
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_MIEMBROS'))
-                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                    <a href="{{route('feligres.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
