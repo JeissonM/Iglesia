@@ -35,5 +35,13 @@ class Iglesia extends Model
     public function distrito() {
         return $this->belongsTo('App\Distrito');
     }
+    
+    public function pastors() {
+        return $this->hasMany('App\Pastor');
+    }
+    
+    public function feligres() {
+        return $this->hasMany('App\Feligres');
+    }
 
 }

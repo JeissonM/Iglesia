@@ -3,7 +3,7 @@
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
+    <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li class="active"><a href="{{route('categorialabor.index')}}">Categoría de Labor</a></li>
 </ol>
 @endsection
@@ -66,7 +66,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-orange">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS LABORES</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS CATEGORÍAS DE LABORES</h4>
             </div>
             <div class="modal-body">
                 <strong>Detalles: </strong>Administre las categorías de labor (terminar).

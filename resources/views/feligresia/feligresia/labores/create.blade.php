@@ -3,7 +3,7 @@
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
+    <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('labor.index')}}">Labores</a></li>
     <li class="active"><a>Crear Labor</a></li>
 </ol>
@@ -83,7 +83,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS LABORES</h4>
             </div>
             <div class="modal-body">
-                <strong>Agregue nuevas categorías,</strong>Administre las labores (terminar).
+                <strong>Agregue nuevas labores,</strong> son las actividades económicas o profesiones que desempeñan los feligreses.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

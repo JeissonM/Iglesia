@@ -23,5 +23,9 @@ class Tipodocumento extends Model {
     protected $hidden = [
             //
     ];
+    
+    public function personas() {
+        return $this->hasMany('App\Persona');
+    }
 
 }

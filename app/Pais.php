@@ -28,4 +28,12 @@ class Pais extends Model {
         return $this->hasMany('App\Estado');
     }
 
+    public function personanaturals() {
+        return $this->hasMany('App\Personanatural');
+    }
+    
+    public function personas() {
+        return $this->hasMany('App\Persona');
+    }
+
 }
