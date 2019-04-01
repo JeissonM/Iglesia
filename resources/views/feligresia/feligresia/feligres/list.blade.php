@@ -53,9 +53,9 @@
                                 <td>{{$f->created_at}}</td>
                                 <td>{{$f->updated_at}}</td>
                                 <td>
-                                    <a href="{{ route('labor.edit',$f->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Feligrés"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('labor.show',$f->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Feligrés"><i class="material-icons">remove_red_eye</i></a>
-                                    <a href="{{ route('labor.delete',$f->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Feligrés"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('feligres.edit',$f->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Feligrés"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('feligres.show',$f->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Feligrés"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('feligres.delete',$f->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Feligrés"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach

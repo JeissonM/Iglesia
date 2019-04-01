@@ -26,8 +26,7 @@ class FeligresRequest extends FormRequest {
             'fecha_bautismo' => 'required',
             'asociacion_destino' => 'required',
             'distrito_destino' => 'required',
-            'iglesia_destino' => 'required',
-            'personanatural_id' => 'required'
+            'iglesia_destino' => 'required'
         ];
     }
 
