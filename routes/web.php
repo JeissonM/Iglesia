@@ -102,4 +102,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //LABOR
     Route::resource('labor', 'LaborController');
     Route::get('labor/{id}/delete', 'LaborController@destroy')->name('labor.delete');
+    //ESTADO CIVIL
+    Route::resource('estadocivil', 'EstadocivilController');
+    Route::get('estadocivil/{id}/delete', 'EstadocivilController@destroy')->name('estadocivil.delete');
+    //TIPO DE DOCUMENTO
+    Route::resource('tipodoc', 'TipodocumentoController');
+    Route::get('tipodoc/{id}/delete', 'TipodocumentoController@destroy')->name('tipodoc.delete');
+    //FELIGRESES
+    Route::resource('feligres', 'FeligresController');
+    Route::get('feligres/{id}/delete', 'FeligresController@destroy')->name('feligres.delete');
+    //PASTORES
+    Route::resource('pastor', 'PastorController');
+    Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');
 });

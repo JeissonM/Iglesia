@@ -129,14 +129,14 @@
                                 <b>FELIGRESÍA</b>
                                 <br/><br/>
                                 <div class="button-demo">
-                                   @if(session()->exists('PAG_PASTORES'))
-                                     <a disabled='disabled' class="btn bg-deep-orange waves-effect">
-                                        <div><span>PASTORES</span><span class="ink animate"></span></div>
+                                    @if(session()->exists('PAG_TIPODOCUMENTO'))
+                                    <a href="{{route('tipodoc.index')}}" class="btn bg-deep-orange waves-effect">
+                                        <div><span>TIPO DE DOCUMENTO</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    @if(session()->exists('PAG_MIEMBROS'))
-                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
-                                        <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
+                                    @if(session()->exists('PAG_ESTADOCIVIL'))
+                                    <a href="{{route('estadocivil.index')}}" class="btn bg-deep-orange waves-effect">
+                                        <div><span>ESTADO CIVIL</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_CATEGORIA-LABOR'))
@@ -147,6 +147,16 @@
                                     @if(session()->exists('PAG_LABOR'))
                                     <a href="{{route('labor.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>LABORES</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
+                                    @if(session()->exists('PAG_PASTORES'))
+                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                        <div><span>PASTORES</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
+                                    @if(session()->exists('PAG_MIEMBROS'))
+                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                        <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
                                 </div>

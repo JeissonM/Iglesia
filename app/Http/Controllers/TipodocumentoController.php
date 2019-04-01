@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Tipodocumento;
+use App\Auditoriafeligresia;
+use App\Http\Requests\TipodocumentoRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class TipodocumentoController extends Controller
-{
+class TipodocumentoController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        $tipos = Tipodocumento::all();
+        return view('feligresia.feligresia.tipodoc.list')
+                        ->with('location', 'feligresia')
+                        ->with('tipos', $tipos);
     }
 
     /**
@@ -22,9 +27,9 @@ class TipodocumentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('feligresia.feligresia.tipodoc.create')
+                        ->with('location', 'feligresia');
     }
 
     /**
@@ -33,9 +38,29 @@ class TipodocumentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(TipodocumentoRequest $request) {
+        $tipo = new Tipodocumento($request->all());
+        foreach ($tipo->attributesToArray() as $key => $value) {
+            $tipo->$key = strtoupper($value);
+        }
+        $result = $tipo->save();
+        if ($result) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE TIPO DE DOCUMENTO. DATOS: ";
+            foreach ($tipo->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> fue almacenado de forma exitosa!")->success();
+            return redirect()->route('tipodoc.index');
+        } else {
+            flash("El tipo de documento <strong>" . $tipo->descripcion . "</strong> no pudo ser almacenado. Error: " . $result)->error();
+            return redirect()->route('tipodoc.index');
+        }
     }
 
     /**
@@ -44,8 +69,7 @@ class TipodocumentoController extends Controller
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function show(Tipodocumento $tipodocumento)
-    {
+    public function show(Tipodocumento $tipodocumento) {
         //
     }
 
@@ -55,9 +79,11 @@ class TipodocumentoController extends Controller
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tipodocumento $tipodocumento)
-    {
-        //
+    public function edit($id) {
+        $tipos = Tipodocumento::find($id);
+        return view('feligresia.feligresia.tipodoc.edit')
+                        ->with('location', 'feligresia')
+                        ->with('tipo', $tipo);
     }
 
     /**
@@ -67,8 +93,7 @@ class TipodocumentoController extends Controller
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tipodocumento $tipodocumento)
-    {
+    public function update(Request $request, Tipodocumento $tipodocumento) {
         //
     }
 
@@ -78,8 +103,8 @@ class TipodocumentoController extends Controller
      * @param  \App\Tipodocumento  $tipodocumento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tipodocumento $tipodocumento)
-    {
+    public function destroy(Tipodocumento $tipodocumento) {
         //
     }
+
 }
