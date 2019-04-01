@@ -15,19 +15,19 @@ class CreateFeligresTable extends Migration {
         Schema::create('feligres', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('aceptado_por')->nullable();
-            $table->string('retiro_por')->nulablle();
+            $table->string('retiro_por')->nullable();
             $table->string('pastor_oficiante')->nullable();
             $table->string('estado_actual');
             $table->date('fecha_bautismo');
-            $table->string('asociacion_origen');
-            $table->string('distrito_origen');
-            $table->string('iglesia_origen');
+            $table->string('asociacion_origen')->nullable();
+            $table->string('distrito_origen')->nullable();
+            $table->string('iglesia_origen')->nullable();
             $table->string('asociacion_destino');
             $table->string('distrito_destino');
             $table->string('iglesia_destino');
             $table->bigInteger('iglesia_id')->unsigned()->nullable(); //iglesia actual
             $table->foreign('iglesia_id')->references('id')->on('iglesias')->onDelete('cascade');
-            $table->bigInteger('personanatural_id')->unsigned()->nullable();
+            $table->bigInteger('personanatural_id')->unsigned();
             $table->foreign('personanatural_id')->references('id')->on('personanaturals')->onDelete('cascade');
             $table->timestamps();
         });

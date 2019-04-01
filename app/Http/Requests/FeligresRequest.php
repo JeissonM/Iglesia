@@ -4,16 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FeligresRequest extends FormRequest
-{
+class FeligresRequest extends FormRequest {
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
+    public function authorize() {
+        return true;
     }
 
     /**
@@ -21,10 +20,15 @@ class FeligresRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            //
+            'estado_actual' => 'required',
+            'fecha_bautismo' => 'required',
+            'asociacion_destino' => 'required',
+            'distrito_destino' => 'required',
+            'iglesia_destino' => 'required',
+            'personanatural_id' => 'required'
         ];
     }
+
 }
