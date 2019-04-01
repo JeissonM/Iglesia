@@ -72,12 +72,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //ASOCIACIÓN
     Route::resource('asociacion', 'AsociacionController');
     Route::get('asociacion/{id}/delete', 'AsociacionController@destroy')->name('asociacion.delete');
+    Route::get('asociacion/{id}/distritos', 'AsociacionController@distritos')->name('asociacion.distritos');
     //ZONA
     Route::resource('zona', 'ZonaController');
     Route::get('zona/{id}/delete', 'ZonaController@destroy')->name('zona.delete');
     //DISTRITOS
     Route::resource('distrito', 'DistritoController');
     Route::get('distrito/{id}/delete', 'DistritoController@destroy')->name('distrito.delete');
+    Route::get('distrito/{id}/iglesias', 'DistritoController@iglesias')->name('distrito.iglesias');
     //IGLESIAS Y GRUPOS
     Route::resource('iglesia', 'IglesiaController');
     Route::get('iglesia/{id}/delete', 'IglesiaController@destroy')->name('iglesia.delete');

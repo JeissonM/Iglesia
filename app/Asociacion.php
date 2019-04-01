@@ -36,4 +36,8 @@ class Asociacion extends Model {
         return $this->hasMany('App\Zona');
     }
 
+    public function distritos() {
+        return $this->hasMany('App\Distrito');
+    }
+
 }

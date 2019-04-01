@@ -203,5 +203,27 @@ class AsociacionController extends Controller {
             }
         }
     }
+    
+    /**
+     * show all resource from a asociacion.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function distritos($id) {
+        $asociacion = Asociacion::find($id);
+        $distritos = $asociacion->distritos;
+        if (count($distritos) > 0) {
+            $distritosf = null;
+            foreach ($distritos as $value) {
+                $obj["id"] = $value->id;
+                $obj["value"] = $value->nombre;
+                $distritosf[] = $obj;
+            }
+            return json_encode($distritosf);
+        } else {
+            return "null";
+        }
+    }
 
 }

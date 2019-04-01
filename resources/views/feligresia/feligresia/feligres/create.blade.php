@@ -33,11 +33,11 @@
                     @endcomponent
                 </div>
                 <h1 class="card-inside-title">DATOS DEL MIEMBRO</h1>
-                <h4>Los campos con asterísco (*) son obligatorios</h4>
+                <h4 style="color: red;">Los campos con asterísco (*) son obligatorios</h4>
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <form class="form-horizontal" role='form' method="POST" action="{{route('feligres.store')}}">
-                            @csrf 
+                            @csrf
                             <div id="wizard_vertical">
                                 <h2>Información Personal</h2>
                                 <section>
@@ -124,42 +124,279 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <br/><input class="form-control" type="text" placeholder="Edad" name="edad">
+                                            </div>
+                                        </div>
                                     </div>
                                 </section>
                                 <h2>Información De Procedencia</h2>
                                 <section>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label>Fecha de Nacimiento</label>
+                                                <input class="form-control" type="date" name="fecha_nacimiento">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Estado/Dpto de Nacimiento</label>
+                                                <select class="form-control"  style="width: 100%;" id="estado_id" name="estado_id" onchange="getCiudades(this.id, 'ciudad_id')"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" placeholder="Otra Nacionalidad" maxlength="30" name="otra_nacionalidad">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">País de Nacimiento</label>
+                                                <select class="form-control"  style="width: 100%;" id="pais_id" name="pais_id" onchange="getEstados(this.id, 'estado_id', 'ciudad_id')">
+                                                    @foreach($paises as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Ciudad de Nacimiento</label>
+                                                <select class="form-control"  style="width: 100%;" id="ciudad_id" name="ciudad_id"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" placeholder="Número de Pasaporte Para Otra Nacionalidad" maxlength="50" name="numero_pasaporte">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                                 <h2>Información de Residencia y Ubicación</h2>
                                 <section>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">País de Residencia</label>
+                                                <select class="form-control"  style="width: 100%;" id="paisr_id" name="paisr_id" onchange="getEstados(this.id, 'estador_id', 'ciudadr_id')">
+                                                    @foreach($paises as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Ciudad de Residencia</label>
+                                                <select class="form-control"  style="width: 100%;" id="ciudadr_id" name="ciudadr_id"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="email" name="email" placeholder="Correo Electrónico">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" name="celular" placeholder="Teléfono Celular">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Estado/Dpto de Residencia</label>
+                                                <select class="form-control"  style="width: 100%;" id="estador_id" name="estador_id" onchange="getCiudades(this.id, 'ciudadr_id')"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" name="direccion" placeholder="Dirección de Residencia">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" name="telefono" placeholder="Teléfono Fijo">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                                 <h2>Información Familiar</h2>
                                 <section>
-
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="padre" placeholder="Nombres y Apellidos del Padre" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="madre" placeholder="Nombres y Apellidos de la Madre" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                                 <h2>Información Académica y Profesional</h2>
                                 <section>
-                                    <p>
-                                        Donec mi sapien, hendrerit nec egestas a, rutrum vitae dolor. Nullam venenatis diam ac
-                                        ligula elementum pellentesque. In lobortis sollicitudin felis non eleifend. Morbi
-                                        tristique tellus est, sed tempor elit. Morbi varius, nulla quis condimentum dictum,
-                                        nisi elit condimentum magna, nec venenatis urna quam in nisi. Integer hendrerit sapien
-                                        a diam adipiscing consectetur. In euismod augue ullamcorper leo dignissim quis elementum
-                                        arcu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum leo
-                                        velit, blandit ac tempor nec, ultrices id diam. Donec metus lacus, rhoncus sagittis
-                                        iaculis nec, malesuada a diam. Donec non pulvinar urna. Aliquam id velit lacus.
-                                    </p>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Clase Libreta Militar</label>
+                                                <select class="form-control"  style="width: 100%;" name="clase_libreta">
+                                                    <option value="DE PRIMERA">DE PRIMERA</option>
+                                                    <option value="DE SEGUNDA">DE SEGUNDA</option>
+                                                    <option value="OTRA">OTRA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="10" name="distrito_militar" placeholder="Distrito militar (10 caracteres)" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="ocupacion" placeholder="Ocupación del miembro" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="ultimo_grado" placeholder="Último grado cursado" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="15" name="libreta_militar" placeholder="Número de la libreta militar" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="profesion" placeholder="Profesión del miembro" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Nivel Estudio</label>
+                                                <select class="form-control"  style="width: 100%;" name="nivel_estudio">
+                                                    <option value="PRIMARIA">PRIMARIA</option>
+                                                    <option value="SECUNDARIA">SECUNDARIA</option>
+                                                    <option value="BACHILLERATO">BACHILLERATO</option>
+                                                    <option value="TECNICO">TÉCNICO</option>
+                                                    <option value="TECNOLOGO">TECNÓLOGO</option>
+                                                    <option value="PROFESIONAL">PROFESIONAL</option>
+                                                    <option value="ESPECIALISTA">ESPECIALISTA</option>
+                                                    <option value="MAGISTER">MAGISTER</option>
+                                                    <option value="DOCTOR">DOCTOR</option>
+                                                    <option value="OTRO">OTRO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                                 <h2>Información de Bautismo</h2>
                                 <section>
-                                    <p>
-                                        Morbi ornare tellus at elit ultrices id dignissim lorem elementum. Sed eget nisl at justo
-                                        condimentum dapibus. Fusce eros justo, pellentesque non euismod ac, rutrum sed quam.
-                                        Ut non mi tortor. Vestibulum eleifend varius ullamcorper. Aliquam erat volutpat.
-                                        Donec diam massa, porta vel dictum sit amet, iaculis ac massa. Sed elementum dui
-                                        commodo lectus sollicitudin in auctor mauris venenatis.
-                                    </p>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="religion_anterior" placeholder="Religión Anterior" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Estado Actual*</label>
+                                                <select class="form-control"  style="width: 100%;" name="estado_actual" required="">
+                                                    <option value="ACTIVO">ACTIVO</option>
+                                                    <option value="INACTIVO">INACTIVO</option>
+                                                    <option value="FALLECIDO">FALLECIDO</option>
+                                                    <option value="PARADERO DESCONOCIDO">PARADERO DESCONOCIDO</option>
+                                                    <option value="RETIRADO">RETIRADO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" type="text" maxlength="250" name="pastor_oficiante" placeholder="Pastor Oficiante" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><label>Fecha Bautismo*</label>
+                                                <input class="form-control" type="date" name="fecha_bautismo" required="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Aceptado Por*</label>
+                                                <select class="form-control"  style="width: 100%;" name="aceptado_por" required="">
+                                                    <option value="BAUTISMO">BAUTISMO</option>
+                                                    <option value="PROFESION DE FE">PROFESIÓN DE FÉ</option>
+                                                    <option value="TRASLADO">TRASLADO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>PROCEDENCIA</h4>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Asociación</label>
+                                                <select class="form-control"  style="width: 100%;" id="asociacion_origen" name="asociacion_origen" onchange="getDistritos(this.id, 'distrito_origen', 'iglesia_origen')">
+                                                    <option value="">-- Seleccione una opción --</option>
+                                                    @foreach($asociaciones as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Distrito</label>
+                                                <select class="form-control"  style="width: 100%;" id="distrito_origen" name="distrito_origen" onchange="getIglesias(this.id, 'iglesia_origen')"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Iglesia/Grupo</label>
+                                                <select class="form-control"  style="width: 100%;" id="iglesia_origen" name="iglesia_origen"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>ACEPTADO EN</h4>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Asociación</label>
+                                                <select class="form-control"  style="width: 100%;" id="asociacion_destino" name="asociacion_destino" onchange="getDistritos(this.id, 'distrito_destino', 'iglesia_destino')">
+                                                    <option value="">-- Seleccione una opción --</option>
+                                                    @foreach($asociaciones as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Distrito</label>
+                                                <select class="form-control"  style="width: 100%;" id="distrito_destino" name="distrito_destino" onchange="getIglesias(this.id, 'iglesia_destino')"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Iglesia/Grupo</label>
+                                                <select class="form-control"  style="width: 100%;" id="iglesia_destino" name="iglesia_destino"></select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                             </div>
                             <div class="col-md-12">
@@ -192,4 +429,101 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    $('.select2').select2();
+
+    function getEstados(name, dpto, ciudad) {
+        var id = $("#" + name).val();
+        $.ajax({
+            type: 'GET',
+            url: url + "feligresia/pais/" + id + "/estados",
+            data: {},
+        }).done(function (msg) {
+            $('#' + dpto + ' option').each(function () {
+                $(this).remove();
+            });
+            $('#' + ciudad + ' option').each(function () {
+                $(this).remove();
+            });
+            if (msg !== "null") {
+                var m = JSON.parse(msg);
+                $.each(m, function (index, item) {
+                    $("#" + dpto).append("<option value='" + item.id + "'>" + item.value + "</option>");
+                });
+            } else {
+                notify('Atención', 'El País seleccionado no posee información de estados.', 'error');
+            }
+        });
+    }
+
+    function getCiudades(name, ciudad) {
+        var id = $("#" + name).val();
+        $.ajax({
+            type: 'GET',
+            url: url + "feligresia/estado/" + id + "/ciudades",
+            data: {},
+        }).done(function (msg) {
+            $('#' + ciudad + ' option').each(function () {
+                $(this).remove();
+            });
+            if (msg !== "null") {
+                var m = JSON.parse(msg);
+                $.each(m, function (index, item) {
+                    $("#" + ciudad).append("<option value='" + item.id + "'>" + item.value + "</option>");
+                });
+            } else {
+                notify('Atención', 'El Estado seleccionado no posee información de ciudades.', 'error');
+            }
+        });
+    }
+
+    function getDistritos(name, distrito, iglesia) {
+        var id = $("#" + name).val();
+        $.ajax({
+            type: 'GET',
+            url: url + "feligresia/asociacion/" + id + "/distritos",
+            data: {},
+        }).done(function (msg) {
+            $('#' + distrito + ' option').each(function () {
+                $(this).remove();
+            });
+            $('#' + iglesia + ' option').each(function () {
+                $(this).remove();
+            });
+            if (msg !== "null") {
+                var m = JSON.parse(msg);
+                $("#" + distrito).append("<option value=''>-- Seleccione una opción --</option>");
+                $.each(m, function (index, item) {
+                    $("#" + distrito).append("<option value='" + item.id + "'>" + item.value + "</option>");
+                });
+            } else {
+                notify('Atención', 'La asociación seleccionada no posee información de distritos.', 'error');
+            }
+        });
+    }
+
+    function getIglesias(name, iglesia) {
+        var id = $("#" + name).val();
+        $.ajax({
+            type: 'GET',
+            url: url + "feligresia/distrito/" + id + "/iglesias",
+            data: {},
+        }).done(function (msg) {
+            $('#' + iglesia + ' option').each(function () {
+                $(this).remove();
+            });
+            if (msg !== "null") {
+                var m = JSON.parse(msg);
+                $("#" + iglesia).append("<option value=''>-- Seleccione una opción --</option>");
+                $.each(m, function (index, item) {
+                    $("#" + iglesia).append("<option value='" + item.id + "'>" + item.value + "</option>");
+                });
+            } else {
+                notify('Atención', 'El distrito seleccionado no posee información de iglesias.', 'error');
+            }
+        });
+    }
+</script>
 @endsection

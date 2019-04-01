@@ -10,6 +10,7 @@ use App\Iglesia;
 use App\Pais;
 use App\Estadocivil;
 use App\Tipodocumento;
+use App\Asociacion;
 
 class FeligresController extends Controller {
 
@@ -31,13 +32,13 @@ class FeligresController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $iglesias = Iglesia::all()->pluck('nombre', 'id');
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
         $paises = Pais::all()->pluck('nombre', 'id');
         $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
         $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
         return view('feligresia.feligresia.feligres.create')
                         ->with('location', 'feligresia')
-                        ->with('iglesias', $iglesias)
+                        ->with('asociaciones', $asociaciones)
                         ->with('estadosc', $estadosciviles)
                         ->with('paises', $paises)
                         ->with('tipodoc', $tiposdoc);
@@ -49,8 +50,8 @@ class FeligresController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        //
+    public function store(FeligresRequest $request) {
+        dd($request->all());
     }
 
     /**

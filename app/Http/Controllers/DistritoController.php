@@ -175,5 +175,27 @@ class DistritoController extends Controller {
             }
         }
     }
+    
+    /**
+     * show all resource from a distrito.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function iglesias($id) {
+        $distrito = Distrito::find($id);
+        $iglesias = $distrito->iglesias;
+        if (count($iglesias) > 0) {
+            $iglesiasf = null;
+            foreach ($iglesias as $value) {
+                $obj["id"] = $value->id;
+                $obj["value"] = $value->nombre;
+                $iglesiasf[] = $obj;
+            }
+            return json_encode($iglesiasf);
+        } else {
+            return "null";
+        }
+    }
 
 }
