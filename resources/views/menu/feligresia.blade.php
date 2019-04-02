@@ -165,7 +165,7 @@
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_TRASLADOS'))
-                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                    <a href="{{route('solicitud.index')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>TRASLADOS</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif

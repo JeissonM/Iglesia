@@ -24,7 +24,39 @@ class SolicitudtrasladoController extends Controller {
         $u = Auth::user();
         $persona = Persona::where('numero_documento', $u->identificacion)->first();
         if ($persona == null) {
-            flash("<strong> Usted </strong> no se encuentra registrado(a)!")->error();
+            flash("<strong> Usted </strong> no se encuentra registrado(a)!")->warning();
+            return redirect()->route('admin.feligresia');
+        }
+        $personanatural = Personanatural::where('persona_id', $persona->id)->first();
+        if ($personanatural != null) {
+            $feligres = Feligres::where('personanatural_id', $personanatural->id)->first();
+        } else {
+            flash("<strong>Usted </strong> no se encuentra registrada como persona natural!")->error();
+            return redirect()->route('admin.feligresia');
+        }
+        if ($feligres == null) {
+            flash("<strong>Usted </strong> no se encuentra registrada como feligres!")->error();
+            return redirect()->route('admin.feligresia');
+        }
+        if ($feligres != null && $feligres->estado_actual == 'ACTIVO') {
+            $solicitudes = Solicitudtraslado::where('iglesia_origen', $feligres->iglesia_id)->orWhere('iglesia_destino', $feligres->iglesia_id)->get();
+            if ($solicitudes != null) {
+                foreach ($solicitudes as $s) {
+                    $io = Iglesia::find($s->iglesia_origen);
+                    $id = Iglesia::find($s->iglesia_destino);
+                    $ao = Actajunta::find($s->acta_origen);
+                    $ad = Actajunta::find($s->acta_destino);
+                    $s['io'] = $io->nombre;
+                    $s['id'] = $id->nombre;
+                    $s['ao'] = $ao->nombre;
+                    $s['ad'] = $ad->nombre;
+                }
+            }
+            return view('feligresia.feligresia.traslados.list')
+                            ->with('location', 'feligresia')
+                            ->with('solicitudes', $solicitudes);
+        } else {
+            flash("<strong>Usted </strong> no se encuentra activo!")->error();
             return redirect()->route('admin.feligresia');
         }
     }
