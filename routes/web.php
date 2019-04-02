@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('usuarios', 'MenuController@usuarios')->name('admin.usuarios');
     Route::get('feligresia', 'MenuController@feligresia')->name('admin.feligresia');
+    Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuController@operaciones')->name('admin.operaciones');
     Route::post('acceso', 'HomeController@confirmaRol')->name('rol');
     Route::get('inicio', 'HomeController@inicio')->name('inicio');
 });
@@ -117,10 +118,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::resource('pastor', 'PastorController');
     Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');
     Route::get('pastor/operaciones/consultar/{identificacion}/traer', 'PastorController@operaciones')->name('pastor.operaciones');
-    //MENU EXPERIENCIA
-    Route::resource('menuexperiencia', 'MenuexperienciaController');
-    Route::get('menuexperiencia/{id}/delete', 'MenuexperienciaController@destroy')->name('menuexperiencia.delete');
-    Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuexperienciaController@operaciones')->name('menuexperiencia.operaciones');
     //EXPERIENCIA LABOR
     Route::resource('experiencialabor', 'ExperiencialaborController');
     Route::get('experiencialabor/{id}/index2', 'ExperiencialaborController@index')->name('experiencialabor.index2');
@@ -135,4 +132,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //JUNTA DE IGLESIA
     Route::resource('junta', 'JuntaController');
     Route::get('junta/{id}/delete', 'JuntaController@destroy')->name('junta.delete');
+    //TRASLADOS DE FELIGRESIA
+    Route::resource('solicitud', 'SolicitudtrasladoController');
+    Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitudtraslado.delete');
 });

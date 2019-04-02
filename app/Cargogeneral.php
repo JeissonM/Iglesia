@@ -12,7 +12,7 @@ class Cargogeneral extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'created_at', 'updated_at'
+        'id', 'nombre', 'descripcion', 'ministerio_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -23,5 +23,9 @@ class Cargogeneral extends Model {
     protected $hidden = [
             //
     ];
+
+    public function ministerio() {
+        return $this->belongsTo('App\Ministerio');
+    }
 
 }

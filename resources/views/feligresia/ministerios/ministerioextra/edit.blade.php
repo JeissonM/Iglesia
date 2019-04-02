@@ -81,7 +81,7 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-grey">
+        <div class="modal-content modal-col-blue-grey">
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS MINISTERIOS EXTRA-OFICIALES DE LA IGLESIA(MINISTERIOS INDEPENDIENTES)</h4>
             </div>

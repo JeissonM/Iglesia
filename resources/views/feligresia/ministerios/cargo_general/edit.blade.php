@@ -49,13 +49,26 @@
                                         <br/><input class="form-control" type="text" placeholder="Descripción del cargo" name="descripcion" value="{{$cargo->descripcion}}">    
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Ministerio</label>
+                                        <br/><select class="form-control show-tick select2" name="ministerio_id" required="">
+                                            @foreach($ministerios as $key=>$value)
+                                            @if($key==$cargo->ministerio_id)
+                                            <option value="{{$key}}" selected="">{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <br/><br/><a href="{{route('cargogeneral.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
                                     <button class="btn bg-green waves-effect" type="submit">Guardar</button>
-
                                 </div>
                             </div>
                         </form>
@@ -68,7 +81,7 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-green">
+        <div class="modal-content modal-col-blue-grey">
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TIPOS DE MINISTERIOS</h4>
             </div>
@@ -81,4 +94,9 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    $('.select2').select2();
+</script>
 @endsection

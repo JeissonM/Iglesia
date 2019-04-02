@@ -119,7 +119,7 @@
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_JUNTA-IGLESIA'))
-                                    <a disabled='disabled' class="btn bg-blue-grey waves-effect">
+                                    <a href="{{route('junta.index')}}" class="btn bg-blue-grey waves-effect">
                                         <div><span>JUNTAS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
@@ -192,7 +192,7 @@
             </div>
             <div class="modal-body">
                 <div class="row clearfix">
-                    <form class="form-horizontal" method="POST" action="{{route('menuexperiencia.operaciones')}}" name="form-privilegios" id="form-privilegios">
+                    <form class="form-horizontal" method="POST" action="{{route('admin.operaciones')}}" name="form-privilegios" id="form-privilegios">
                         @csrf
                         <div class="col-md-12">
                             <div class="col-sm-8">

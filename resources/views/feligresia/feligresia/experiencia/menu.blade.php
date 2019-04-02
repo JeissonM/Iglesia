@@ -4,7 +4,6 @@
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li><a href="{{route('admin.feligresia')}}">Experiencia</a></li>
     <li class="active"><a>Menu Experiencia</a></li>
 </ol>
 @endsection

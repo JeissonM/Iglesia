@@ -35,6 +35,7 @@
                                 <th>ID</th>
                                 <th>NOMBRE</th>
                                 <th>DESCRIPCIÓN</th>
+                                <th>MINISTERIO</th>
                                 <th>CREADO</th>
                                 <th>MODIFICADO</th>
                                 <th>ACCIONES</th>
@@ -46,6 +47,7 @@
                                 <td>{{$cargo->id}}</td>
                                 <td>{{$cargo->nombre}}</td>
                                 <td>{{$cargo->descripcion}}</td>
+                                <td>{{$cargo->ministerio->nombre}}</td>
                                 <td>{{$cargo->created_at}}</td>
                                 <td>{{$cargo->updated_at}}</td>
                                 <td>
@@ -64,7 +66,7 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-green">
+        <div class="modal-content modal-col-blue-grey">
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS CARGOS</h4>
             </div>

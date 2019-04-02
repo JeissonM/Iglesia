@@ -48,6 +48,16 @@
                                         <br/><input class="form-control" type="text" placeholder="Descripción del cargo" name="descripcion">    
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Ministerio</label>
+                                        <br/><select class="form-control show-tick select2" name="ministerio_id" required="">
+                                            @foreach($ministerios as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -67,7 +77,7 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-green">
+        <div class="modal-content modal-col-blue-grey">
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TIPOS DE MINISTERIOS</h4>
             </div>
@@ -80,4 +90,9 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    $('.select2').select2();
+</script>
 @endsection

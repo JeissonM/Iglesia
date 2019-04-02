@@ -7,6 +7,7 @@ use App\Auditoriafeligresia;
 use App\Http\Requests\CargogeneralRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Ministerio;
 
 class CargogeneralController extends Controller {
 
@@ -28,8 +29,10 @@ class CargogeneralController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        $ministerios = Ministerio::all()->pluck('nombre', 'id');
         return view('feligresia.ministerios.cargo_general.create')
-                        ->with('location', 'feligresia');
+                        ->with('location', 'feligresia')
+                        ->with('ministerios', $ministerios);
     }
 
     /**
@@ -81,9 +84,11 @@ class CargogeneralController extends Controller {
      */
     public function edit($id) {
         $cargo = Cargogeneral::find($id);
+        $ministerios = Ministerio::all()->pluck('nombre', 'id');
         return view('feligresia.ministerios.cargo_general.edit')
                         ->with('location', 'feligresia')
-                        ->with('cargo', $cargo);
+                        ->with('cargo', $cargo)
+                        ->with('ministerios', $ministerios);
     }
 
     /**
