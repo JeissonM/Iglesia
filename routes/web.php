@@ -117,4 +117,19 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::resource('pastor', 'PastorController');
     Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');
     Route::post('pastor/operaciones/consultar/traer', 'PastorController@operaciones')->name('pastor.operaciones');
+    //MENU EXPERIENCIA
+    Route::resource('menuexperiencia', 'MenuexperienciaController');
+    Route::get('menuexperiencia/{id}/delete', 'MenuexperienciaController@destroy')->name('menuexperiencia.delete');
+    Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuexperienciaController@operaciones')->name('menuexperiencia.operaciones');
+    //EXPERIENCIA LABOR
+    Route::resource('experiencialabor', 'ExperiencialaborController');
+    Route::get('experiencialabor/{id}/index2', 'ExperiencialaborController@index')->name('experiencialabor.index2');
+    Route::get('experiencialabor/{id}/create2', 'ExperiencialaborController@create')->name('experiencialabor.create2');
+    Route::get('experiencialabor/{id}/get/labores', 'ExperiencialaborController@getlabores')->name('experiencialabor.getlabores');
+    Route::get('experiencialabor/{id}/delete', 'ExperiencialaborController@destroy')->name('experiencialabor.delete');
+    //CONOCIMIENTO
+    Route::resource('conocimiento', 'ConocimientoController');
+    Route::get('conocimiento/{id}/index2', 'ConocimientoController@index')->name('conocimiento.index2');
+    Route::get('conocimiento/{id}/create2', 'ConocimientoController@create')->name('conocimiento.create2');
+    Route::get('conocimiento/{id}/delete', 'ConocimientoController@destroy')->name('conocimiento.delete');
 });

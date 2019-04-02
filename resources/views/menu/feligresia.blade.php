@@ -159,11 +159,48 @@
                                         <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
+                                    @if(session()->exists('PAG_MIEMBROS'))
+                                    <a data-toggle="modal" data-target="#consultar" class="btn bg-deep-orange waves-effect">
+                                        <div><span>EXPERIENCIA</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Consultar -->
+<div class="modal fade" id="consultar" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">GESTIONAR EXPERIENCIA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row clearfix">
+                    <form class="form-horizontal" method="POST" action="{{route('menuexperiencia.operaciones')}}" name="form-privilegios" id="form-privilegios">
+                        @csrf
+                        <div class="col-md-12">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="id" class="form-control" placeholder="Escriba la identificación a consultar" name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn bg-orange waves-effect btn-block">CONSULTAR FELIGRES</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
             </div>
         </div>
     </div>

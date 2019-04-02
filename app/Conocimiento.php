@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Labor extends Model {
+class Conocimiento extends Model {
 
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Labor extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'categorialabor_id', 'created_at', 'updated_at'
+        'id', 'nombre', 'descripcion', 'feligres_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -24,12 +24,8 @@ class Labor extends Model {
             //
     ];
 
-    public function categorialabor() {
-        return $this->belongsTo('App\Categorialabor');
-    }
-
-    public function experiencialabors() {
-        return $this->hasMany('App\Experiencialabor');
+    public function feligres() {
+        return $this->belongsTo('App\Feligres');
     }
 
 }

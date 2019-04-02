@@ -32,4 +32,12 @@ class Feligres extends Model {
         return $this->belongsTo('App\Iglesia');
     }
 
+    public function experiencialabors() {
+        return $this->hasMany('App\Experiencialabor');
+    }
+
+    public function conocimientos() {
+        return $this->hasMany('App\Conocimiento');
+    }
+
 }
