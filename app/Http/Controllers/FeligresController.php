@@ -185,8 +185,11 @@ class FeligresController extends Controller {
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function show(Feligres $feligres) {
-        //
+    public function show($id) {
+        $feligres = Feligres::find($id);
+        return view('feligresia.feligresia.feligres.show')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres);
     }
 
     /**
