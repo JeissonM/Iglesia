@@ -124,7 +124,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS EXPERIENCIAS</h4>
             </div>
             <div class="modal-body">
-                <strong>Agregue nuevas experiencias,</strong> son las actividades económicas o profesiones que desempeña o a desempeñado el feligres consultado.
+                <strong>Agregue nuevas experiencias,</strong> son las actividades económicas o profesiones que desempeña o ha desempeñado el feligrés consultado.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

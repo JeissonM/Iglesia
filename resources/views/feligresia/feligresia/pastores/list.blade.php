@@ -79,21 +79,18 @@
             </div>
             <div class="modal-body">
                 <div class="row clearfix">
-                    <form class="form-horizontal" method="POST" action="{{route('pastor.operaciones')}}" name="form-privilegios" id="form-privilegios">
-                        @csrf
-                        <div class="col-md-12">
-                            <div class="col-sm-8">
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" id="id" class="form-control" placeholder="Escriba la identificación a consultar" name="id"/>
-                                    </div>
+                    <div class="col-md-12">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" id="identificacion" class="form-control" placeholder="Escriba la identificación a consultar" name="identificacion"/>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <button type="submit" class="btn bg-orange waves-effect btn-block">CONSULTAR FELIGRES</button>
-                            </div>
                         </div>
-                    </form>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn bg-orange waves-effect btn-block" onclick="consultar()">CONSULTAR FELIGRES</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -123,5 +120,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
     });
+
+    function consultar() {
+        var id = $("#identificacion").val();
+        location.href = url + "feligresia/pastor/operaciones/consultar/" + id + "/traer";
+    }
 </script>
 @endsection

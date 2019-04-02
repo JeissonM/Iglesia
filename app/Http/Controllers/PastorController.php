@@ -37,18 +37,12 @@ class PastorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
         $iglesias = Iglesia::all()->pluck('nombre', 'id');
-        $paises = Pais::all()->pluck('nombre', 'id');
-        $distritos = Distrito::all()->pluck('nombre', 'id');
-        $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
-        $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
         return view('feligresia.feligresia.pastores.create')
                         ->with('location', 'feligresia')
                         ->with('iglesias', $iglesias)
-                        ->with('estadosc', $estadosciviles)
-                        ->with('paises', $paises)
-                        ->with('distritos', $distritos)
-                        ->with('tipodoc', $tiposdoc);
+                        ->with('asociaciones', $asociaciones);
     }
 
     /**
@@ -107,9 +101,11 @@ class PastorController extends Controller {
     public function edit($id) {
         $pastor = Pastor::find($id);
         $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $iglesias = Iglesia::all()->pluck('nombre', 'id');
         return view('feligresia.feligresia.pastores.edit')
                         ->with('location', 'feligresia')
                         ->with('pastor', $pastor)
+                        ->with('iglesias', $iglesias)
                         ->with('asociaciones', $asociaciones);
     }
 
@@ -193,8 +189,8 @@ class PastorController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function operaciones() {
-        $persona = Persona::where('numero_documento', $_POST["id"])->first();
+    public function operaciones($id) {
+        $persona = Persona::where('numero_documento', $id)->first();
         if ($persona == null) {
             flash("<strong>La Persona</strong> consultada no se encuentra registrada!")->error();
             return redirect()->route('pastor.index');
@@ -212,9 +208,11 @@ class PastorController extends Controller {
         }
         $feligres->personanatural;
         $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $iglesias = Iglesia::all()->pluck('nombre', 'id');
         return view('feligresia.feligresia.pastores.create')
                         ->with('location', 'feligresia')
                         ->with('feligres', $feligres)
+                        ->with('iglesias', $iglesias)
                         ->with('asociaciones', $asociaciones);
     }
 

@@ -96,7 +96,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input class="form-control" type="text" placeholder="Distritos o zonas a cargo del pastor" name="pastor_sobre" value="{{$pastor->pastor_sobre}}">    
+                                        <br/><input class="form-control" type="text" placeholder="Distritos o zonas a cargo del pastor"  required="required" name="pastor_sobre" value="{{$pastor->pastor_sobre}}">    
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -113,14 +113,22 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Distrito (Actual - {{$pastor->distrito->nombre}})</label>
-                                        <select class="form-control"  style="width: 100%;" name="distrito_id" id="distrito_id" onchange="getIglesias()">
+                                        <select class="form-control"  style="width: 100%;" name="distrito_id" id="distrito_id">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Iglesia/Grupo (Actual - {{$pastor->iglesia->nombre}})</label>
+                                        <label class="control-label">Iglesia/Grupo (Dónde Tiene su Feligresía)</label>
                                         <select class="form-control"  style="width: 100%;" id="iglesia_id" name="iglesia_id">
+                                            <option value="">-- Seleccione una opción --</option>
+                                            @foreach($iglesias as $key=>$value)
+                                            @if($pastor->iglesia_id == $key)
+                                            <option value="{{$key}}" selected>{{$value}}</option>
+                                            @else
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -166,9 +174,6 @@
             data: {},
         }).done(function (msg) {
             $('#distrito_id option').each(function () {
-                $(this).remove();
-            });
-            $('#iglesia_id option').each(function () {
                 $(this).remove();
             });
             if (msg !== "null") {

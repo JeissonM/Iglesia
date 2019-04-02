@@ -91,7 +91,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input class="form-control" type="text" placeholder="Distritos o zonas a cargo del pastor" name="pastor_sobre">    
+                                        <br/><input class="form-control" type="text" placeholder="Distritos o zonas a cargo del pastor" required="required" name="pastor_sobre">    
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -108,14 +108,19 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Distrito a Cargo (Actualidad)</label>
-                                        <select class="form-control"  style="width: 100%;" required="required" name="distrito_id" id="distrito_id" onchange="getIglesias()">
+                                        <select class="form-control"  style="width: 100%;" required="required" name="distrito_id" id="distrito_id">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Iglesia/Grupo (Dónde Tiene su Feligresía)</label>
-                                        <select class="form-control"  style="width: 100%;" id="iglesia_id" name="iglesia_id"></select>
+                                        <select class="form-control"  style="width: 100%;" id="iglesia_id" name="iglesia_id">
+                                            <option value="">-- Seleccione una opción --</option>
+                                            @foreach($iglesias as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -161,9 +166,6 @@
             data: {},
         }).done(function (msg) {
             $('#distrito_id option').each(function () {
-                $(this).remove();
-            });
-            $('#iglesia_id option').each(function () {
                 $(this).remove();
             });
             if (msg !== "null") {

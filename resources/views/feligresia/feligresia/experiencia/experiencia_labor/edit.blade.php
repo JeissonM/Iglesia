@@ -125,7 +125,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS EXPERIENCIA</h4>
             </div>
             <div class="modal-body">
-                <strong>Actualice la experiencia,</strong> son las actividades económicas o profesiones que desempeña o a desempeñado el feligres consultado.
+                <strong>Actualice la experiencia,</strong> son las actividades económicas o profesiones que desempeña o ha desempeñado el feligrés consultado.
                 <strong>Nota:</strong> Tenga en cuenta que si no desea modificar la labor, no seleccionar el campo categoria.
             </div>
             <div class="modal-footer">
