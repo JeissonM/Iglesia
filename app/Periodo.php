@@ -23,4 +23,8 @@ class Periodo extends Model
     protected $hidden = [
             //
     ];
+    
+    public function juntas() {
+        return $this->hasMany('App\Junta');
+    }
 }

@@ -44,4 +44,8 @@ class Feligres extends Model {
         return $this->hasMany('App\Solicitudtraslado');
     }
 
+    public function miembrojuntas() {
+        return $this->hasMany('App\Miembrojunta');
+    }
+
 }

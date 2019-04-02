@@ -27,5 +27,9 @@ class Cargogeneral extends Model {
     public function ministerio() {
         return $this->belongsTo('App\Ministerio');
     }
+    
+    public function miembrojuntas() {
+        return $this->hasMany('App\Miembrojunta');
+    }
 
 }

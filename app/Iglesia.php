@@ -43,5 +43,9 @@ class Iglesia extends Model
     public function feligres() {
         return $this->hasMany('App\Feligres');
     }
+    
+    public function juntas() {
+        return $this->hasMany('App\Junta');
+    }
 
 }

@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Junta extends Model
-{
+class Junta extends Model {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +23,21 @@ class Junta extends Model
     protected $hidden = [
             //
     ];
+
+    public function iglesia() {
+        return $this->belongsTo('App\Iglesia');
+    }
+
+    public function pastor() {
+        return $this->belongsTo('App\Pastor');
+    }
+
+    public function periodo() {
+        return $this->belongsTo('App\Periodo');
+    }
+    
+    public function miembrojuntas() {
+        return $this->hasMany('App\Miembrojunta');
+    }
+
 }

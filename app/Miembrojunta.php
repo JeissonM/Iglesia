@@ -24,4 +24,16 @@ class Miembrojunta extends Model {
             //
     ];
 
+    public function feligres() {
+        return $this->belongsTo('App\Feligres');
+    }
+
+    public function cargogeneral() {
+        return $this->belongsTo('App\Cargogeneral');
+    }
+
+    public function junta() {
+        return $this->belongsTo('App\Junta');
+    }
+
 }
