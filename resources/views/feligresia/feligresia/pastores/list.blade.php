@@ -110,7 +110,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS PASTORES</h4>
             </div>
             <div class="modal-body">
-                <strong>Administre la información de los pastores,</strong> son todos los miembros bautizados y registrados en el libro de secretaría de iglesia.
+                <strong>Administre la información de los pastores,</strong> son todos los miembros bautizados y registrados en el libro de secretaría de iglesia que desempeñan la función de pastor (graduado en teología).
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

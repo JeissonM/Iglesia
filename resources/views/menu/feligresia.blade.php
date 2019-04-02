@@ -159,9 +159,19 @@
                                         <div><span>MIEMBROS DE IGLESIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    @if(session()->exists('PAG_MIEMBROS'))
+                                    @if(session()->exists('PAG_EXPERIENCIA-FELIGRES'))
                                     <a data-toggle="modal" data-target="#consultar" class="btn bg-deep-orange waves-effect">
                                         <div><span>EXPERIENCIA</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
+                                    @if(session()->exists('PAG_TRASLADOS'))
+                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                        <div><span>TRASLADOS</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
+                                    @if(session()->exists('PAG_DISCIPLINA'))
+                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                        <div><span>DISCIPLINA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
                                 </div>

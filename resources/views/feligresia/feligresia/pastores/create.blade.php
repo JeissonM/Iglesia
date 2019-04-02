@@ -107,14 +107,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Distrito</label>
+                                        <label class="control-label">Distrito a Cargo (Actualidad)</label>
                                         <select class="form-control"  style="width: 100%;" required="required" name="distrito_id" id="distrito_id" onchange="getIglesias()">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Iglesia/Grupo</label>
+                                        <label class="control-label">Iglesia/Grupo (Dónde Tiene su Feligresía)</label>
                                         <select class="form-control"  style="width: 100%;" id="iglesia_id" name="iglesia_id"></select>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS PASTORES</h4>
             </div>
             <div class="modal-body">
-                <strong>Agregue nuevo pastor,</strong> A partir de los datos ya gestionado con anterioridad en el feligres agregue nuevo pastor; el campo distrito o zonas a cargos, sera llenado siempre y cuando el pastor tenga mas de un distrito o zona a cargo. 
+                <strong>Agregue nuevo pastor,</strong> A partir de los datos ya gestionado con anterioridad en el feligres agregue nuevo pastor; el campo distrito o zonas a cargo, sera llenado siempre y cuando el pastor tenga mas de un distrito o zona a cargo. 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

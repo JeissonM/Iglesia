@@ -95,9 +95,9 @@
                                 </tr>
                                 <tr class="read">
                                     <td class="subject">{{$f->personanatural->madre}}</td>
-                                    <td class="subject">{{$f->personanatural->persona->telefono}}</td>
-                                    <td class="subject">{{$f->personanatural->persona->celular}}</td>
-                                    <td class="subject">{{$f->personanatural->padre}}</td>
+                                    <td class="subject">{{$f->personanatural->clase_libreta}}</td>
+                                    <td class="subject">{{$f->personanatural->libreta_militar}}</td>
+                                    <td class="subject">{{$f->personanatural->distrito_militar}}</td>
                                 </tr>
                                 <tr class="read">
                                     <td class="contact"><b>Profesión</b></td>
@@ -106,10 +106,22 @@
                                     <td class="contact"><b>Último Grado Cursado</b></td>
                                 </tr>
                                 <tr class="read">
+                                    <td class="subject">{{$f->personanatural->profesion}}</td>
+                                    <td class="subject">{{$f->personanatural->ocupacion}}</td>
+                                    <td class="subject">{{$f->personanatural->nivel_estudio}}</td>
+                                    <td class="subject">{{$f->personanatural->ultimo_grado}}</td>
+                                </tr>
+                                <tr class="read">
                                     <td class="contact"><b>Religión Anterior</b></td>
                                     <td class="contact"><b>Pastor Oficiante</b></td>
                                     <td class="contact"><b>Estado Actual</b></td>
                                     <td class="contact"><b>Fecha de Bautismo</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="subject">{{$f->personanatural->religion_anterior}}</td>
+                                    <td class="subject">{{$f->pastor_oficiante}}</td>
+                                    <td class="subject">{{$f->estado_actual}}</td>
+                                    <td class="subject">{{$f->fecha_bautismo}}</td>
                                 </tr>
                                 <tr class="read">
                                     <td class="contact"><b>Aceptado Por</b></td>
@@ -118,14 +130,22 @@
                                     <td class="contact"><b>Creado</b></td>
                                 </tr>
                                 <tr class="read">
+                                    <td class="subject">{{$f->aceptado_por}}</td>
+                                    <td class="subject">{{$io->nombre." - ".$io->distrito->nombre." - ".$io->distrito->asociacion->nombre}}</td>
+                                    <td class="subject">{{$id->nombre." - ".$id->distrito->nombre." - ".$id->distrito->asociacion->nombre}}</td>
+                                    <td class="subject">{{$f->created_at}}</td>
+                                </tr>
+                                <tr class="read">
                                     <td class="contact"><b>Modificado</b></td>
                                     <td class="contact"><b>Id Persona General</b></td>
                                     <td class="contact"><b>Id Persona Natural</b></td>
                                     <td class="contact"><b>Id Feligrés</b></td>
                                 </tr>
                                 <tr class="read">
-                                    <td class="subject">{{$f->created_at}}</td>
                                     <td class="subject">{{$f->updated_at}}</td>
+                                    <td class="subject">{{$f->personanatural->persona->id}}</td>
+                                    <td class="subject">{{$f->personanatural->id}}</td>
+                                    <td class="subject">{{$f->id}}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -63,21 +63,21 @@ class FeligresController extends Controller {
                     $this->setAuditoria($p->attributesToArray(), 'INSERTAR', 'CREACIÓN DE PERSONA, DATOS:');
                     $this->setAuditoria($pn->attributesToArray(), 'INSERTAR', 'CREACIÓN DE PERSONA NATURAL, DATOS:');
                     $this->setAuditoria($f->attributesToArray(), 'INSERTAR', 'CREACIÓN DE FELIGRÉS, DATOS:');
-                    flash("La persona</strong> fue almacenada con exito.")->success();
+                    flash("La persona fue almacenada con exito.")->success();
                     return redirect()->route('feligres.index');
                 } else {
                     $pn->delete();
                     $p->delete();
-                    flash("La persona</strong> no pudo ser almacenada.")->error();
+                    flash("La persona no pudo ser almacenada.")->error();
                     return redirect()->route('feligres.index');
                 }
             } else {
                 $p->delete();
-                flash("La persona</strong> no pudo ser almacenada.")->error();
+                flash("La persona no pudo ser almacenada.")->error();
                 return redirect()->route('feligres.index');
             }
         } else {
-            flash("La persona</strong> no pudo ser almacenada.")->error();
+            flash("La persona no pudo ser almacenada.")->error();
             return redirect()->route('feligres.index');
         }
     }
@@ -187,9 +187,13 @@ class FeligresController extends Controller {
      */
     public function show($id) {
         $feligres = Feligres::find($id);
+        $iglesiao = Iglesia::find($feligres->iglesia_origen);
+        $iglesiad = Iglesia::find($feligres->iglesia_destino);
         return view('feligresia.feligresia.feligres.show')
                         ->with('location', 'feligresia')
-                        ->with('f', $feligres);
+                        ->with('f', $feligres)
+                        ->with('io', $iglesiao)
+                        ->with('id', $iglesiad);
     }
 
     /**
@@ -198,8 +202,33 @@ class FeligresController extends Controller {
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function edit(Feligres $feligres) {
-        //
+    public function edit($id) {
+        $feligres = Feligres::find($id);
+        $iglesiao = Iglesia::find($feligres->iglesia_origen);
+        $iglesiad = Iglesia::find($feligres->iglesia_destino);
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $paises = Pais::all()->pluck('nombre', 'id');
+        $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
+        $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
+        $rh = ['A+' => 'A +', 'A-' => 'A -', 'O+' => 'O +', 'O-' => 'O -',
+            'B-' => 'B -', 'B+' => 'B +', 'AB+' => 'AB +', 'AB-' => 'AB -'];
+        $nivel = ['PRIMARIA' => 'PRIMARIA', 'SECUNDARIA' => 'SECUNDARIA', 'BACHILLERATO' => 'BACHILLERATO',
+            'TECNICO' => 'TÉCNICO', 'TECNOLOGO' => 'TECNÓLOGO', 'PROFESIONAL' => 'PROFESIONAL',
+            'ESPECIALISTA' => 'ESPECIALISTA', 'MAGISTER' => 'MAGISTER', 'DOCTOR' => 'DOCTOR', 'OTRO' => 'OTRO'];
+        $estadom = ['ACTIVO' => 'ACTIVO', 'INACTIVO' => 'INACTIVO', 'FALLECIDO' => 'FALLECIDO',
+            'PARADERO DESCONOCIDO' => 'PARADERO DESCONOCIDO', 'RETIRADO' => 'RETIRADO'];
+        return view('feligresia.feligresia.feligres.edit')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('iglesiao', $iglesiao)
+                        ->with('iglesiad', $iglesiad)
+                        ->with('asociaciones', $asociaciones)
+                        ->with('estadosc', $estadosciviles)
+                        ->with('paises', $paises)
+                        ->with('tipodoc', $tiposdoc)
+                        ->with('rh', $rh)
+                        ->with('estadom', $estadom)
+                        ->with('nivel', $nivel);
     }
 
     /**
@@ -209,8 +238,103 @@ class FeligresController extends Controller {
      * @param  \App\Feligres  $feligres
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feligres $feligres) {
-        //
+    public function update(Request $request, $id) {
+        $feligres = Feligres::find($id);
+        $pn = $feligres->personanatural;
+        $p = $pn->persona;
+        $fu = $this->updateFeligres($request, $feligres);
+        $pnu = $this->updatePersonaNatural($request, $pn);
+        $pu = $this->updatePersona($request, $p);
+        if ($fu->save()) {
+            if ($pnu->save()) {
+                if ($pu->save()) {
+                    $this->setAuditoria($pu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE PERSONA, DATOS:');
+                    $this->setAuditoria($pnu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE PERSONA NATURAL, DATOS:');
+                    $this->setAuditoria($fu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE FELIGRÉS, DATOS:');
+                    flash("La persona fue modificada con exito.")->success();
+                    return redirect()->route('feligres.index');
+                } else {
+                    $this->setAuditoria($pnu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE PERSONA NATURAL, DATOS:');
+                    $this->setAuditoria($fu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE FELIGRÉS, DATOS:');
+                    flash("El feligrés fue modificado pero los datos de persona general no pudo ser modificado.")->error();
+                    return redirect()->route('feligres.index');
+                }
+            } else {
+                $this->setAuditoria($fu->attributesToArray(), 'ACTUALIZAR', 'ACTUALIZACIÓN DE FELIGRÉS, DATOS:');
+                flash("El feligrés fue modificado pero los datos de persona natural no pudo ser modificado.")->error();
+                return redirect()->route('feligres.index');
+            }
+        } else {
+            flash("La persona no pudo ser modificada.")->error();
+            return redirect()->route('feligres.index');
+        }
+    }
+
+    /*
+     * edicion
+     */
+
+    public function updateFeligres($request, $f) {
+        $f->aceptado_por = (isset($request->aceptado_por)) ? $request->aceptado_por : $f->aceptado_por;
+        $f->retiro_por = (isset($request->retiro_por)) ? $request->retiro_por : $f->retiro_por;
+        $f->pastor_oficiante = (isset($request->pastor_oficiante)) ? $request->pastor_oficiante : $f->pastor_oficiante;
+        $f->estado_actual = (isset($request->estado_actual)) ? $request->estado_actual : $f->estado_actual;
+        $f->fecha_bautismo = (isset($request->fecha_bautismo)) ? $request->fecha_bautismo : $f->fecha_bautismo;
+        $f->asociacion_origen = (isset($request->asociacion_origen)) ? $request->asociacion_origen : $f->asociacion_origen;
+        $f->distrito_origen = (isset($request->distrito_origen)) ? $request->distrito_origen : $f->distrito_origen;
+        $f->iglesia_origen = (isset($request->iglesia_origen)) ? $request->iglesia_origen : $f->iglesia_origen;
+        $f->asociacion_destino = (isset($request->asociacion_destino)) ? $request->asociacion_destino : $f->asociacion_destino;
+        $f->distrito_destino = (isset($request->distrito_destino)) ? $request->distrito_destino : $f->distrito_destino;
+        $f->iglesia_destino = (isset($request->iglesia_destino)) ? $request->iglesia_destino : $f->iglesia_destino;
+        $f->iglesia_id = (isset($request->iglesia_id)) ? $request->iglesia_id : $f->iglesia_id;
+        return $f;
+    }
+
+    public function updatePersonaNatural($request, $p) {
+        $p->primer_nombre = (isset($request->primer_nombre)) ? $request->primer_nombre : $p->primer_nombre;
+        $p->segundo_nombre = (isset($request->segundo_nombre)) ? $request->segundo_nombre : $p->segundo_nombre;
+        $p->sexo = (isset($request->sexo)) ? $request->sexo : $p->sexo;
+        $p->fecha_nacimiento = (isset($request->fecha_nacimiento)) ? $request->fecha_nacimiento : $p->fecha_nacimiento;
+        $p->libreta_militar = (isset($request->libreta_militar)) ? $request->libreta_militar : $p->libreta_militar;
+        $p->edad = (isset($request->edad)) ? $request->edad : $p->edad;
+        $p->rh = (isset($request->rh)) ? $request->rh : $p->rh;
+        $p->primer_apellido = (isset($request->primer_apellido)) ? $request->primer_apellido : $p->primer_apellido;
+        $p->segundo_apellido = (isset($request->segundo_apellido)) ? $request->segundo_apellido : $p->segundo_apellido;
+        $p->distrito_militar = (isset($request->distrito_militar)) ? $request->distrito_militar : $p->distrito_militar;
+        $p->numero_pasaporte = (isset($request->numero_pasaporte)) ? $request->numero_pasaporte : $p->numero_pasaporte;
+        $p->otra_nacionalidad = (isset($request->otra_nacionalidad)) ? $request->otra_nacionalidad : $p->otra_nacionalidad;
+        $p->clase_libreta = (isset($request->clase_libreta)) ? $request->clase_libreta : $p->clase_libreta;
+        $p->fax = (isset($request->fax)) ? $request->fax : $p->fax;
+        $p->padre = (isset($request->padre)) ? $request->padre : $p->padre;
+        $p->madre = (isset($request->madre)) ? $request->madre : $p->madre;
+        $p->ocupacion = (isset($request->ocupacion)) ? $request->ocupacion : $p->ocupacion;
+        $p->profesion = (isset($request->profesion)) ? $request->profesion : $p->profesion;
+        $p->nivel_estudio = (isset($request->nivel_estudio)) ? $request->nivel_estudio : $p->nivel_estudio;
+        $p->ultimo_grado = (isset($request->ultimo_grado)) ? $request->ultimo_grado : $p->ultimo_grado;
+        $p->religion_anterior = (isset($request->religion_anterior)) ? $request->religion_anterior : $p->religion_anterior;
+        $p->pais_id = (isset($request->pais_id)) ? $request->pais_id : $p->pais_id;
+        $p->estado_id = (isset($request->estado_id)) ? $request->estado_id : $p->estado_id;
+        $p->ciudad_id = (isset($request->ciudad_id)) ? $request->ciudad_id : $p->ciudad_id;
+        $p->estadocivil_id = (isset($request->estadocivil_id)) ? $request->estadocivil_id : $p->estadocivil_id;
+        return $p;
+    }
+
+    public function updatePersona($request, $p) {
+        $p->tipopersona = (isset($request->tipopersona)) ? $request->tipopersona : $p->tipopersona;
+        $p->direccion = (isset($request->direccion)) ? $request->direccion : $p->direccion;
+        $p->mail = (isset($request->mail)) ? $request->mail : $p->mail;
+        $p->celular = (isset($request->celular)) ? $request->celular : $p->celular;
+        $p->telefono = (isset($request->telefono)) ? $request->telefono : $p->telefono;
+        $p->numero_documento = (isset($request->numero_documento)) ? $request->numero_documento : $p->numero_documento;
+        $p->lugar_expedicion = (isset($request->lugar_expedicion)) ? $request->lugar_expedicion : $p->lugar_expedicion;
+        $p->fecha_expedicion = (isset($request->fecha_expedicion)) ? $request->fecha_expedicion : $p->fecha_expedicion;
+        $p->nombrecomercial = (isset($request->nombrecomercial)) ? $request->nombrecomercial : $p->nombrecomercial;
+        $p->regimen = (isset($request->regimen)) ? $request->regimen : $p->regimen;
+        $p->tipodocumento_id = (isset($request->tipodocumento_id)) ? $request->tipodocumento_id : $p->tipodocumento_id;
+        $p->pais_id = (isset($request->paisr_id)) ? $request->paisr_id : $p->pais_id;
+        $p->estado_id = (isset($request->estador_id)) ? $request->estador_id : $p->estado_id;
+        $p->ciudad_id = (isset($request->ciudadr_id)) ? $request->ciudadr_id : $p->ciudad_id;
+        return $p;
     }
 
     /**
