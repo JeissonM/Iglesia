@@ -16,6 +16,8 @@ class CreateCargogeneralsTable extends Migration {
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('descripcion')->nullable();
+            $table->bigInteger('ministerio_id')->unsigned();
+            $table->foreign('ministerio_id')->references('id')->on('ministerios')->onDelete('cascade');
             $table->timestamps();
         });
     }

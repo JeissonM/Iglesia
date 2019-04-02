@@ -116,7 +116,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //PASTORES
     Route::resource('pastor', 'PastorController');
     Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');
-    Route::post('pastor/operaciones/consultar/traer', 'PastorController@operaciones')->name('pastor.operaciones');
+    Route::get('pastor/operaciones/consultar/{identificacion}/traer', 'PastorController@operaciones')->name('pastor.operaciones');
     //MENU EXPERIENCIA
     Route::resource('menuexperiencia', 'MenuexperienciaController');
     Route::get('menuexperiencia/{id}/delete', 'MenuexperienciaController@destroy')->name('menuexperiencia.delete');
@@ -132,4 +132,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('conocimiento/{id}/index2', 'ConocimientoController@index')->name('conocimiento.index2');
     Route::get('conocimiento/{id}/create2', 'ConocimientoController@create')->name('conocimiento.create2');
     Route::get('conocimiento/{id}/delete', 'ConocimientoController@destroy')->name('conocimiento.delete');
+    //JUNTA DE IGLESIA
+    Route::resource('junta', 'JuntaController');
+    Route::get('junta/{id}/delete', 'JuntaController@destroy')->name('junta.delete');
 });
