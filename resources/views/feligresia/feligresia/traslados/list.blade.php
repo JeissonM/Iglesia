@@ -15,8 +15,8 @@
                 <h2>
                     TRASLADOS<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
                 </h2>
-                </br><label class="control-label">Solicitudes de traslado realizadas por mi iglesia</label>
-                </br><label class="control-label">Solicitudes de traslado realizadas a mi iglesia</label>
+                </br><label class="control-label" style="background-color: #02cdba; color: #ffffff; font-weight: bold; width: 100%; padding: 10px;">Solicitudes de traslado realizadas por mi iglesia</label> 
+                </br><label class="control-label" style="background-color: #99e4ee; color: #ffffff; font-weight: bold; width: 100%; padding: 10px;">Solicitudes de traslado realizadas a mi iglesia</label>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -72,6 +72,11 @@
                                 @endif
                                 <td>
                                     <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Solicitud"><i class="material-icons">delete</i></a>
+                                    @if($s->iglesia_destino == $secretario->iglesia_id)   
+                                    <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Aceptar Solicitud"><i class="material-icons">assignment_ind</i></a>
+                                    @else
+                                    <a href="{{ route('solicitud.procesar',$s->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Procesar Solicitud"><i class="material-icons">assignment</i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

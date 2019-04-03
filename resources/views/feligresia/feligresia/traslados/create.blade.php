@@ -4,7 +4,6 @@
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li><a href="{{route('tipodoc.index')}}">Tipo Documento</a></li>
     <li><a href="{{route('solicitud.index')}}">Traslados</a></li>
     <li class="active"><a>Crear Solicitud de Traslado</a></li>
 </ol>
@@ -53,12 +52,6 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <input class="form-control" type="text"  name="feligres" id="feligres" placeholder="Identificación del feligres" required="" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <label class="control-label">Observación</label>
-                                        <input class="form-control" type="text"  name="observacion" id="observacion" placeholder="Observación" /> 
                                     </div>
                                 </div>
                                 </br><h4>PROCEDENCIA</h4>
@@ -142,10 +135,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-orange">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TIPOS DE DOCUMENTOS</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TRASLADOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Agregue nuevo tipo de documento,</strong>Administre los tipos de documento de identidad.
+                <strong>Realice nueva solicitud de traslado,</strong> Administre las solicitudes de traslado de los feligreses.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

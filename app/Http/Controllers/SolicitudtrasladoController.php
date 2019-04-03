@@ -8,6 +8,7 @@ use App\Persona;
 use App\Personanatural;
 use App\Actajunta;
 use App\Iglesia;
+use App\Pastor;
 use App\Asociacion;
 use App\Auditoriafeligresia;
 use App\Http\Requests\SolicitudtrasladoRequest;
@@ -176,6 +177,28 @@ class SolicitudtrasladoController extends Controller {
         } else {
             return "null";
         }
+    }
+
+    /*
+     * procesa las solicitudes que le hacen a mi iglesia
+     * 
+     * @params {id}
+     * @return \Illuminate\Http\Response
+     */
+
+    public function procesar($id) {
+        $solicitud = Solicitudtraslado::find($id);
+        $solicitud->estado = 'EN ESTUDIO';
+        $solicitud->save();
+        $iglesiadestino = Iglesia::find($solicitud->iglesia_destino);
+        $pastord = Pastor::where('distrito_id', $iglesiadestino->distrito_id)->first();
+        $feligres = Feligres::find($solicitud->feligres_id);
+        return view('feligresia.feligresia.traslados.procesar')
+                        ->with('location', 'feligresia')
+                        ->with('iglesiadestino', $iglesiadestino)
+                        ->with('pastord', $pastord)
+                        ->with('f', $feligres)
+                        ->with('solicitud', $solicitud);
     }
 
 }
