@@ -53,6 +53,37 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-md-12">
+                        <h4>LISTADO DE MIEMBROS ACTIVOS EN LA JUNTA</h4>
+                        <div class="table-responsive">
+                            <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>MIEMBRO</th>
+                                        <th>CARGO</th>
+                                        <th>MINISTERIO</th>
+                                        <th>CREADO</th>
+                                        <th>MODIFICADO</th>
+                                        <th>ACCIONES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($j->miembrojuntas as $m)
+                                    <tr>
+                                        <td>{{$m->feligres->personanatural->primer_nombre." ".$m->feligres->personanatural->segundo_nombre." ".$m->feligres->personanatural->primer_apellido." ".$m->feligres->personanatural->segundo_apellido}}</td>
+                                        <td>{{$m->cargogeneral->nombre}}</td>
+                                        <td>{{$m->cargogeneral->ministerio->nombre}}</td>
+                                        <td>{{$m->created_at}}</td>
+                                        <td>{{$m->updated_at}}</td>
+                                        <td>
+                                            <a href="{{ route('junta.eliminarmiembro',[$f->id,$p->id,$j->id,$m->id])}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Miembro"><i class="material-icons">delete</i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

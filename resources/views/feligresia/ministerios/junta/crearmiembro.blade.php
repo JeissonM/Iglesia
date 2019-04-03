@@ -53,6 +53,43 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-md-12">
+                        <form class="form-horizontal" method="POST" action="{{route('junta.agregarmiembro')}}">
+                            @csrf
+                            <input type="hidden" name="secretario_id" value="{{$f->id}}" />
+                            <input type="hidden" name="periodo_id" value="{{$p->id}}" />
+                            <input type="hidden" name="junta_id" value="{{$j->id}}" />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/>
+                                        <label>Seleccione el Cargo Para el Miembro</label>
+                                        <select class="form-control show-tick select2" name="cargogeneral_id" required="">
+                                            @foreach($cargos as $key=>$value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/>
+                                        <label>Seleccione el Miembro</label>
+                                        <select class="form-control show-tick select2" name="feligres_id" required="">
+                                            @foreach($feligreses as $f)
+                                            <option value="{{$f->id}}">{{$f->personanatural->primer_nombre." ".$f->personanatural->segundo_nombre." ".$f->personanatural->primer_apellido." ".$f->personanatural->segundo_apellido}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br/><br/><a href="{{route('junta.miembros',[$f->id,$p->id,$j->id])}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,6 +118,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         //$('#tabla').DataTable();
+        $('.select2').select2();
     });
 </script>
 @endsection
