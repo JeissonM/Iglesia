@@ -12,6 +12,7 @@ use App\Periodo;
 use App\Iglesia;
 use App\Pastor;
 use App\Auditoriafeligresia;
+use App\Cargogeneral;
 
 class JuntaController extends Controller {
 
@@ -191,6 +192,27 @@ class JuntaController extends Controller {
                         ->with('location', 'feligresia')
                         ->with('f', $feligres)
                         ->with('p', $periodo)
+                        ->with('j', $junta);
+    }
+
+    /*
+     * permite crear los miembros de una junta
+     */
+
+    public function crearmiembro($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $cg = Cargogeneral::all();
+        $cargos = null;
+        foreach ($cg as $c) {
+            $cargos[$c->id] = $c->nombre . " - " . $c->descripcion . " - <b>MINISTERIO: " . $c->ministerio->nombre . "</b>";
+        }
+        return view('feligresia.ministerios.junta.crearmiembro')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('cargos', $cargos)
                         ->with('j', $junta);
     }
 
