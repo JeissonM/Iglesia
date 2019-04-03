@@ -22,9 +22,7 @@ class SolicitudtrasladoRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'tiposolicitud' => 'required',
-            'fechasolicitud' => 'required',
-            'estado' => 'required'
+            'fechasolicitud' => 'required'
         ];
     }
 

@@ -48,13 +48,18 @@ class SolicitudtrasladoController extends Controller {
                     $ao = Actajunta::find($s->acta_origen);
                     $ad = Actajunta::find($s->acta_destino);
                     $s['io'] = $io->nombre;
-                    $s['id'] = $id->nombre;
-                    $s['ao'] = $ao->nombre;
-                    $s['ad'] = $ad->nombre;
+                    $s['ide'] = $id->nombre;
+                    if ($ao != null) {
+                        $s['ao'] = $ao->nombre;
+                    }
+                    if ($ad != null) {
+                        $s['ad'] = $ad->nombre;
+                    }
                 }
             }
             return view('feligresia.feligresia.traslados.list')
                             ->with('location', 'feligresia')
+                            ->with('secretario', $feligres)
                             ->with('solicitudes', $solicitudes);
         } else {
             flash("<strong>Usted </strong> no se encuentra activo!")->error();
@@ -81,7 +86,29 @@ class SolicitudtrasladoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(SolicitudtrasladoRequest $request) {
-        dd($request);
+        $solicitud = new Solicitudtraslado($request->all());
+        foreach ($solicitud->attributesToArray() as $key => $value) {
+            $solicitud->$key = strtoupper($value);
+        }
+        $solicitud->tiposolicitud = 'SOLICITAR';
+        $result = $solicitud->save();
+        if ($result) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE SOLICITUD DE TRASLADO. DATOS: ";
+            foreach ($solicitud->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->primer_apellido . "</strong> fue almacenada de forma exitosa!")->success();
+            return redirect()->route('solicitud.index');
+        } else {
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->apellido_apellido . "</strong> no pudo ser almacenada. Error: " . $result)->error();
+            return redirect()->route('solicitud.index');
+        }
     }
 
     /**

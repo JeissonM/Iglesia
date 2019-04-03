@@ -57,12 +57,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Tipo de Solicitud</label>
-                                        <select class="form-control"  style="width: 100%;" id="asociacion_origen" name="asociacion_origen" onchange="getDistritos(this.id, 'distrito_origen', 'iglesia_origen')">
-                                            <option value="">-- Seleccione una opción --</option>
-                                            <option value="SOLICITAR">SOLICITAR</option>
-                                            <option value="RECIBIR">RECIBIR</option>
-                                        </select>
+                                        <label class="control-label">Observación</label>
+                                        <input class="form-control" type="text"  name="observacion" id="observacion" placeholder="Observación" /> 
                                     </div>
                                 </div>
                                 </br><h4>PROCEDENCIA</h4>
@@ -86,7 +82,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Iglesia/Grupo</label>
-                                        <select class="form-control"  style="width: 100%;" id="iglesia_origen" name="iglesia_origen"></select>
+                                        <select class="form-control"  style="width: 100%;" id="iglesia_origen" name="iglesia_origen" required=""></select>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +119,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Iglesia/Grupo</label>
-                                        <select class="form-control"  style="width: 100%;" id="iglesia_destino" name="iglesia_destino"></select>
+                                        <select class="form-control"  style="width: 100%;" id="iglesia_destino" name="iglesia_destino" required=""></select>
                                     </div>
                                 </div>
                             </div>

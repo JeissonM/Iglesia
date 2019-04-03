@@ -67,12 +67,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input type="email" class="form-control" placeholder="Dirección de correo de la división" name="email" />
+                                        <br/><input type="email" class="form-control" placeholder="Dirección de correo del distrito" name="email" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input type="text" class="form-control" placeholder="Sitio web oficial de la división" name="sitioweb" />
+                                        <br/><input type="text" class="form-control" placeholder="Sitio web oficial del distrito" name="sitioweb" />
                                     </div>
                                 </div>
                                 <div class="form-group">

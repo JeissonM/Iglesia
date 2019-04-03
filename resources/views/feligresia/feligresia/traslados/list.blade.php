@@ -15,6 +15,8 @@
                 <h2>
                     TRASLADOS<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
                 </h2>
+                </br><label class="control-label">Solicitudes de traslado realizadas por mi iglesia</label>
+                </br><label class="control-label">Solicitudes de traslado realizadas a mi iglesia</label>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -41,17 +43,15 @@
                                 <th>IGLESIA DESTINO</th>
                                 <th>ACTA DESTINO</th>
                                 <th>ACTA ORIGEN</th>
-                                <th>CREADO</th>
-                                <th>MODIFICADO</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($solicitudes as $s)
-                            @if($s->tipo == 'SOLICITAR')
-                            <tr class="indigo">
+                            @if($s->iglesia_destino == $secretario->iglesia_id)
+                            <tr style="background-color: #99e4ee;">
                                 @else
-                            <tr class="info">
+                            <tr style="background-color: #02cdba;">
                                 @endif
                                 <td>{{$s->feligres->personanatural->persona->tipodocumento->abreviatura." - ".$s->feligres->personanatural->persona->numero_documento}}</td>
                                 <td>{{$s->feligres->personanatural->primer_apellido." ".$s->feligres->personanatural->segundo_apellido." ".$s->feligres->personanatural->primer_nombre." ".$s->feligres->personanatural->segundo_nombre}}</td>
@@ -59,7 +59,7 @@
                                 <td>{{$s->estado}}</td>
                                 <td>{{$s->fechasolicitud}}</td>
                                 <td>{{$s->io}}</td>
-                                <td>{{$s->id}}</td>
+                                <td>{{$s->ide}}</td>
                                 @if($s->ao == null)
                                 <td>Sin Acta</td>
                                 @else
@@ -70,8 +70,6 @@
                                 @else
                                 <td><a target="_blank" href="{{asset('docs/actas/'.$s->ad)}}">{{$s->ad}}</a></td>
                                 @endif
-                                <td>{{$s->created_at}}</td>
-                                <td>{{$s->updated_at}}</td>
                                 <td>
                                     <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Solicitud"><i class="material-icons">delete</i></a>
                                 </td>
