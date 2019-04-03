@@ -30,13 +30,27 @@
             <div class="body">
                 <div class="row clearfix">
                     @if($junta!==null)
-                    <!-- DEMÁS OPERACIONES CON JUNTA -->
+                    
                     @else
                     <!-- CREAR JUNTA -->
                     <div class="col-md-12">
-                        <form class="form-horizontal" method="POST" action="{{route('junta.continuar')}}">
+                        <form class="form-horizontal" method="POST" action="{{route('junta.store')}}">
                             @csrf
-                            HOLA, DEBE CREAR JUNTA!
+                            <input type="hidden" name="feligres_id" value="{{$f->id}}" />
+                            <input type="hidden" name="periodo_id" value="{{$p->id}}" />
+                            <h3>No hay junta directiva activa en el período indicado, ¿Desea crearla?</h3>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input type="text" name="etiqueta" required="" class="form-control" placeholder="Escriba la etiqueta o nombre de la junta directiva, ejemplo: JUNTA DIRECTIVA PERÍODO 2018-2019" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="btn bg-green waves-effect" type="submit">Crear junta directiva para el período indicado.</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     @endif
