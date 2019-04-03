@@ -8,6 +8,7 @@ use App\Persona;
 use App\Personanatural;
 use App\Actajunta;
 use App\Iglesia;
+use App\Asociacion;
 use App\Auditoriafeligresia;
 use App\Http\Requests\SolicitudtrasladoRequest;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,10 @@ class SolicitudtrasladoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        return view('feligresia.feligresia.traslados.create')
+                        ->with('location', 'feligresia')
+                        ->with('asociaciones', $asociaciones);
     }
 
     /**
@@ -76,8 +80,8 @@ class SolicitudtrasladoController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        //
+    public function store(SolicitudtrasladoRequest $request) {
+        dd($request);
     }
 
     /**
@@ -119,6 +123,32 @@ class SolicitudtrasladoController extends Controller {
      */
     public function destroy(Solicitudtraslado $solicitudtraslado) {
         //
+    }
+
+    /**
+     * show all resource from a identificacion.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getfeligres($id) {
+        $persona = Persona::where('numero_documento', $id)->first();
+        if ($persona == null) {
+            return "null";
+        }
+        $personanatural = Personanatural::where('persona_id', $persona->id)->first();
+        if ($personanatural == null) {
+            return "null";
+        }
+        $feligres = Feligres::where('personanatural_id', $personanatural->id)->first();
+        if ($feligres != null) {
+            $obj["id"] = $feligres->id;
+            $obj["identificacion"] = $feligres->personanatural->persona->numero_documento;
+            $obj["nombre"] = $personanatural->primer_nombre . " " . $personanatural->segundo_nombre . " " . $personanatural->primer_apellido . " " . $personanatural->segundo_apellido;
+            return json_encode($obj);
+        } else {
+            return "null";
+        }
     }
 
 }

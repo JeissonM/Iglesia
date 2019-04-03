@@ -89,10 +89,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-orange">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TIPOS DE DOCUMENTOS</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TRASLADOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los tipos de documentos de identidad.
+                <strong>Detalles: </strong>Administre las solicitudes de traslados de los feligreses.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
