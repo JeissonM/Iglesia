@@ -153,8 +153,45 @@ class JuntaController extends Controller {
      * @param  \App\Junta  $junta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Junta $junta) {
-        //
+    public function destroy($id) {
+        $junta = Junta::find($id);
+        if (count($junta->miembrojuntas) > 0) {
+            flash("La junta no pudo ser eliminada, tiene miembros asociados.")->error();
+            return redirect()->route('junta.index');
+        }
+        if ($junta->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE JUNTA. DATOS: ";
+            foreach ($junta->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La junta fue eliminada con exito.")->success();
+            return redirect()->route('junta.index');
+        } else {
+            flash("La junta no pudo ser eliminada.")->error();
+            return redirect()->route('junta.index');
+        }
+    }
+
+    /*
+     * permite gestionar los miembros de una junta
+     */
+
+    public function miembros($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $junta->miembrojuntas;
+        return view('feligresia.ministerios.junta.miembros')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('j', $junta);
     }
 
 }

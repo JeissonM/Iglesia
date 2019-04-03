@@ -30,7 +30,47 @@
             <div class="body">
                 <div class="row clearfix">
                     @if($junta!==null)
-                    
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr class="read">
+                                    <td class="contact"><b>JUNTA DIRECTIVA</b></td>
+                                    <td class="contact"><b>PERÍODO</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$junta->etiqueta}}</td>
+                                    <td class="subject">{{$p->etiqueta." - DESDE: ".$p->fechainicio." - HASTA: ".$p->fechafin}}</td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>PASTOR</b></td>
+                                    <td class="contact"><b>IGLESIA</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$junta->pastor->personanatural->primer_nombre." ".$junta->pastor->personanatural->segundo_nombre." ".$junta->pastor->personanatural->primer_apellido." ".$junta->pastor->personanatural->segundo_apellido}}</td>
+                                    <td class="subject">{{$junta->iglesia->nombre." - ".$junta->iglesia->distrito->nombre}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="button-demo">
+                            <a href="{{route('junta.miembros',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
+                                <div><span>MIEMBROS DE LA JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>REUNIONES DE LA JUNTA (GENERACIÓN DE ACTAS)</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>AGENDA DE JUNTA DIRECTIVA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>CIERRE DE PERÍODO DE JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a href="{{route('junta.delete',$junta->id)}}" class="btn bg-red waves-effect">
+                                <div><span>ELIMINAR ÉSTA JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                        </div>
+                    </div>
                     @else
                     <!-- CREAR JUNTA -->
                     <div class="col-md-12">
