@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActajuntasTable extends Migration {
+class CreateReunionjuntasTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateActajuntasTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('actajuntas', function (Blueprint $table) {
+        Schema::create('reunionjuntas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('documento', 250);
-            $table->bigInteger('junta_id')->unsigned();
-            $table->foreign('junta_id')->references('id')->on('juntas')->onDelete('cascade');
+            $table->string('titulo');
+            
             $table->timestamps();
         });
     }
@@ -27,7 +26,7 @@ class CreateActajuntasTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('actajuntas');
+        Schema::dropIfExists('reunionjuntas');
     }
 
 }
