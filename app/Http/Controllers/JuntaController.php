@@ -12,6 +12,8 @@ use App\Periodo;
 use App\Iglesia;
 use App\Pastor;
 use App\Auditoriafeligresia;
+use App\Cargogeneral;
+use App\Miembrojunta;
 
 class JuntaController extends Controller {
 
@@ -192,6 +194,79 @@ class JuntaController extends Controller {
                         ->with('f', $feligres)
                         ->with('p', $periodo)
                         ->with('j', $junta);
+    }
+
+    /*
+     * permite crear los miembros de una junta
+     */
+
+    public function crearmiembro($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $cg = Cargogeneral::all();
+        $cargos = null;
+        foreach ($cg as $c) {
+            $cargos[$c->id] = $c->nombre . " - " . $c->descripcion . " - MINISTERIO: " . $c->ministerio->nombre;
+        }
+        $feligreses = Feligres::where([['iglesia_id', $junta->iglesia_id], ['estado_actual', 'ACTIVO']])->get();
+        return view('feligresia.ministerios.junta.crearmiembro')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('cargos', $cargos)
+                        ->with('feligreses', $feligreses)
+                        ->with('j', $junta);
+    }
+
+    /*
+     * agrega un nuevo miembro a la junta
+     */
+
+    public function agregarmiembro(Request $request) {
+        $m = new Miembrojunta($request->all());
+        if ($m->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "INSERCIÓN DE MIEMBROS DE JUNTA. DATOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El miembro fue agregado a la junta con exito.")->success();
+            return redirect()->route('junta.miembros', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        } else {
+            flash("El miembro no pudo ser agregado a la junta.")->error();
+            return redirect()->route('junta.miembros', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        }
+    }
+
+    /*
+     * permite eliminar los miembros de una junta
+     */
+
+    public function eliminarmiembro($f, $p, $j, $m) {
+        $m = Miembrojunta::find($m);
+        if ($m->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE MIEMBROS DE JUNTA. DATOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El miembro fue eliminado de la junta con exito.")->success();
+            return redirect()->route('junta.miembros', [$f, $p, $j]);
+        } else {
+            flash("El miembro no pudo ser eliminado de la junta.")->error();
+            return redirect()->route('junta.miembros', [$f, $p, $j]);
+        }
     }
 
 }
