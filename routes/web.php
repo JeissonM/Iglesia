@@ -133,6 +133,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::resource('junta', 'JuntaController');
     Route::get('junta/{id}/delete', 'JuntaController@destroy')->name('junta.delete');
     Route::post('junta/menu/periodo/continuar', 'JuntaController@continuar')->name('junta.continuar');
+    //MIEMBROS DE JUNTA
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros', 'JuntaController@miembros')->name('junta.miembros');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros/{cargo}/agregar/miembro', 'JuntaController@agregarmiembro')->name('junta.agregarmiembro');
     //TRASLADOS DE FELIGRESIA
     Route::resource('solicitud', 'SolicitudtrasladoController');
     Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitud.delete');

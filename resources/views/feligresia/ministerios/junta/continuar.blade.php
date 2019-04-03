@@ -30,13 +30,67 @@
             <div class="body">
                 <div class="row clearfix">
                     @if($junta!==null)
-                    <!-- DEMÁS OPERACIONES CON JUNTA -->
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr class="read">
+                                    <td class="contact"><b>JUNTA DIRECTIVA</b></td>
+                                    <td class="contact"><b>PERÍODO</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$junta->etiqueta}}</td>
+                                    <td class="subject">{{$p->etiqueta." - DESDE: ".$p->fechainicio." - HASTA: ".$p->fechafin}}</td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>PASTOR</b></td>
+                                    <td class="contact"><b>IGLESIA</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$junta->pastor->personanatural->primer_nombre." ".$junta->pastor->personanatural->segundo_nombre." ".$junta->pastor->personanatural->primer_apellido." ".$junta->pastor->personanatural->segundo_apellido}}</td>
+                                    <td class="subject">{{$junta->iglesia->nombre." - ".$junta->iglesia->distrito->nombre}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="button-demo">
+                            <a href="{{route('junta.miembros',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
+                                <div><span>MIEMBROS DE LA JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>REUNIONES DE LA JUNTA (GENERACIÓN DE ACTAS)</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>AGENDA DE JUNTA DIRECTIVA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                                <div><span>CIERRE DE PERÍODO DE JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                            <a href="{{route('junta.delete',$junta->id)}}" class="btn bg-red waves-effect">
+                                <div><span>ELIMINAR ÉSTA JUNTA</span><span class="ink animate"></span></div>
+                            </a>
+                        </div>
+                    </div>
                     @else
                     <!-- CREAR JUNTA -->
                     <div class="col-md-12">
-                        <form class="form-horizontal" method="POST" action="{{route('junta.continuar')}}">
+                        <form class="form-horizontal" method="POST" action="{{route('junta.store')}}">
                             @csrf
-                            HOLA, DEBE CREAR JUNTA!
+                            <input type="hidden" name="feligres_id" value="{{$f->id}}" />
+                            <input type="hidden" name="periodo_id" value="{{$p->id}}" />
+                            <h3>No hay junta directiva activa en el período indicado, ¿Desea crearla?</h3>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input type="text" name="etiqueta" required="" class="form-control" placeholder="Escriba la etiqueta o nombre de la junta directiva, ejemplo: JUNTA DIRECTIVA PERÍODO 2018-2019" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="btn bg-green waves-effect" type="submit">Crear junta directiva para el período indicado.</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     @endif

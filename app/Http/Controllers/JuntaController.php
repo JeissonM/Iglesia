@@ -9,6 +9,9 @@ use App\Persona;
 use App\Personanatural;
 use App\Feligres;
 use App\Periodo;
+use App\Iglesia;
+use App\Pastor;
+use App\Auditoriafeligresia;
 
 class JuntaController extends Controller {
 
@@ -36,15 +39,15 @@ class JuntaController extends Controller {
                                     ->with('periodos', $periodos);
                 } else {
                     flash('No tiene permisos para acceder a esta función.')->warning();
-                    return redirect()->route();
+                    return redirect()->route('admin.feligresia');
                 }
             } else {
                 flash('No tiene permisos para acceder a esta función.')->warning();
-                return redirect()->route();
+                return redirect()->route('admin.feligresia');
             }
         } else {
             flash('No tiene permisos para acceder a esta función.')->warning();
-            return redirect()->route();
+            return redirect()->route('admin.feligresia');
         }
     }
 
@@ -79,7 +82,38 @@ class JuntaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $f = Feligres::find($request->feligres_id);
+        $p = Periodo::find($request->periodo_id);
+        $juntaold = Junta::where([['iglesia_id', $f->iglesia_id], ['vigente', 'SI']])->first();
+        if ($juntaold !== null) {
+            flash('Hay una junta vigente en otro período, haga el cierre de dicha junta para crear una nueva.')->warning();
+            return redirect()->route('junta.index');
+        }
+        $iglesia = Iglesia::find($f->iglesia_id);
+        $pastor = Pastor::where('distrito_id', $iglesia->distrito_id)->first();
+        $j = new Junta();
+        $j->etiqueta = strtoupper($request->etiqueta);
+        $j->vigente = "SI";
+        $j->iglesia_id = $f->iglesia_id;
+        $j->pastor_id = $pastor->id;
+        $j->periodo_id = $p->id;
+        if ($j->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE JUNTA. DATOS: ";
+            foreach ($j->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La junta fue almacenada de forma exitosa!")->success();
+            return redirect()->route('junta.index');
+        } else {
+            flash("La junta no pudo ser almacenada.")->error();
+            return redirect()->route('junta.index');
+        }
     }
 
     /**
@@ -119,8 +153,45 @@ class JuntaController extends Controller {
      * @param  \App\Junta  $junta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Junta $junta) {
-        //
+    public function destroy($id) {
+        $junta = Junta::find($id);
+        if (count($junta->miembrojuntas) > 0) {
+            flash("La junta no pudo ser eliminada, tiene miembros asociados.")->error();
+            return redirect()->route('junta.index');
+        }
+        if ($junta->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE JUNTA. DATOS: ";
+            foreach ($junta->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La junta fue eliminada con exito.")->success();
+            return redirect()->route('junta.index');
+        } else {
+            flash("La junta no pudo ser eliminada.")->error();
+            return redirect()->route('junta.index');
+        }
+    }
+
+    /*
+     * permite gestionar los miembros de una junta
+     */
+
+    public function miembros($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $junta->miembrojuntas;
+        return view('feligresia.ministerios.junta.miembros')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('j', $junta);
     }
 
 }
