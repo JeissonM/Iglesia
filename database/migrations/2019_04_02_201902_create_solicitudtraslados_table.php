@@ -16,7 +16,8 @@ class CreateSolicitudtrasladosTable extends Migration {
             $table->bigIncrements('id');
             $table->string('tiposolicitud', 20);
             $table->date('fechasolicitud');
-            $table->string('observacion')->nullable();
+            $table->string('observacion_origen')->nullable();
+            $table->string('observacion_destino')->nullable();
             $table->string('estado', 30)->default('PENDIENTE');
             $table->string('iglesia_origen')->nullable();
             $table->string('iglesia_destino')->nullable();

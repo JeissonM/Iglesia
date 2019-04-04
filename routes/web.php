@@ -142,5 +142,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::resource('solicitud', 'SolicitudtrasladoController');
     Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitud.delete');
     Route::get('solicitud/get/{identificacion}/feligres', 'SolicitudtrasladoController@getfeligres')->name('solicitud.getfeligres');
+    Route::get('solicitud/{periodo}/{iglesia}/getactas', 'SolicitudtrasladoController@getactas')->name('solicitud.getactas');
     Route::get('solicitud/{id}/procesar', 'SolicitudtrasladoController@procesar')->name('solicitud.procesar');
 });

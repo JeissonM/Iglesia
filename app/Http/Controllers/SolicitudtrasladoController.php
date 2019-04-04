@@ -10,6 +10,10 @@ use App\Actajunta;
 use App\Iglesia;
 use App\Pastor;
 use App\Asociacion;
+use App\Miembrojunta;
+use App\Periodo;
+use App\Junta;
+use App\Reunionjunta;
 use App\Auditoriafeligresia;
 use App\Http\Requests\SolicitudtrasladoRequest;
 use Illuminate\Support\Facades\Auth;
@@ -51,10 +55,10 @@ class SolicitudtrasladoController extends Controller {
                     $s['io'] = $io->nombre;
                     $s['ide'] = $id->nombre;
                     if ($ao != null) {
-                        $s['ao'] = $ao->nombre;
+                        $s['ao'] = $ao->documento;
                     }
                     if ($ad != null) {
-                        $s['ad'] = $ad->nombre;
+                        $s['ad'] = $ad->documento;
                     }
                 }
             }
@@ -139,8 +143,45 @@ class SolicitudtrasladoController extends Controller {
      * @param  \App\Solicitudtraslado  $solicitudtraslado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Solicitudtraslado $solicitudtraslado) {
-        //
+    public function update(Request $request, $id) {
+        $solicitud = Solicitudtraslado::find($id);
+        $m = new Solicitudtraslado($solicitud->attributesToArray());
+        foreach ($solicitud->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $solicitud->$key = strtoupper($request->$key);
+            }
+        }
+        $result = $solicitud->save();
+        if ($result) {
+            if ($request->estado == 'ACEPTADA') {
+                $iglesiao = Iglesia::find($solicitud->iglesia_origen);
+                $feligres = Feligres::find($solicitud->feligres_id);
+                $feligres->distrito_origen = $iglesiao->distrito_id;
+                $feligres->asociacion_origen = $iglesiao->distrito->asociacion_id;
+                $feligres->iglesia_origen = $iglesiao->id;
+                $feligres->iglesia_id = null;
+                $feligres->save();
+            }
+            $aud = new Auditoriafeligresia();
+            $u = Auth::user();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "PROCESO DE SOLICITUD DE TRASLADO: ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($solicitud->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str . " - " . $str2;
+            $aud->save();
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->primer_apellido . "</strong> fue procesada de forma exitosa!")->success();
+            return redirect()->route('solicitud.index');
+        } else {
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->apellido_apellido . "</strong> no pudo ser procesada. Error: " . $result)->error();
+            return redirect()->route('solicitud.index');
+        }
     }
 
     /**
@@ -180,6 +221,33 @@ class SolicitudtrasladoController extends Controller {
     }
 
     /*
+     * devuelve las reuniones de junta para un periodo e iglesia
+     * 
+     * @params {periodo,iglesia}
+     * @return \Illuminate\Http\Response
+     */
+
+    public function getactas($per, $igle) {
+        $junta = Junta::where([['iglesia_id', $igle], ['periodo_id', $per]])->first();
+        if ($junta != null) {
+            $reunion = Reunionjunta::where('junta_id', $junta->id)->get();
+            if (count($reunion) > 0) {
+                $reuniones = null;
+                foreach ($reunion as $value) {
+                    $obj["id"] = $value->actajunta_id;
+                    $obj["value"] = $value->titulo . " - " . $value->fecha;
+                    $reuniones[] = $obj;
+                }
+                return json_encode($reuniones);
+            } else {
+                return "null";
+            }
+        } else {
+            return "null";
+        }
+    }
+
+    /*
      * procesa las solicitudes que le hacen a mi iglesia
      * 
      * @params {id}
@@ -193,11 +261,25 @@ class SolicitudtrasladoController extends Controller {
         $iglesiadestino = Iglesia::find($solicitud->iglesia_destino);
         $pastord = Pastor::where('distrito_id', $iglesiadestino->distrito_id)->first();
         $feligres = Feligres::find($solicitud->feligres_id);
+        $miembrojunta = Miembrojunta::where('feligres_id', $feligres->id)->get();
+        $periodos = Periodo::all()->pluck('etiqueta', 'id');
+        $historialsoli = Solicitudtraslado::where('feligres_id', $feligres->id)->get();
+        if ($historialsoli != null) {
+            foreach ($historialsoli as $h) {
+                $io = Iglesia::find($h->iglesia_origen);
+                $id = Iglesia::find($h->iglesia_destino);
+                $h['io'] = $io->nombre;
+                $h['ide'] = $id->nombre;
+            }
+        }
         return view('feligresia.feligresia.traslados.procesar')
                         ->with('location', 'feligresia')
                         ->with('iglesiadestino', $iglesiadestino)
                         ->with('pastord', $pastord)
                         ->with('f', $feligres)
+                        ->with('miembrojunta', $miembrojunta)
+                        ->with('historialsoli', $historialsoli)
+                        ->with('periodos', $periodos)
                         ->with('solicitud', $solicitud);
     }
 
