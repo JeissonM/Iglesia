@@ -14,6 +14,8 @@ use App\Pastor;
 use App\Auditoriafeligresia;
 use App\Cargogeneral;
 use App\Miembrojunta;
+use App\Agendajunta;
+use App\Agendajuntapunto;
 
 class JuntaController extends Controller {
 
@@ -266,6 +268,149 @@ class JuntaController extends Controller {
         } else {
             flash("El miembro no pudo ser eliminado de la junta.")->error();
             return redirect()->route('junta.miembros', [$f, $p, $j]);
+        }
+    }
+
+    /*
+     * agenda junta index
+     */
+
+    public function agendajuntaindex($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $agendas = Agendajunta::where('junta_id', $junta->id)->get();
+        return view('feligresia.ministerios.junta.agendajuntaindex')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('agendas', $agendas)
+                        ->with('j', $junta);
+    }
+
+    /*
+     * crear agenda junta
+     */
+
+    public function crearagendajunta(Request $request) {
+        $a = new Agendajunta($request->all());
+        $a->titulo = strtoupper($a->titulo);
+        if ($a->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "INSERCIÓN DE AGENDA DE JUNTA. DATOS: ";
+            foreach ($a->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La agenda fue agregada a la junta con exito.")->success();
+            return redirect()->route('junta.agendajuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        } else {
+            flash("La agenda no pudo ser agregada a la junta.")->error();
+            return redirect()->route('junta.agendajuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        }
+    }
+
+    /*
+     * permite eliminar los miembros de una junta
+     */
+
+    public function eliminaragendajunta($f, $p, $j, $a) {
+        $a = Agendajunta::find($a);
+        if ($a->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE AGENDAS DE JUNTA. DATOS: ";
+            foreach ($a->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La agenda fue eliminada de la junta con exito.")->success();
+            return redirect()->route('junta.agendajuntaindex', [$f, $p, $j]);
+        } else {
+            flash("La agenda no pudo ser eliminada de la junta.")->error();
+            return redirect()->route('junta.agendajuntaindex', [$f, $p, $j]);
+        }
+    }
+
+    /*
+     * puntos agenda junta index
+     */
+
+    public function puntosagendajuntaindex($f, $p, $j, $a) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $agenda = Agendajunta::find($a);
+        $agenda->agendajuntapuntos;
+        $junta->miembrojuntas;
+        return view('feligresia.ministerios.junta.agendajuntapuntosindex')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('agenda', $agenda)
+                        ->with('j', $junta);
+    }
+
+    /*
+     * puntos agenda junta crear
+     */
+
+    public function puntosagendajuntacrear(Request $request) {
+        $v = explode(";", $request->feligres_id);
+        $c = Cargogeneral::find($v[1]);
+        $a = new Agendajuntapunto();
+        $a->ministerio = $c->nombre . " - " . $c->ministerio->nombre;
+        $a->punto = strtoupper($request->punto);
+        $a->feligres_id = $v[0];
+        $a->agendajunta_id = $request->agendajunta_id;
+        if ($a->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "INSERCIÓN DE PUNTO DE AGENDA DE JUNTA. DATOS: ";
+            foreach ($a->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El punto de agenda fue agregado con exito.")->success();
+            return redirect()->route('junta.puntosagendajuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id, $request->agendajunta_id]);
+        } else {
+            flash("El punto de agenda no pudo ser agregado.")->error();
+            return redirect()->route('junta.puntosagendajuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id, $request->agendajunta_id]);
+        }
+    }
+
+    /*
+     * puntos agenda junta eliminar punto
+     */
+
+    public function puntosagendajuntaeliminarpunto($f, $p, $j, $a, $pu) {
+        $apu = Agendajuntapunto::find($pu);
+        if ($apu->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE PUNTOS DE AGENDAS DE JUNTA. DATOS: ";
+            foreach ($apu->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El punto fue eliminado de la agenda con exito.")->success();
+            return redirect()->route('junta.puntosagendajuntaindex', [$f, $p, $j, $a]);
+        } else {
+            flash("El punto no pudo ser eliminado de la agenda.")->error();
+            return redirect()->route('junta.puntosagendajuntaindex', [$f, $p, $j, $a]);
         }
     }
 

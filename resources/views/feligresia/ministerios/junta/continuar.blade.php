@@ -60,7 +60,7 @@
                             <a disabled="disabled" class="btn bg-blue-grey waves-effect">
                                 <div><span>REUNIONES DE LA JUNTA (GENERACIÓN DE ACTAS)</span><span class="ink animate"></span></div>
                             </a>
-                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                            <a href="{{route('junta.agendajuntaindex',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
                                 <div><span>AGENDA DE JUNTA DIRECTIVA</span><span class="ink animate"></span></div>
                             </a>
                             <a disabled="disabled" class="btn bg-blue-grey waves-effect">
