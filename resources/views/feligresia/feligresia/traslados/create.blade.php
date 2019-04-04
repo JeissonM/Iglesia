@@ -54,7 +54,7 @@
                                         <input class="form-control" type="text"  name="feligres" id="feligres" placeholder="Identificación del feligres" required="" />
                                     </div>
                                 </div>
-                                </br><h4>PROCEDENCIA</h4>
+                                </br><h4>IGLESIA DE PROCEDENCIA</h4>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Asociación</label>
@@ -64,12 +64,6 @@
                                             <option value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <label class="control-label">Distrito</label>
-                                        <select class="form-control"  style="width: 100%;" id="distrito_origen" name="distrito_origen" onchange="getIglesias(this.id, 'iglesia_origen')"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -91,28 +85,10 @@
                                         <input class="form-control" type="date" name="fechasolicitud" required="" />
                                     </div>
                                 </div>
-                                <h4>ACEPTADO EN</h4>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <label class="control-label">Asociación</label>
-                                        <select class="form-control"  style="width: 100%;" id="asociacion_destino" name="asociacion_destino" onchange="getDistritos(this.id, 'distrito_destino', 'iglesia_destino')">
-                                            <option value="">-- Seleccione una opción --</option>
-                                            @foreach($asociaciones as $key=>$value)
-                                            <option value="{{$key}}">{{$value}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Distrito</label>
-                                        <select class="form-control"  style="width: 100%;" id="distrito_destino" name="distrito_destino" onchange="getIglesias(this.id, 'iglesia_destino')"></select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-line">
-                                        <label class="control-label">Iglesia/Grupo</label>
-                                        <select class="form-control"  style="width: 100%;" id="iglesia_destino" name="iglesia_destino" required=""></select>
+                                        <select class="form-control"  style="width: 100%;" id="distrito_origen" name="distrito_origen" onchange="getIglesias(this.id, 'iglesia_origen')"></select>
                                     </div>
                                 </div>
                             </div>

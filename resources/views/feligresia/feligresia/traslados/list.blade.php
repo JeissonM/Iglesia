@@ -41,8 +41,8 @@
                                 <th>FECHA DE SOLICITUD</th>
                                 <th>IGLESIA ORIGEN</th>
                                 <th>IGLESIA DESTINO</th>
-                                <th>ACTA DESTINO</th>
                                 <th>ACTA ORIGEN</th>
+                                <th>ACTA DESTINO</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -58,25 +58,39 @@
                                 <td>{{$s->tiposolicitud}}</td>
                                 <td>{{$s->estado}}</td>
                                 <td>{{$s->fechasolicitud}}</td>
+                                @if($s->io != null)
                                 <td>{{$s->io}}</td>
+                                @else
+                                <td> -- </td>
+                                @endif
+                                @if($s->ide != null)
                                 <td>{{$s->ide}}</td>
-                                @if($s->ao == null)
+                                @else
+                                <td> -- </td>
+                                @endif
+                                @if($s->ao == 'NO')
                                 <td>Sin Acta</td>
                                 @else
                                 <td><a target="_blank" href="{{asset('docs/actas/'.$s->ao)}}">{{$s->ao}}</a></td>
                                 @endif
-                                @if($s->ad == null)
+                                @if($s->ad == 'NO')
                                 <td>Sin Acta</td>
                                 @else
                                 <td><a target="_blank" href="{{asset('docs/actas/'.$s->ad)}}">{{$s->ad}}</a></td>
                                 @endif
                                 <td>
-                                    <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Solicitud"><i class="material-icons">delete</i></a>
                                     @if($s->iglesia_destino == $secretario->iglesia_id)   
-                                    <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Aceptar Solicitud"><i class="material-icons">assignment_ind</i></a>
-                                    @else
-                                    <a href="{{ route('solicitud.procesar',$s->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Procesar Solicitud"><i class="material-icons">assignment</i></a>
+                                    <a href="{{ route('solicitud.delete',$s->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('solicitud.show',$s->id)}}" class="btn bg-pink waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Solicitud"><i class="material-icons">remove_red_eye</i></a>             
+                                    @if($s->estado == 'ACEPTADA')
+                                    <a href="{{ route('solicitud.edit',$s->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Finalizar Solicitud"><i class="material-icons">assignment_ind</i></a>
                                     @endif
+                                    @else
+                                    @if($s->estado != 'ACEPTADA' && $s->estado != 'RECHAZADA')
+                                    <a href="{{ route('solicitud.procesar',$s->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Procesar Solicitud"><i class="material-icons">assignment</i></a>
+                                    @endif 
+                                    <a href="{{ route('solicitud.show',$s->id)}}" class="btn bg-pink waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Solicitud"><i class="material-icons">remove_red_eye</i></a>      
+                                    @endif  
                                 </td>
                             </tr>
                             @endforeach

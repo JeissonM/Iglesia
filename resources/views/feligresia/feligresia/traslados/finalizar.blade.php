@@ -5,7 +5,7 @@
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('solicitud.index')}}">Traslados</a></li>
-    <li class="active"><a>Procesar Solicitud</a></li>
+    <li class="active"><a>Finalizar Solicitud</a></li>
 </ol>
 @endsection
 @section('content')
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    TRASLADO - PROCESAR SOLICITUD<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
+                    TRASLADO - FINALIZAR SOLICITUD<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -236,11 +236,8 @@
                         </div>
                         <div class="col-md-12">
                             <div class="button-demo">
-                                <a data-toggle="modal" data-target="#aceptar" class="btn bg-orange waves-effect">
-                                    <div><span>ACEPTAR</span><span class="ink animate"></span></div>
-                                </a>
-                                <a data-toggle="modal" data-target="#rechazar" class="btn bg-orange waves-effect">
-                                    <div><span>RECHAZAR</span><span class="ink animate"></span></div>
+                                <a data-toggle="modal" data-target="#finalizar" class="btn bg-orange waves-effect">
+                                    <div><span>FINALIZAR</span><span class="ink animate"></span></div>
                                 </a>
                             </div>
                         </div>
@@ -252,23 +249,23 @@
 </div>
 </div>
 <!-- ModalAceptar -->
-<div class="modal fade" id="aceptar" tabindex="-1" role="dialog">
+<div class="modal fade" id="finalizar" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">ACEPTAR SOLICITUD</h4>
+                <h4 class="modal-title" id="defaultModalLabel">FINALIZAR SOLICITUD</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role='form' method="POST" action="{{route('solicitud.update',$solicitud->id)}}">
+                <form class="form-horizontal" role='form' method="POST" action="{{route('solicitud.finalizar',$solicitud->id)}}">
                     @csrf 
                     <input name="_method" type="hidden" value="PUT" />
-                    <input type="hidden" name="iglesia_origen" id="iglesia_origen" value="{{$solicitud->iglesia_origen}}"/>
-                    <input type="hidden" name="estado" id="estado" value="ACEPTADA"/>
+                    <input type="hidden" name="iglesia_destino" id="iglesia_destino" value="{{$solicitud->iglesia_destino}}"/>
+                    <input type="hidden" name="estado" id="estado" value="FINALIZADA"/>
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
                                 <label class="control-label">Periodo</label>
-                                <select class="form-control"  style="width: 100%;" id="periodo_origen" name="periodo_origen" onchange="getActas(this.id, 'iglesia_origen', 'acta_origen')">
+                                <select class="form-control"  style="width: 100%;" id="periodo_origen" name="periodo_destino" onchange="getActas(this.id, 'iglesia_destino', 'acta_destino')">
                                     <option value="">-- Seleccione una opción --</option>
                                     @foreach($periodos as $key=>$value)
                                     <option value="{{$key}}">{{$value}}</option>
@@ -279,7 +276,7 @@
                         <div class="form-group">
                             <div class="form-line">
                                 <label class="control-label">Actas</label>
-                                <select class="form-control"  style="width: 100%;" id="acta_origen" name="acta_origen" required="required">
+                                <select class="form-control"  style="width: 100%;" id="acta_destino" name="acta_destino" required="required">
                                 </select>
                             </div>
                         </div>
@@ -287,61 +284,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-line">
-                                <br/><input class="form-control" type="text" id="observacion" placeholder="Observación" name="observacion_origen">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <br/><br/><a data-dismiss="modal" class="btn bg-red waves-effect">Cancelar</a>
-                            <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
-                            <button class="btn bg-green waves-effect" type="submit">Guardar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Rechazar -->
-<div class="modal fade" id="rechazar" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">RECHAZAR SOLICITUD</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role='form' method="POST" action="{{route('solicitud.update',$solicitud->id)}}">
-                    @csrf 
-                    <input name="_method" type="hidden" value="PUT" />
-                    <input type="hidden" name="iglesia_origen" id="iglesia_destino" value="{{$solicitud->iglesia_origen}}"/>
-                    <input type="hidden" name="estado" id="esatdo" value="RECHAZADA"/>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <label class="control-label">Periodo</label>
-                                <select class="form-control"  style="width: 100%;" id="periodo_destino" name="periodo_origen" onchange="getActas(this.id, 'iglesia_destino', 'acta_destino')">
-                                    <option value="">-- Seleccione una opción --</option>
-                                    @foreach($periodos as $key=>$value)
-                                    <option value="{{$key}}">{{$value}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-line">
-                                <label class="control-label">Actas</label>
-                                <select class="form-control"  style="width: 100%;" id="acta_destino" name="acta_origen" required="required">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <br/><input class="form-control" type="text" id="observacion" placeholder="Observación" name="observacion_origen">
+                                <br/><input class="form-control" type="text" id="observacion" placeholder="Observación" name="observacion_destino">
                             </div>
                         </div>
                     </div>
@@ -367,7 +310,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS TRASLADOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Rechace o acepte, </strong> las solicitudes de traslados.
+                <strong>Finalice, </strong> las solicitudes de traslados que usted ha realizado.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

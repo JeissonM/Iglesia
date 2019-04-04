@@ -151,4 +151,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('solicitud/get/{identificacion}/feligres', 'SolicitudtrasladoController@getfeligres')->name('solicitud.getfeligres');
     Route::get('solicitud/{periodo}/{iglesia}/getactas', 'SolicitudtrasladoController@getactas')->name('solicitud.getactas');
     Route::get('solicitud/{id}/procesar', 'SolicitudtrasladoController@procesar')->name('solicitud.procesar');
+    Route::put('solicitud/{id}/finalizar/solicitud', 'SolicitudtrasladoController@finalizar')->name('solicitud.finalizar');
 });

@@ -52,8 +52,12 @@ class SolicitudtrasladoController extends Controller {
                     $id = Iglesia::find($s->iglesia_destino);
                     $ao = Actajunta::find($s->acta_origen);
                     $ad = Actajunta::find($s->acta_destino);
-                    $s['io'] = $io->nombre;
-                    $s['ide'] = $id->nombre;
+                    if ($io != null) {
+                        $s['io'] = $io->nombre;
+                    }
+                    if ($id != null) {
+                        $s['ide'] = $id->nombre;
+                    }
                     if ($ao != null) {
                         $s['ao'] = $ao->documento;
                     }
@@ -96,6 +100,8 @@ class SolicitudtrasladoController extends Controller {
             $solicitud->$key = strtoupper($value);
         }
         $solicitud->tiposolicitud = 'SOLICITAR';
+        $feligres = Feligres::find($request->feligres_id);
+        $solicitud->iglesia_destino = $feligres->iglesia_id;
         $result = $solicitud->save();
         if ($result) {
             $u = Auth::user();
@@ -122,8 +128,25 @@ class SolicitudtrasladoController extends Controller {
      * @param  \App\Solicitudtraslado  $solicitudtraslado
      * @return \Illuminate\Http\Response
      */
-    public function show(Solicitudtraslado $solicitudtraslado) {
-        //
+    public function show($id) {
+        $solicitud = Solicitudtraslado::find($id);
+        $feligres = Feligres::find($solicitud->feligres_id);
+        $iglesiadestino = Iglesia::find($solicitud->iglesia_destino);
+        $iglesiaorigen = Iglesia::find($solicitud->iglesia_origen);
+        $ao = Actajunta::find($solicitud->acta_origen);
+        $ad = Actajunta::find($solicitud->acta_destino);
+        if ($ao != null) {
+            $solicitud['ao'] = $ao->documento;
+        }
+        if ($ad != null) {
+            $solicitud['ad'] = $ad->documento;
+        }
+        return view('feligresia.feligresia.traslados.show')
+                        ->with('location', 'feligresia')
+                        ->with('iglesiadestino', $iglesiadestino)
+                        ->with('f', $feligres)
+                        ->with('iglesiaorigen', $iglesiaorigen)
+                        ->with('solicitud', $solicitud);
     }
 
     /**
@@ -132,8 +155,31 @@ class SolicitudtrasladoController extends Controller {
      * @param  \App\Solicitudtraslado  $solicitudtraslado
      * @return \Illuminate\Http\Response
      */
-    public function edit(Solicitudtraslado $solicitudtraslado) {
-        //
+    public function edit($id) {
+        $solicitud = Solicitudtraslado::find($id);
+        $iglesiadestino = Iglesia::find($solicitud->iglesia_destino);
+        $pastord = Pastor::where('distrito_id', $iglesiadestino->distrito_id)->first();
+        $feligres = Feligres::find($solicitud->feligres_id);
+        $miembrojunta = Miembrojunta::where('feligres_id', $feligres->id)->get();
+        $periodos = Periodo::all()->pluck('etiqueta', 'id');
+        $historialsoli = Solicitudtraslado::where('feligres_id', $feligres->id)->get();
+        if ($historialsoli != null) {
+            foreach ($historialsoli as $h) {
+                $io = Iglesia::find($h->iglesia_origen);
+                $id = Iglesia::find($h->iglesia_destino);
+                $h['io'] = $io->nombre;
+                $h['ide'] = $id->nombre;
+            }
+        }
+        return view('feligresia.feligresia.traslados.finalizar')
+                        ->with('location', 'feligresia')
+                        ->with('iglesiadestino', $iglesiadestino)
+                        ->with('pastord', $pastord)
+                        ->with('f', $feligres)
+                        ->with('miembrojunta', $miembrojunta)
+                        ->with('historialsoli', $historialsoli)
+                        ->with('periodos', $periodos)
+                        ->with('solicitud', $solicitud);
     }
 
     /**
@@ -281,6 +327,51 @@ class SolicitudtrasladoController extends Controller {
                         ->with('historialsoli', $historialsoli)
                         ->with('periodos', $periodos)
                         ->with('solicitud', $solicitud);
+    }
+
+    /*
+     * procesa las solicitudes que le hacen a mi iglesia
+     * 
+     * @params {id}
+     * @return \Illuminate\Http\Response
+     */
+
+    public function finalizar(Request $request, $id) {
+        $solicitud = Solicitudtraslado::find($id);
+        $m = new Solicitudtraslado($solicitud->attributesToArray());
+        foreach ($solicitud->attributesToArray() as $key => $value) {
+            if (isset($request->$key)) {
+                $solicitud->$key = strtoupper($request->$key);
+            }
+        }
+        $result = $solicitud->save();
+        if ($result) {
+            $feligres = Feligres::find($solicitud->feligres_id);
+            $iglesiad = Iglesia::find($solicitud->iglesia_destino);
+            $feligres->asociacion_destino = $iglesiad->distrito->asociacion_id;
+            $feligres->distrito_destino = $iglesiad->distrito_id;
+            $feligres->iglesia_destino = $iglesiad->id;
+            $feligres->save();
+            $aud = new Auditoriafeligresia();
+            $u = Auth::user();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR DATOS";
+            $str = "PROCESO DE SOLICITUD DE TRASLADO 'FINALIZAR': ";
+            $str2 = " DATOS ANTIGUOS: ";
+            foreach ($m->attributesToArray() as $key => $value) {
+                $str2 = $str2 . ", " . $key . ": " . $value;
+            }
+            foreach ($solicitud->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str . " - " . $str2;
+            $aud->save();
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->primer_apellido . "</strong> fue finalizada de forma exitosa!")->success();
+            return redirect()->route('solicitud.index');
+        } else {
+            flash("La solicitud del feligres <strong>" . $solicitud->feligres->personanatural->primer_nombre . " " . $solicitud->feligres->personanatural->apellido_apellido . "</strong> no pudo ser finalizada. Error: " . $result)->error();
+            return redirect()->route('solicitud.index');
+        }
     }
 
 }
