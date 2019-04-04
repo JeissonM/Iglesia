@@ -62,8 +62,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/>
-                                        <label>Seleccione el Cargo Para el Miembro</label>
+                                        <br/><label>Seleccione el Cargo Para el Miembro</label>
                                         <select class="form-control show-tick select2" name="cargogeneral_id" required="">
                                             @foreach($cargos as $key=>$value)
                                             <option value="{{$key}}">{{$value}}</option>
@@ -73,8 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/>
-                                        <label>Seleccione el Miembro</label>
+                                        <br/><label>Seleccione el Miembro</label>
                                         <select class="form-control show-tick select2" name="feligres_id" required="">
                                             @foreach($feligreses as $f)
                                             <option value="{{$f->id}}">{{$f->personanatural->primer_nombre." ".$f->personanatural->segundo_nombre." ".$f->personanatural->primer_apellido." ".$f->personanatural->segundo_apellido}}</option>

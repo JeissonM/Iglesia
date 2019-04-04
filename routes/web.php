@@ -138,6 +138,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros/crear/miembro', 'JuntaController@crearmiembro')->name('junta.crearmiembro');
     Route::post('junta/menu/periodo/continuar/menu/miembros/agregar/miembro', 'JuntaController@agregarmiembro')->name('junta.agregarmiembro');
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros/{miembro}/eliminar/miembro/cargo', 'JuntaController@eliminarmiembro')->name('junta.eliminarmiembro');
+    //AGENDA DE REUNIÓN DE JUNTA
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/agenda/junta', 'JuntaController@agendajuntaindex')->name('junta.agendajuntaindex');
+    Route::post('junta/menu/periodo/continuar/menu/agenda/junta/crearagendajunta', 'JuntaController@crearagendajunta')->name('junta.crearagendajunta');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/agenda/junta/{agendajunta}/eliminaragendajunta', 'JuntaController@eliminaragendajunta')->name('junta.eliminaragendajunta');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/agenda/junta/{agendajunta}/puntosagendajunta/index', 'JuntaController@puntosagendajuntaindex')->name('junta.puntosagendajuntaindex');
+    Route::post('junta/menu/periodo/continuar/menu/agenda/junta/puntosagendajunta/index/crearpunto', 'JuntaController@puntosagendajuntacrear')->name('junta.puntosagendajuntacrear');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/agenda/junta/{agendajunta}/puntosagendajunta/{punto}/eliminarpunto', 'JuntaController@puntosagendajuntaeliminarpunto')->name('junta.puntosagendajuntaeliminarpunto');
     //TRASLADOS DE FELIGRESIA
     Route::resource('solicitud', 'SolicitudtrasladoController');
     Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitud.delete');
