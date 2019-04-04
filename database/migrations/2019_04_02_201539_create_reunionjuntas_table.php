@@ -15,7 +15,15 @@ class CreateReunionjuntasTable extends Migration {
         Schema::create('reunionjuntas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo');
-            
+            $table->date('fecha');
+            $table->text('asistentes');
+            $table->text('conlusiones');
+            $table->bigInteger('junta_id')->unsigned();
+            $table->foreign('junta_id')->references('id')->on('juntas')->onDelete('cascade');
+            $table->bigInteger('agendajunta_id')->unsigned();
+            $table->foreign('agendajunta_id')->references('id')->on('agendajuntas')->onDelete('cascade');
+            $table->bigInteger('actajunta_id')->unsigned();
+            $table->foreign('actajunta_id')->references('id')->on('actajuntas')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class Actajunta extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'created_at', 'updated_at'
+        'id', 'documento', 'junta_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -23,5 +23,13 @@ class Actajunta extends Model {
     protected $hidden = [
             //
     ];
+
+    public function junta() {
+        return $this->belongsTo('App\Junta');
+    }
+    
+    public function reunionjuntas() {
+        return $this->hasMany('App\Reunionjunta');
+    }
 
 }

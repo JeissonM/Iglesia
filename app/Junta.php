@@ -35,9 +35,21 @@ class Junta extends Model {
     public function periodo() {
         return $this->belongsTo('App\Periodo');
     }
-    
+
     public function miembrojuntas() {
         return $this->hasMany('App\Miembrojunta');
+    }
+
+    public function actajuntas() {
+        return $this->hasMany('App\Actajunta');
+    }
+
+    public function agendajuntas() {
+        return $this->hasMany('App\Agendajunta');
+    }
+    
+    public function reunionjuntas() {
+        return $this->hasMany('App\Reunionjunta');
     }
 
 }
