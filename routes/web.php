@@ -147,6 +147,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/agenda/junta/{agendajunta}/puntosagendajunta/{punto}/eliminarpunto', 'JuntaController@puntosagendajuntaeliminarpunto')->name('junta.puntosagendajuntaeliminarpunto');
     //REUNIONES DE JUNTA Y ACTAS
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/reuniones/junta', 'JuntaController@reunionjuntaindex')->name('junta.reunionjuntaindex');
+    Route::post('junta/menu/periodo/continuar/menu/reuniones/junta/agregar/reunion', 'JuntaController@reunionjuntaagregar')->name('junta.reunionjuntaagregar');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/reuniones/{reunion}/junta/ver', 'JuntaController@reunionjuntaver')->name('junta.reunionjuntaver');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/reuniones/junta/{reunion}/delete', 'JuntaController@reunionjuntadelete')->name('junta.reunionjuntadelete');
     //TRASLADOS DE FELIGRESIA
     Route::resource('solicitud', 'SolicitudtrasladoController');
     Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitud.delete');
