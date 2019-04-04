@@ -57,7 +57,7 @@
                             <a href="{{route('junta.miembros',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
                                 <div><span>MIEMBROS DE LA JUNTA</span><span class="ink animate"></span></div>
                             </a>
-                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                            <a href="{{route('junta.reunionjuntaindex',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
                                 <div><span>REUNIONES DE LA JUNTA (GENERACIÓN DE ACTAS)</span><span class="ink animate"></span></div>
                             </a>
                             <a href="{{route('junta.agendajuntaindex',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">

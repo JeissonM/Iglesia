@@ -16,6 +16,8 @@ use App\Cargogeneral;
 use App\Miembrojunta;
 use App\Agendajunta;
 use App\Agendajuntapunto;
+use App\Reunionjunta;
+use App\Actajunta;
 
 class JuntaController extends Controller {
 
@@ -412,6 +414,117 @@ class JuntaController extends Controller {
             flash("El punto no pudo ser eliminado de la agenda.")->error();
             return redirect()->route('junta.puntosagendajuntaindex', [$f, $p, $j, $a]);
         }
+    }
+
+    /*
+     * reunion junta index
+     */
+
+    public function reunionjuntaindex($f, $p, $j) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $reuniones = Reunionjunta::where('junta_id', $j)->get();
+        $agendas = Agendajunta::where('junta_id', $j)->get();
+        return view('feligresia.ministerios.junta.reunionjuntaindex')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('j', $junta)
+                        ->with('reuniones', $reuniones)
+                        ->with('agendas', $agendas);
+    }
+
+    /*
+     * reunion junta agregar
+     */
+
+    public function reunionjuntaagregar(Request $request) {
+        $r = new Reunionjunta();
+        $r->titulo = strtoupper($request->titulo);
+        $r->fecha = $request->fecha;
+        $r->asistentes = strtoupper($request->asistentes);
+        $r->conclusiones = strtoupper($request->conclusiones);
+        $r->junta_id = $request->junta_id;
+        $r->agendajunta_id = $request->agendajunta_id;
+        if ($r->save()) {
+            $aj = new Actajunta();
+            $aj->junta_id = $request->junta_id;
+            if ($request->hasFile('acta')) {
+                $file = $request->file("acta");
+                $name = "ACTA_" . $r->id . "_" . $file->getClientOriginalName();
+                $path = public_path() . "/docs/actas/";
+                $file->move($path, $name);
+                $aj->documento = $name;
+            } else {
+                $aj->documento = "NO";
+            }
+            $aj->save();
+            $r->actajunta_id = $aj->id;
+            $r->save();
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "INSERCIÓN DE REUNIÓN DE JUNTA. DATOS: ";
+            foreach ($r->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La reunión fue agregada con exito.")->success();
+            return redirect()->route('junta.reunionjuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        } else {
+            flash("La reunión no pudo ser agregada.")->error();
+            return redirect()->route('junta.reunionjuntaindex', [$request->secretario_id, $request->periodo_id, $request->junta_id]);
+        }
+    }
+
+    /*
+     * junta reunion junta delete
+     */
+
+    public function reunionjuntadelete($f, $p, $j, $r) {
+        $r = Reunionjunta::find($r);
+        $path = $r->actajunta->documento;
+        $r->actajunta->delete();
+        if ($r->delete()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE REUNIONES DE JUNTA. DATOS: ";
+            foreach ($r->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            unlink(public_path() . "/docs/actas/" . $path);
+            flash("La reunión fue eliminada de la junta con exito.")->success();
+            return redirect()->route('junta.reunionjuntaindex', [$f, $p, $j]);
+        } else {
+            flash("La reunión no pudo ser eliminada de la junta.")->error();
+            return redirect()->route('junta.reunionjuntaindex', [$f, $p, $j]);
+        }
+    }
+
+    /*
+     * reunionjunta ver
+     */
+
+    public function reunionjuntaver($f, $p, $j, $r) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $reunion = Reunionjunta::find($r);
+        $reunion->agendajunta;
+        $reunion->actajunta;
+        return view('feligresia.ministerios.junta.reunionjuntaver')
+                        ->with('location', 'feligresia')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('j', $junta)
+                        ->with('r', $reunion);
     }
 
 }
