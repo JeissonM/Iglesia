@@ -5,7 +5,7 @@
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
     <li><a href="{{route('junta.index')}}">Junta de Iglesia</a></li>
-    <li><a href="{{route('junta.index')}}">Continuar</a></li>
+    <li><a href="{{route('junta.continuar',[$f->id,$p->id])}}">Continuar</a></li>
     <li><a href="{{route('junta.miembros',[$f->id,$p->id,$j->id])}}">Miembros de la Junta</a></li>
     <li class="active"><a>Crear Miembro</a></li>
 </ol>
@@ -64,9 +64,11 @@
                                     <div class="form-line">
                                         <br/><label>Seleccione el Cargo Para el Miembro</label>
                                         <select class="form-control show-tick select2" name="cargogeneral_id" required="">
+                                            @if($cargos!=null)
                                             @foreach($cargos as $key=>$value)
                                             <option value="{{$key}}">{{$value}}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

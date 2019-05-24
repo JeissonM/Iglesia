@@ -51,5 +51,9 @@ class Feligres extends Model {
     public function agendajuntapuntos() {
         return $this->hasMany('App\Agendajuntapunto');
     }
+    
+    public function disciplinas() {
+        return $this->hasMany('App\Disciplina');
+    }
 
 }

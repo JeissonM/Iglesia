@@ -5,7 +5,7 @@
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
     <li><a href="{{route('junta.index')}}">Junta de Iglesia</a></li>
-    <li><a href="{{route('junta.index')}}">Continuar</a></li>
+    <li><a href="{{route('junta.continuar',[$f->id,$p->id])}}">Continuar</a></li>
     <li><a href="{{route('junta.reunionjuntaindex',[$f->id,$p->id,$j->id])}}">Reuniones de la Junta</a></li>
     <li class="active"><a>Ver Reunión</a></li>
 </ol>
@@ -40,11 +40,52 @@
                                     <td class="contact">{{$j->pastor->personanatural->primer_nombre." ".$j->pastor->personanatural->segundo_nombre." ".$j->pastor->personanatural->primer_apellido." ".$j->pastor->personanatural->segundo_apellido}}</td>
                                     <td class="subject">{{$j->iglesia->nombre." - ".$j->iglesia->distrito->nombre}}</td>
                                 </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>JUNTA</b></td>
+                                    <td class="contact"><b>VIGENTE</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$j->etiqueta}}</td>
+                                    <td class="subject">{{$j->vigente}}</td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>AGENDA</b></td>
+                                    <td class="contact"><b>PUNTOS AGENDA</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$r->agendajunta->titulo}}</td>
+                                    <td class="subject">
+                                        <ul>
+                                            @foreach($r->agendajunta->agendajuntapuntos as $ajp)
+                                            <li>{{$ajp->punto." - ".$ajp->ministerio." (".$ajp->feligres->personanatural->primer_nombre." ".$ajp->feligres->personanatural->segundo_nombre." ".$ajp->feligres->personanatural->primer_apellido." ".$ajp->feligres->personanatural->segundo_apellido.")"}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>REUNIÓN</b></td>
+                                    <td class="contact"><b>FECHA</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$r->titulo}}</td>
+                                    <td class="subject">{{$r->fecha}}</td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact"><b>ASISTENTES</b></td>
+                                    <td class="contact"><b>CONCLUSIONES</b></td>
+                                </tr>
+                                <tr class="read">
+                                    <td class="contact">{{$r->asistentes}}</td>
+                                    <td class="subject">{{$r->conclusiones}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-12">
-                        
+                        <h3>ACTA DE REUNIÓN DE LA JUNTA</h3>
+                        @if($r->actajunta->documento!='')
+                        <iframe src="{{asset('docs/actas/'.$r->actajunta->documento)}}" width="100%" height="800px"></iframe>
+                        @endif
                     </div>
                 </div>
             </div>

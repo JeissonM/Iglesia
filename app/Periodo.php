@@ -27,4 +27,8 @@ class Periodo extends Model
     public function juntas() {
         return $this->hasMany('App\Junta');
     }
+    
+    public function disciplinas() {
+        return $this->hasMany('App\Disciplina');
+    }
 }

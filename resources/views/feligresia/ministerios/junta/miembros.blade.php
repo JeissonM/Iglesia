@@ -5,7 +5,7 @@
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
     <li><a href="{{route('junta.index')}}">Junta de Iglesia</a></li>
-    <li><a href="{{route('junta.index')}}">Continuar</a></li>
+    <li><a href="{{route('junta.continuar',[$f->id,$p->id])}}">Continuar</a></li>
     <li class="active"><a>Miembros de la Junta</a></li>
 </ol>
 @endsection

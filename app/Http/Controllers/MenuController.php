@@ -32,22 +32,22 @@ class MenuController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function operaciones() {
-        $persona = Persona::where('numero_documento', $_POST["id"])->first();
+    public function operaciones(Request $request) {
+        $persona = Persona::where('numero_documento', $request->id)->first();
         if ($persona == null) {
             flash("<strong>La Persona</strong> consultada no se encuentra registrada!")->error();
-            return redirect()->route('pastor.index');
+            return redirect()->route('admin.feligresia');
         }
         $personanatural = Personanatural::where('persona_id', $persona->id)->first();
         if ($personanatural != null) {
             $feligres = Feligres::where('personanatural_id', $personanatural->id)->first();
         } else {
             flash("<strong>La Persona</strong> consultada no se encuentra registrada como persona natural!")->error();
-            return redirect()->route('pastor.index');
+            return redirect()->route('admin.feligresia');
         }
         if ($feligres == null) {
             flash("<strong>La Persona</strong> consultada no se encuentra registrada como feligres!")->error();
-            return redirect()->route('pastor.index');
+            return redirect()->route('admin.feligresia');
         }
         $feligres->personanatural;
         return view('feligresia.feligresia.experiencia.menu')

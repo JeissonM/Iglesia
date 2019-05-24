@@ -35,5 +35,9 @@ class Reunionjunta extends Model {
     public function actajunta() {
         return $this->belongsTo('App\Actajunta');
     }
+    
+    public function disciplinas() {
+        return $this->hasMany('App\Disciplina');
+    }
 
 }

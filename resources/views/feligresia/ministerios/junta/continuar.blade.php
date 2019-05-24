@@ -55,7 +55,7 @@
                     <div class="col-md-12">
                         <div class="button-demo">
                             <a href="{{route('junta.miembros',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
-                                <div><span>MIEMBROS DE LA JUNTA</span><span class="ink animate"></span></div>
+                                <div><span>GESTIONAR MIEMBROS DE LA JUNTA</span><span class="ink animate"></span></div>
                             </a>
                             <a href="{{route('junta.reunionjuntaindex',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
                                 <div><span>REUNIONES DE LA JUNTA (GENERACIÓN DE ACTAS)</span><span class="ink animate"></span></div>
@@ -63,12 +63,23 @@
                             <a href="{{route('junta.agendajuntaindex',[$f->id,$p->id,$junta->id])}}" class="btn bg-blue-grey waves-effect">
                                 <div><span>AGENDA DE JUNTA DIRECTIVA</span><span class="ink animate"></span></div>
                             </a>
-                            <a disabled="disabled" class="btn bg-blue-grey waves-effect">
+                            <a onclick="javascript:$('#alert').fadeIn();" class="btn bg-blue-grey waves-effect">
                                 <div><span>CIERRE DE PERÍODO DE JUNTA</span><span class="ink animate"></span></div>
                             </a>
                             <a href="{{route('junta.delete',$junta->id)}}" class="btn bg-red waves-effect">
                                 <div><span>ELIMINAR ÉSTA JUNTA</span><span class="ink animate"></span></div>
                             </a>
+                            <div id="alert" style="display: none" class="alert alert-warning alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                Está a punto de cerrar el período de la junta actual. Si lo hace, no podra realizar ninguna operación sobre la junta constituida. Éste proceso se realiza una vez entre en vigencia una nueva junta directiva para el siguiente período ecleciástico en vigor.
+                                <br>¿Desea continuar?<br><br>
+                                <a onclick="javascript:$('#alert').fadeOut();" class="btn bg-info waves-effect">
+                                    <div><span>CANCELAR</span><span class="ink animate"></span></div>
+                                </a>
+                                <a href="{{route('junta.cerrarjunta',$junta->id)}}" class="btn bg-primary waves-effect">
+                                    <div><span>CONTINUAR</span><span class="ink animate"></span></div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @else

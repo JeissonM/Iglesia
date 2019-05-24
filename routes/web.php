@@ -132,7 +132,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //JUNTA DE IGLESIA
     Route::resource('junta', 'JuntaController');
     Route::get('junta/{id}/delete', 'JuntaController@destroy')->name('junta.delete');
-    Route::post('junta/menu/periodo/continuar', 'JuntaController@continuar')->name('junta.continuar');
+    Route::get('junta/menu/{feligres}/periodo/{periodo}/continuar', 'JuntaController@continuar')->name('junta.continuar');
+    Route::get('junta/{id}/cerrarjunta', 'JuntaController@cerrarJunta')->name('junta.cerrarjunta');
     //MIEMBROS DE JUNTA
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros', 'JuntaController@miembros')->name('junta.miembros');
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/miembros/crear/miembro', 'JuntaController@crearmiembro')->name('junta.crearmiembro');
@@ -150,6 +151,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::post('junta/menu/periodo/continuar/menu/reuniones/junta/agregar/reunion', 'JuntaController@reunionjuntaagregar')->name('junta.reunionjuntaagregar');
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/reuniones/{reunion}/junta/ver', 'JuntaController@reunionjuntaver')->name('junta.reunionjuntaver');
     Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/{junta}/reuniones/junta/{reunion}/delete', 'JuntaController@reunionjuntadelete')->name('junta.reunionjuntadelete');
+    Route::get('junta/menu/periodo/continuar/menu/{feligres}/{periodo}/reuniones/obtenerreunion', 'JuntaController@getReunion')->name('junta.getreunion');
     //TRASLADOS DE FELIGRESIA
     Route::resource('solicitud', 'SolicitudtrasladoController');
     Route::get('solicitud/{id}/delete', 'SolicitudtrasladoController@destroy')->name('solicitud.delete');
@@ -157,4 +159,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('solicitud/{periodo}/{iglesia}/getactas', 'SolicitudtrasladoController@getactas')->name('solicitud.getactas');
     Route::get('solicitud/{id}/procesar', 'SolicitudtrasladoController@procesar')->name('solicitud.procesar');
     Route::put('solicitud/{id}/finalizar/solicitud', 'SolicitudtrasladoController@finalizar')->name('solicitud.finalizar');
+    //APLICAR DISCIPLINA
+    Route::resource('disciplina', 'DisciplinaController');
+    Route::get('disciplina/{id}/inicio', 'DisciplinaController@inicio')->name('disciplina.inicio');
 });

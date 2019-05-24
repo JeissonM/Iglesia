@@ -170,7 +170,7 @@
                                     </a>
                                     @endif
                                     @if(session()->exists('PAG_DISCIPLINA'))
-                                    <a disabled='disabled' class="btn bg-deep-orange waves-effect">
+                                    <a data-toggle="modal" data-target="#consultar2" class="btn bg-deep-orange waves-effect">
                                         <div><span>DISCIPLINA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
@@ -215,4 +215,46 @@
         </div>
     </div>
 </div>
+<!-- Modal Consultar2 -->
+<div class="modal fade" id="consultar2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">APLICAR/CONSULTAR DISCIPLINA</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row clearfix">
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="idc" class="form-control" placeholder="Escriba la identificación a consultar" name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <button onclick="enviar()" class="btn bg-orange waves-effect btn-block">CONSULTAR FELIGRES</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function enviar() {
+        location.href = url + "feligresia/disciplina/" + $("#idc").val() + "/inicio";
+    }
+</script>
 @endsection

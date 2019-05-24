@@ -3,8 +3,9 @@
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li><a href="{{route('admin.feligresia')}}">Ministerios</a></li>
-    <li class="active"><a>Junta de Iglesia</a></li>
+    <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
+    <li><a href="{{route('estadocivil.index')}}">Estado Civil</a></li>
+    <li class="active"><a>Crear Estado Civil</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,7 +14,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    JUNTA DE IGLESIA<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
+                    ESTADO CIVIL - CREAR ESTADO<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -27,26 +28,28 @@
                 </ul>
             </div>
             <div class="body">
+                <div class="col-md-12">
+                    @component('layouts.errors')
+                    @endcomponent
+                </div>
+                <h1 class="card-inside-title">DATOS DEL ESTADO</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form-horizontal" method="POST">
-                            @csrf
-                            <input type="hidden" name="feligres_id" id="feligres_id" value="{{$f->id}}" />
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('estadocivil.store')}}">
+                            @csrf 
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label>Período Ecleciástico</label>
-                                        <br/><select class="form-control show-tick select2" name="periodo_id" id="periodo_id" required="">
-                                            @foreach($periodos as $key=>$value)
-                                            <option value="{{$key}}">{{$value}}</option>
-                                            @endforeach
-                                        </select>
+                                        <br/><input class="form-control" type="text" placeholder="Descripción del estado" name="descripcion">    
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button class="btn bg-green waves-effect" type="button" onclick="enviar()">Continuar</button>
+                                    <br/><br/><a href="{{route('estadocivil.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
+                                    <button class="btn bg-green waves-effect" type="submit">Guardar</button>
+
                                 </div>
                             </div>
                         </form>
@@ -59,12 +62,12 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-blue-grey">
+        <div class="modal-content modal-col-orange">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LA JUNTA DIRECTIVA</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS ESTADOS CIVIL</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong> La junta directiva es la máxima autoridad de la iglesia local y es precedida por el pastor del distrito. En éste apartado puede crear o gestionar la información de la junta directiva de su iglesia para un período ecleciástico vigente.
+                <strong>Agregue nuevo estado civil,</strong>Administre los diferentes estados civil.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
@@ -72,15 +75,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('script')
-<script type="text/javascript">
-    $(document).ready(function () {
-        //$('#tabla').DataTable();
-    });
-
-    function enviar() {
-        location.href = url + "feligresia/junta/menu/" + $("#feligres_id").val() + "/periodo/" + $("#periodo_id").val() + "/continuar";
-    }
-</script>
 @endsection

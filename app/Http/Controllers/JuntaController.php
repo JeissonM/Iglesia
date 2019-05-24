@@ -34,7 +34,7 @@ class JuntaController extends Controller {
             if ($pn !== null) {
                 $f = Feligres::where([['personanatural_id', $pn->id], ['estado_actual', 'ACTIVO']])->first();
                 if ($f !== null) {
-                    $per = Periodo::all();
+                    $per = Periodo::all()->sortByDesc('id');
                     $periodos = null;
                     foreach ($per as $pe) {
                         $periodos[$pe->id] = $pe->etiqueta . " - " . $pe->fechainicio . " - " . $pe->fechafin;
@@ -61,9 +61,9 @@ class JuntaController extends Controller {
      * muestra menu de junta
      */
 
-    public function continuar(Request $request) {
-        $f = Feligres::find($request->feligres_id);
-        $p = Periodo::find($request->periodo_id);
+    public function continuar($feligres_id, $periodo_id) {
+        $f = Feligres::find($feligres_id);
+        $p = Periodo::find($periodo_id);
         $junta = Junta::where([['iglesia_id', $f->iglesia_id], ['periodo_id', $p->id], ['vigente', 'SI']])->first();
         return view('feligresia.ministerios.junta.continuar')
                         ->with('location', 'feligresia')
@@ -525,6 +525,45 @@ class JuntaController extends Controller {
                         ->with('p', $periodo)
                         ->with('j', $junta)
                         ->with('r', $reunion);
+    }
+
+    public function cerrarJunta($id) {
+        $junta = Junta::find($id);
+        $junta->vigente = "NO";
+        if ($junta->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ACTUALIZAR";
+            $str = "ACTUALIZAR SITUACIÓN DE JUNTA, CERRAR JUNTA. DATOS: ";
+            foreach ($junta->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La junta fue cerrada con exito.")->success();
+            return redirect()->route('junta.index');
+        } else {
+            flash("La junta no pudo ser cerrada.")->error();
+            return redirect()->route('junta.index');
+        }
+    }
+
+    public function getReunion($f, $p) {
+        $fel = Feligres::find($f);
+        $response['error'] = "NO";
+        $junta = Junta::where([['iglesia_id', $fel->iglesia_id], ['periodo_id', $p]])->first();
+        if ($junta !== null) {
+            $reu = $junta->reunionjuntas;
+            if (count($reu) > 0) {
+                foreach ($reu as $r) {
+                    $response['data'][$r->id] = $r->titulo . " (" . $r->fecha . ")";
+                }
+            }
+        } else {
+            $response['error'] = "SI";
+        }
+        return json_encode($response);
     }
 
 }
