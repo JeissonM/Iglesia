@@ -174,7 +174,7 @@
                                         <div><span>DISCIPLINA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
-                                    @if(session()->exists('PAG_DISCIPLINA'))
+                                    @if(session()->exists('PAG_SITUACION-FELIGRES'))
                                     <a href="{{route('admin.situacion')}}" class="btn bg-deep-orange waves-effect">
                                         <div><span>SITUACIÓN</span><span class="ink animate"></span></div>
                                     </a>

@@ -35,16 +35,12 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="button-demo">
-                            @if(session()->exists('PAG_TIPODOCUMENTO'))
                             <a href="{{route('situacion.index')}}" class="btn bg-deep-orange waves-effect">
                                 <div><span>GESTIÓN DE SITUACIONES</span><span class="ink animate"></span></div>
                             </a>
-                            @endif
-                            @if(session()->exists('PAG_ESTADOCIVIL'))
                             <a data-toggle="modal" data-target="#consultar" class="btn bg-deep-orange waves-effect">
                                 <div><span>ACTUALIZAR SITUACIÓN/ESTADO DEL FELIGRES</span><span class="ink animate"></span></div>
                             </a>
-                            @endif
                         </div>
                     </div>
                 </div>
