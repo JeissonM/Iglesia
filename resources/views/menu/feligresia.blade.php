@@ -179,6 +179,11 @@
                                         <div><span>SITUACIÓN</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
+                                    @if(session()->exists('PAG_EXPERIENCIA-FELIGRES-FELIGRES'))
+                                    <a href="{{route('admin.experienciafeligres')}}" class="btn bg-deep-orange waves-effect">
+                                        <div><span>EXPERIENCIA</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

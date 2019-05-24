@@ -56,16 +56,12 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="button-demo">
-                            @if(session()->exists('PAG_TIPODOCUMENTO'))
                             <a href="{{route('experiencialabor.index2',$feligres->id)}}" class="btn bg-deep-orange waves-effect">
                                 <div><span>TRABAJO/LABOR</span><span class="ink animate"></span></div>
                             </a>
-                            @endif
-                            @if(session()->exists('PAG_ESTADOCIVIL'))
                             <a href="{{route('conocimiento.index2',$feligres->id)}}" class="btn bg-deep-orange waves-effect">
                                 <div><span>CONOCIMIENTOS</span><span class="ink animate"></span></div>
                             </a>
-                            @endif
                         </div>
                     </div>
                 </div>
