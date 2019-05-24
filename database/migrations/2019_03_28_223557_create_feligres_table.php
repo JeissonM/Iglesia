@@ -29,6 +29,9 @@ class CreateFeligresTable extends Migration {
             $table->foreign('iglesia_id')->references('id')->on('iglesias')->onDelete('cascade');
             $table->bigInteger('personanatural_id')->unsigned();
             $table->foreign('personanatural_id')->references('id')->on('personanaturals')->onDelete('cascade');
+            $table->bigInteger('situacionfeligres_id')->unsigned();
+            $table->foreign('situacionfeligres_id')->references('id')->on('situacionfeligres')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

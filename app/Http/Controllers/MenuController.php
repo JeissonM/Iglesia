@@ -26,6 +26,15 @@ class MenuController extends Controller {
     public function feligresia() {
         return view('menu.feligresia')->with('location', 'feligresia');
     }
+    
+     /**
+     * Show the view menu situaciones.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function situacion() {
+        return view('menu.situacion')->with('location', 'feligresia');
+    }
 
     /**
      * Show the form for make operations width a resource.

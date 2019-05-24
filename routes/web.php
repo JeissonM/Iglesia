@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('usuarios', 'MenuController@usuarios')->name('admin.usuarios');
     Route::get('feligresia', 'MenuController@feligresia')->name('admin.feligresia');
+    Route::get('situacion', 'MenuController@situacion')->name('admin.situacion');
     Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuController@operaciones')->name('admin.operaciones');
     Route::post('acceso', 'HomeController@confirmaRol')->name('rol');
     Route::get('inicio', 'HomeController@inicio')->name('inicio');
@@ -157,4 +158,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('solicitud/{periodo}/{iglesia}/getactas', 'SolicitudtrasladoController@getactas')->name('solicitud.getactas');
     Route::get('solicitud/{id}/procesar', 'SolicitudtrasladoController@procesar')->name('solicitud.procesar');
     Route::put('solicitud/{id}/finalizar/solicitud', 'SolicitudtrasladoController@finalizar')->name('solicitud.finalizar');
+    //SITUACIÓN
+    Route::resource('situacion', 'SituacionfeligresController');
+    Route::get('situacion/{id}/delete', 'SituacionfeligresController@destroy')->name('situacion.delete');
+    Route::get('situacion/list/index2', 'SituacionfeligresController@index2')->name('situacion.index2');
+    Route::post('situacion/actualizar/operaciones/consultar/traer', 'SituacionfeligresController@getfeligres')->name('situacion.getfeligres');
+    Route::post('situacion/actualizar/situacion/estado', 'SituacionfeligresController@actualizar')->name('situacion.actualizar');
+    
 });
