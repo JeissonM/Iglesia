@@ -27,6 +27,21 @@
                         <div><span>AGENDA ASOCIACIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_DIRECTORIO-FELIGRES'))
+                    <a disabled="disabled" class="btn bg-blue waves-effect">
+                        <div><span>DIRECTORIO DE FELIGRESES</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
+                    @if(session()->exists('PAG_DIRECTORIO-IGLESIAS'))
+                    <a disabled="disabled" class="btn bg-blue waves-effect">
+                        <div><span>DIRECTORIO DE IGLESIAS</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
+                    @if(session()->exists('PAG_JARDIN-ORACION'))
+                    <a disabled="disabled" class="btn bg-blue waves-effect">
+                        <div><span>JARDÍN DE ORACIÓN</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>
