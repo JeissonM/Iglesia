@@ -179,7 +179,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
 Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function() {
     //LISTA DE PREDICACION
     Route::resource('listapredicacion', 'ListapredicacionController');
+    Route::get('listapredicacion/{id}/crear/lista', 'ListapredicacionController@create')->name('listapredicacion.crear');
     Route::get('listapredicacion/{id}/delete', 'ListapredicacionController@destroy')->name('listapredicacion.delete');
+    Route::post('listapredicacion/store/configurar', 'ListapredicacionController@store2')->name('listapredicacion.store2');
+    Route::get('listapredicacion/{id}/crear/lista/items', 'ListapredicacionController@create2')->name('listapredicacion.crear2');
+    Route::get('listapredicacion/{id}/crear/lista/items/{iditem}/delete', 'ListapredicacionController@delete2')->name('listapredicacion.delete2');
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN

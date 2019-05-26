@@ -16,7 +16,7 @@ class CreateLppredicadoriglesiasTable extends Migration {
             $table->bigIncrements('id');
             $table->bigInteger('iglesia_id')->unsigned();
             $table->foreign('iglesia_id')->references('id')->on('iglesias')->onDelete('cascade');
-            $table->bigInteger('feligres_id')->unsigned();
+            $table->bigInteger('feligres_id')->unsigned()->nullable();
             $table->foreign('feligres_id')->references('id')->on('feligres')->onDelete('cascade');
             $table->bigInteger('listapredicacionfecha_id')->unsigned();
             $table->foreign('listapredicacionfecha_id')->references('id')->on('listapredicacionfechas')->onDelete('cascade');
