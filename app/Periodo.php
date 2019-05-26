@@ -31,4 +31,8 @@ class Periodo extends Model
     public function disciplinas() {
         return $this->hasMany('App\Disciplina');
     }
+    
+    public function listapredicacions() {
+        return $this->hasMany('App\Periodo');
+    }
 }

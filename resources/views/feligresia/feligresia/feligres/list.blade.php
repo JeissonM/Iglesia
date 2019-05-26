@@ -32,11 +32,12 @@
                     <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>TIPO Y NÚMERO DE DOCUMENTO.</th>
+                                <th>TIPO Y # DE DOC.</th>
                                 <th>FELIGRÉS</th>
                                 <th>FECHA BAUTISMO</th>
                                 <th>IGLESIA ACTUAL</th>
                                 <th>ESTADO ACTUAL</th>
+                                <th>SITUACIÓN ACTUAL</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -48,6 +49,7 @@
                                 <td>{{$f->personanatural->primer_apellido." ".$f->personanatural->segundo_apellido." ".$f->personanatural->primer_nombre." ".$f->personanatural->segundo_nombre}}</td>
                                 <td>{{$f->iglesia->nombre}}</td>
                                 <td>{{$f->estado_actual}}</td>
+                                <td>{{$f->situacionfeligres->nombre}}</td>
                                 <td>
                                     <a href="{{ route('feligres.edit',$f->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Feligrés"><i class="material-icons">mode_edit</i></a>
                                     <a href="{{ route('feligres.show',$f->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Feligrés"><i class="material-icons">remove_red_eye</i></a>

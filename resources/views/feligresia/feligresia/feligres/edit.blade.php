@@ -340,21 +340,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                </br><input class="form-control" value="{{$f->pastor_oficiante}}" type="text" maxlength="250" name="pastor_oficiante" placeholder="Pastor Oficiante" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                </br><label>Fecha Bautismo*</label>
-                                                <input class="form-control" value="{{$f->fecha_bautismo}}" type="date" name="fecha_bautismo" required="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="form-line">
                                                 <label class="control-label">Aceptado Por*</label>
@@ -372,6 +357,34 @@
                                                     <option value="PROFESION DE FE">PROFESIÓN DE FÉ</option>
                                                     <option value="TRASLADO" selected="">TRASLADO</option>
                                                     @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><input class="form-control" value="{{$f->pastor_oficiante}}" type="text" maxlength="250" name="pastor_oficiante" placeholder="Pastor Oficiante" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                </br><label>Fecha Bautismo*</label>
+                                                <input class="form-control" value="{{$f->fecha_bautismo}}" type="date" name="fecha_bautismo" required="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Situación Actual</label>
+                                                <select class="form-control"  style="width: 100%;" id="situacionfeligres_id" name="situacionfeligres_id">
+                                                    <option value="">-- Seleccione una opción --</option>
+                                                    @foreach($situacion as $key=>$value)
+                                                    @if($f->situacionfeligres_id==$key)
+                                                    <option value="{{$key}}" selected="">{{$value}}</option>
+                                                    @else
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endif
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

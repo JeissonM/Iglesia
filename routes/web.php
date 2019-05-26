@@ -174,3 +174,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::post('situacion/actualizar/operaciones/consultar/traer', 'SituacionfeligresController@getfeligres')->name('situacion.getfeligres');
     Route::post('situacion/actualizar/situacion/estado', 'SituacionfeligresController@actualizar')->name('situacion.actualizar');
 });
+
+//GRUPO DE RUTAS PARA LA GESTIÓN DOCUMENTAL
+Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function() {
+    //LISTA DE PREDICACION
+    Route::resource('listapredicacion', 'ListapredicacionController');
+    Route::get('listapredicacion/{id}/delete', 'ListapredicacionController@destroy')->name('listapredicacion.delete');
+});
+
+//GRUPO DE RUTAS PARA LA COMUNICACIÓN
+Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
+    //
+});
