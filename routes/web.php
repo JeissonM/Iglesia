@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('feligresia', 'MenuController@feligresia')->name('admin.feligresia');
     Route::get('situacion', 'MenuController@situacion')->name('admin.situacion');
     Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuController@operaciones')->name('admin.operaciones');
+    Route::get('experienciafeligres/cosultar/ir', 'MenuController@experienciafeligres')->name('admin.experienciafeligres');
     Route::post('acceso', 'HomeController@confirmaRol')->name('rol');
     Route::get('inicio', 'HomeController@inicio')->name('inicio');
     Route::get('gestiondocumental', 'MenuController@gestiondocumental')->name('admin.gestiondocumental');
@@ -172,5 +173,4 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('situacion/list/index2', 'SituacionfeligresController@index2')->name('situacion.index2');
     Route::post('situacion/actualizar/operaciones/consultar/traer', 'SituacionfeligresController@getfeligres')->name('situacion.getfeligres');
     Route::post('situacion/actualizar/situacion/estado', 'SituacionfeligresController@actualizar')->name('situacion.actualizar');
-    
 });
