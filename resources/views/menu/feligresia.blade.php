@@ -176,7 +176,7 @@
                                     @endif
                                     @if(session()->exists('PAG_SITUACION-FELIGRES'))
                                     <a href="{{route('admin.situacion')}}" class="btn bg-deep-orange waves-effect">
-                                        <div><span>SITUACIÓN</span><span class="ink animate"></span></div>
+                                        <div><span>SITUACIÓN Y ESTADO DEL FELIGRÉS</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
                                 </div>

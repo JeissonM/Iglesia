@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::post('menuexperiencia/operaciones/consultar/traer', 'MenuController@operaciones')->name('admin.operaciones');
     Route::post('acceso', 'HomeController@confirmaRol')->name('rol');
     Route::get('inicio', 'HomeController@inicio')->name('inicio');
+    Route::get('gestiondocumental', 'MenuController@gestiondocumental')->name('admin.gestiondocumental');
+    Route::get('comunicacion', 'MenuController@comunicacion')->name('admin.comunicacion');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DE USUARIOS
@@ -163,6 +165,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //APLICAR DISCIPLINA
     Route::resource('disciplina', 'DisciplinaController');
     Route::get('disciplina/{id}/inicio', 'DisciplinaController@inicio')->name('disciplina.inicio');
+    Route::get('disciplina/{id}/delete', 'DisciplinaController@destroy')->name('disciplina.delete');
     //SITUACIÓN
     Route::resource('situacion', 'SituacionfeligresController');
     Route::get('situacion/{id}/delete', 'SituacionfeligresController@destroy')->name('situacion.delete');

@@ -4,7 +4,7 @@
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
     <li><a href="{{route('admin.feligresia')}}">Feligresía</a></li>
-    <li class="active"><a>Menu Situación</a></li>
+    <li class="active"><a>Menú Situación</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,7 +13,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    MENU SITUACIÓN DEL FELIGRES<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
+                    MENÚ SITUACIÓN DEL FELIGRES<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">

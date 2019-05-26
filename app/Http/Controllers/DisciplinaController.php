@@ -8,6 +8,9 @@ use App\Persona;
 use App\Personanatural;
 use App\Feligres;
 use App\Periodo;
+use App\Auditoriafeligresia;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\DisciplinaRequest;
 
 class DisciplinaController extends Controller {
 
@@ -35,8 +38,26 @@ class DisciplinaController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        dd($request->all());
+    public function store(DisciplinaRequest $request) {
+        $d = new Disciplina($request->all());
+        $f = Feligres::find($request->feligres_id);
+        if ($d->save()) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "INSERTAR";
+            $str = "CREACIÓN DE DISCIPLINA. DATOS: ";
+            foreach ($d->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La disciplina fue aplicada de forma exitosa!")->success();
+            return redirect()->route('disciplina.inicio', $f->personanatural->persona->numero_documento);
+        } else {
+            flash("La disciplina no pudo ser aplicada.")->error();
+            return redirect()->route('disciplina.inicio', $f->personanatural->persona->numero_documento);
+        }
     }
 
     /**
@@ -46,7 +67,12 @@ class DisciplinaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Disciplina $disciplina) {
-        //
+        $disciplina->feligres;
+        $disciplina->reunionjunta;
+        $disciplina->periodo;
+        return view('feligresia.feligresia.disciplina.show')
+                        ->with('location', 'feligresia')
+                        ->with('d', $disciplina);
     }
 
     /**
@@ -76,8 +102,26 @@ class DisciplinaController extends Controller {
      * @param  \App\Disciplina  $disciplina
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Disciplina $disciplina) {
-        //
+    public function destroy($id) {
+        $d = Disciplina::find($id);
+        $result = $d->delete();
+        if ($result) {
+            $aud = new Auditoriafeligresia();
+            $u = Auth::user();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE DISCIPLINA. DATOS ELIMINADOS: ";
+            foreach ($d->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("La disciplina fue retirada de forma exitosa!")->success();
+            return redirect()->route('disciplina.inicio', $d->feligres->personanatural->persona->numero_documento);
+        } else {
+            flash("La disciplina no pudo ser retirada.")->error();
+            return redirect()->route('disciplina.inicio', $d->feligres->personanatural->persona->numero_documento);
+        }
     }
 
     public function inicio($id) {

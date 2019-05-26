@@ -134,8 +134,8 @@
                                 <td>{{$d->fechafin}}</td>
                                 <td>{{$d->reunionjunta->junta->periodo->etiqueta}}</td>
                                 <td>
-                                    <a href="{{ route('categorialabor.edit',$d->id)}}" class="btn bg-primary waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Disciplina"><i class="material-icons">eye</i></a>
-                                    <a href="{{ route('categorialabor.delete',$d->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Disciplina"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('disciplina.show',$d->id)}}" class="btn bg-primary waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Disciplina"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('disciplina.delete',$d->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Disciplina"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach

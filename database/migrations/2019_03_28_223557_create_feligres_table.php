@@ -31,7 +31,6 @@ class CreateFeligresTable extends Migration {
             $table->foreign('personanatural_id')->references('id')->on('personanaturals')->onDelete('cascade');
             $table->bigInteger('situacionfeligres_id')->unsigned();
             $table->foreign('situacionfeligres_id')->references('id')->on('situacionfeligres')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

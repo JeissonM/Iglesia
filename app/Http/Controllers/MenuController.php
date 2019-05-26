@@ -26,8 +26,8 @@ class MenuController extends Controller {
     public function feligresia() {
         return view('menu.feligresia')->with('location', 'feligresia');
     }
-    
-     /**
+
+    /**
      * Show the view menu situaciones.
      *
      * @return \Illuminate\Http\Response
@@ -62,6 +62,24 @@ class MenuController extends Controller {
         return view('feligresia.feligresia.experiencia.menu')
                         ->with('location', 'feligresia')
                         ->with('feligres', $feligres);
+    }
+
+    /**
+     * Show the view menu gestión documental
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function gestiondocumental() {
+        return view('menu.gestiondocumental')->with('location', 'gestion-documental');
+    }
+
+    /**
+     * Show the view menu comunicacion
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function comunicacion() {
+        return view('menu.comunicacion')->with('location', 'comunicacion');
     }
 
 }
