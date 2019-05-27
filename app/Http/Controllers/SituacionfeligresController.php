@@ -236,8 +236,7 @@ class SituacionfeligresController extends Controller {
         }
         $feligres->personanatural;
         $situacion = Situacionfeligres::all()->pluck('nombre', 'id');
-        $estadom = ['ACTIVO' => 'ACTIVO', 'INACTIVO' => 'INACTIVO', 'FALLECIDO' => 'FALLECIDO',
-            'PARADERO DESCONOCIDO' => 'PARADERO DESCONOCIDO', 'RETIRADO' => 'RETIRADO'];
+        $estadom = ['ACTIVO' => 'ACTIVO', 'INACTIVO' => 'INACTIVO'];
         return view('feligresia.feligresia.situacion.actualizar_situacion.list')
                         ->with('location', 'feligresia')
                         ->with('feligres', $feligres)
