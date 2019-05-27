@@ -40,4 +40,8 @@ class Asociacion extends Model {
         return $this->hasMany('App\Distrito');
     }
 
+    public function agendaasociacions() {
+        return $this->hasMany('App\Agendaasociacion');
+    }
+
 }

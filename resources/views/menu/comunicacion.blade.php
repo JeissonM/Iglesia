@@ -23,7 +23,7 @@
                 <h1 class="card-inside-title">MENÚ</h1>
                 <div class="button-demo">
                     @if(session()->exists('PAG_AGENDA-ASOCIACION'))
-                    <a disabled="disabled" class="btn bg-blue waves-effect">
+                    <a href="{{route('agendaasociacion.index')}}" class="btn bg-green waves-effect">
                         <div><span>AGENDA ASOCIACIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif

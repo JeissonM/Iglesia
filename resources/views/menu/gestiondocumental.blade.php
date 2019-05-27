@@ -23,7 +23,7 @@
                 <h1 class="card-inside-title">MENÚ</h1>
                 <div class="button-demo">
                     @if(session()->exists('PAG_ITINERARIO-EVENTOS'))
-                    <a disabled="disabled" class="btn bg-blue waves-effect">
+                    <a href="{{route('itinerario.index')}}" class="btn bg-blue waves-effect">
                         <div><span>ITINERARIO DE CULTO, EVENTOS Y REUNIONES</span><span class="ink animate"></span></div>
                     </a>
                     @endif

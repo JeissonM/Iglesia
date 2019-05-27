@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Periodo extends Model
-{
+class Periodo extends Model {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,12 +23,21 @@ class Periodo extends Model
     protected $hidden = [
             //
     ];
-    
+
     public function juntas() {
         return $this->hasMany('App\Junta');
     }
-    
+
     public function disciplinas() {
         return $this->hasMany('App\Disciplina');
     }
+
+    public function itinerarios() {
+        return $this->hasMany('App\Itinerario');
+    }
+
+    public function agendaasociacions() {
+        return $this->hasMany('App\Agendaasociacion');
+    }
+
 }

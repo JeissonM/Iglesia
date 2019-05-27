@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Iglesia extends Model
-{
-     /**
+class Iglesia extends Model {
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -35,17 +35,21 @@ class Iglesia extends Model
     public function distrito() {
         return $this->belongsTo('App\Distrito');
     }
-    
+
     public function pastors() {
         return $this->hasMany('App\Pastor');
     }
-    
+
     public function feligres() {
         return $this->hasMany('App\Feligres');
     }
-    
+
     public function juntas() {
         return $this->hasMany('App\Junta');
+    }
+
+    public function itinerarios() {
+        return $this->hasMany('App\Itinerario');
     }
 
 }
