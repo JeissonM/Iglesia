@@ -313,9 +313,16 @@
                                                 <select class="form-control"  style="width: 100%;" name="estado_actual" required="">
                                                     <option value="ACTIVO">ACTIVO</option>
                                                     <option value="INACTIVO">INACTIVO</option>
-                                                    <option value="FALLECIDO">FALLECIDO</option>
-                                                    <option value="PARADERO DESCONOCIDO">PARADERO DESCONOCIDO</option>
-                                                    <option value="RETIRADO">RETIRADO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <label class="control-label">Aceptado Por*</label>
+                                                <select class="form-control"  style="width: 100%;" name="aceptado_por" required="">
+                                                    <option value="BAUTISMO">BAUTISMO</option>
+                                                    <option value="PROFESION DE FE">PROFESIÓN DE FÉ</option>
+                                                    <option value="TRASLADO">TRASLADO</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -332,15 +339,14 @@
                                                 <input class="form-control" type="date" name="fecha_bautismo" required="" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <label class="control-label">Aceptado Por*</label>
-                                                <select class="form-control"  style="width: 100%;" name="aceptado_por" required="">
-                                                    <option value="BAUTISMO">BAUTISMO</option>
-                                                    <option value="PROFESION DE FE">PROFESIÓN DE FÉ</option>
-                                                    <option value="TRASLADO">TRASLADO</option>
+                                                <label class="control-label">Situación Actual</label>
+                                                <select class="form-control"  style="width: 100%;" id="situacionfeligres_id" name="situacionfeligres_id">
+                                                    <option value="">-- Seleccione una opción --</option>
+                                                    @foreach($situacion as $key=>$value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

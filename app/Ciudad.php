@@ -27,13 +27,17 @@ class Ciudad extends Model {
     public function estado() {
         return $this->belongsTo('App\Estado');
     }
-    
+
     public function personanaturals() {
         return $this->hasMany('App\Personanatural');
     }
-    
+
     public function personas() {
         return $this->hasMany('App\Persona');
+    }
+
+    public function iglesias() {
+        return $this->hasMany('App\Iglesia');
     }
 
 }

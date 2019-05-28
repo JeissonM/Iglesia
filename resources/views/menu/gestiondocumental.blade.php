@@ -27,6 +27,11 @@
                         <div><span>ITINERARIO DE CULTO, EVENTOS Y REUNIONES</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_LISTA-PREDICACION'))
+                    <a href="{{route('listapredicacion.index')}}" class="btn bg-blue waves-effect">
+                        <div><span>LISTA DE PREDICACIÓN</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

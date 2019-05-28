@@ -14,6 +14,12 @@ use App\Asociacion;
 use App\Persona;
 use App\Personanatural;
 use App\Auditoriafeligresia;
+use App\Labor;
+use App\Distrito;
+use App\Pastor;
+use App\Ciudad;
+use App\Experiencialabor;
+use App\Situacionfeligres;
 
 class FeligresController extends Controller {
 
@@ -39,12 +45,14 @@ class FeligresController extends Controller {
         $paises = Pais::all()->pluck('nombre', 'id');
         $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
         $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
+        $situacion = Situacionfeligres::all()->pluck('nombre', 'id');
         return view('feligresia.feligresia.feligres.create')
                         ->with('location', 'feligresia')
                         ->with('asociaciones', $asociaciones)
                         ->with('estadosc', $estadosciviles)
                         ->with('paises', $paises)
-                        ->with('tipodoc', $tiposdoc);
+                        ->with('tipodoc', $tiposdoc)
+                        ->with('situacion', $situacion);
     }
 
     /**
@@ -56,9 +64,9 @@ class FeligresController extends Controller {
     public function store(FeligresRequest $request) {
         $p = $this->setPersona('NATURAL', $request->direccion, $request->email, $request->celular, $request->telefono, $request->numero_documento, $request->lugar_expedicion, $request->fecha_expedicion, 'NO', 'NO', $request->tipodocumento_id, $request->paisr_id, $request->estador_id, $request->ciudadr_id);
         if ($p->save()) {
-            $pn = $this->setPersonanatural($request->primer_nombre, $request->segundo_nombre, $request->sexo, $request->fecha_nacimiento, $request->libreta_militar, $request->edad, $request->rh, $request->primer_apellido, $request->segundo_apellido, $request->distrito_militar, $request->numero_pasaporte, $request->otra_nacionalidad, $request->clase_libreta, 'NO', $request->padre, $request->madre, $request->ocupacion, $request->profesion, $request->nivel_estudio, $request->ultimo_grado, $request->religion_anterior, $request->ciudad_id, $request->estado_id, $request->pais_id, $p->id,$request->estadocivil_id);
+            $pn = $this->setPersonanatural($request->primer_nombre, $request->segundo_nombre, $request->sexo, $request->fecha_nacimiento, $request->libreta_militar, $request->edad, $request->rh, $request->primer_apellido, $request->segundo_apellido, $request->distrito_militar, $request->numero_pasaporte, $request->otra_nacionalidad, $request->clase_libreta, 'NO', $request->padre, $request->madre, $request->ocupacion, $request->profesion, $request->nivel_estudio, $request->ultimo_grado, $request->religion_anterior, $request->ciudad_id, $request->estado_id, $request->pais_id, $p->id, $request->estadocivil_id);
             if ($pn->save()) {
-                $f = $this->setFeligres($request->aceptado_por, null, $request->pastor_oficiante, $request->estado_actual, $request->fecha_bautismo, $request->asociacion_origen, $request->distrito_origen, $request->iglesia_origen, $request->asociacion_destino, $request->distrito_destino, $request->iglesia_destino, $pn->id);
+                $f = $this->setFeligres($request->aceptado_por, null, $request->pastor_oficiante, $request->estado_actual, $request->fecha_bautismo, $request->asociacion_origen, $request->distrito_origen, $request->iglesia_origen, $request->asociacion_destino, $request->distrito_destino, $request->iglesia_destino, $pn->id, $request->situacionfeligres_id);
                 if ($f->save()) {
                     $this->setAuditoria($p->attributesToArray(), 'INSERTAR', 'CREACIÓN DE PERSONA, DATOS:');
                     $this->setAuditoria($pn->attributesToArray(), 'INSERTAR', 'CREACIÓN DE PERSONA NATURAL, DATOS:');
@@ -161,7 +169,7 @@ class FeligresController extends Controller {
      * llena un feligres
      */
 
-    public function setFeligres($aceptado_por, $retiro_por, $pastor_oficiante, $estado_actual, $fecha_bautismo, $asociacion_origen, $distrito_origen, $iglesia_origen, $asociacion_destino, $distrito_destino, $iglesia_destino, $personanatural_id) {
+    public function setFeligres($aceptado_por, $retiro_por, $pastor_oficiante, $estado_actual, $fecha_bautismo, $asociacion_origen, $distrito_origen, $iglesia_origen, $asociacion_destino, $distrito_destino, $iglesia_destino, $personanatural_id, $situacion) {
         $f = new Feligres();
         $f->aceptado_por = $aceptado_por;
         $f->retiro_por = $retiro_por;
@@ -176,6 +184,7 @@ class FeligresController extends Controller {
         $f->iglesia_destino = $iglesia_destino;
         $f->iglesia_id = $iglesia_destino;
         $f->personanatural_id = $personanatural_id;
+        $f->situacionfeligres_id = $situacion;
         return $f;
     }
 
@@ -210,13 +219,13 @@ class FeligresController extends Controller {
         $paises = Pais::all()->pluck('nombre', 'id');
         $estadosciviles = Estadocivil::all()->pluck('descripcion', 'id');
         $tiposdoc = Tipodocumento::all()->pluck('descripcion', 'id');
+        $situacion = Situacionfeligres::all()->pluck('nombre', 'id');
         $rh = ['A+' => 'A +', 'A-' => 'A -', 'O+' => 'O +', 'O-' => 'O -',
             'B-' => 'B -', 'B+' => 'B +', 'AB+' => 'AB +', 'AB-' => 'AB -'];
         $nivel = ['PRIMARIA' => 'PRIMARIA', 'SECUNDARIA' => 'SECUNDARIA', 'BACHILLERATO' => 'BACHILLERATO',
             'TECNICO' => 'TÉCNICO', 'TECNOLOGO' => 'TECNÓLOGO', 'PROFESIONAL' => 'PROFESIONAL',
             'ESPECIALISTA' => 'ESPECIALISTA', 'MAGISTER' => 'MAGISTER', 'DOCTOR' => 'DOCTOR', 'OTRO' => 'OTRO'];
-        $estadom = ['ACTIVO' => 'ACTIVO', 'INACTIVO' => 'INACTIVO', 'FALLECIDO' => 'FALLECIDO',
-            'PARADERO DESCONOCIDO' => 'PARADERO DESCONOCIDO', 'RETIRADO' => 'RETIRADO'];
+        $estadom = ['ACTIVO' => 'ACTIVO', 'INACTIVO' => 'INACTIVO'];
         return view('feligresia.feligresia.feligres.edit')
                         ->with('location', 'feligresia')
                         ->with('f', $feligres)
@@ -228,7 +237,8 @@ class FeligresController extends Controller {
                         ->with('tipodoc', $tiposdoc)
                         ->with('rh', $rh)
                         ->with('estadom', $estadom)
-                        ->with('nivel', $nivel);
+                        ->with('nivel', $nivel)
+                        ->with('situacion', $situacion);
     }
 
     /**
@@ -287,6 +297,7 @@ class FeligresController extends Controller {
         $f->distrito_destino = (isset($request->distrito_destino)) ? $request->distrito_destino : $f->distrito_destino;
         $f->iglesia_destino = (isset($request->iglesia_destino)) ? $request->iglesia_destino : $f->iglesia_destino;
         $f->iglesia_id = (isset($request->iglesia_id)) ? $request->iglesia_id : $f->iglesia_id;
+        $f->situacionfeligres_id = (isset($request->situacionfeligres_id)) ? $request->situacionfeligres_id : $f->situacionfeligres_id;
         return $f;
     }
 
@@ -355,6 +366,168 @@ class FeligresController extends Controller {
         } else {
             flash("La persona</strong> no pudo ser eliminada.")->error();
             return redirect()->route('feligres.index');
+        }
+    }
+
+    public function directoriofeligres() {
+        $feligreses = Feligres::all();
+        $iglesias = Iglesia::all()->pluck('nombre', 'id');
+        $ciudades = Ciudad::all()->pluck('nombre', 'id');
+        $distritos = Distrito::all()->pluck('nombre', 'id');
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $labor = Labor::all()->pluck('nombre', 'id');
+        return view('comunicaciones.directorio_feligres.list')
+                        ->with('location', 'comunicaciones')
+                        ->with('feligreses', $feligreses)
+                        ->with('iglesias', $iglesias)
+                        ->with('distritos', $distritos)
+                        ->with('labor', $labor)
+                        ->with('asociaciones', $asociaciones)
+                        ->with('ciudades', $ciudades);
+    }
+
+    public function ver($id) {
+        $feligres = Feligres::find($id);
+        $experiencia = $feligres->experiencialabors;
+        $conocimientos = $feligres->conocimientos;
+        return view('comunicaciones.directorio_feligres.show')
+                        ->with('location', 'comunicaciones')
+                        ->with('f', $feligres)
+                        ->with('experiencia', $experiencia)
+                        ->with('conocimientos', $conocimientos);
+    }
+
+    /**
+     * show all resource from a distrito,ciudad,asociacion,iglesia u labor.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function feligres($id, $tipo) {
+        if ($tipo == 'DISTRITO') {
+            $distrito = Distrito::find($id);
+            $iglesias = $distrito->iglesias;
+            if (count($iglesias) > 0) {
+                $feligreses = null;
+                foreach ($iglesias as $igl) {
+                    $feligres = $igl->feligres;
+                    if (count($feligres) > 0) {
+                        foreach ($feligres as $f) {
+                            $obj["id"] = $f->id;
+                            $obj["documento"] = $f->personanatural->persona->tipodocumento->abreviatura . " - " . $f->personanatural->persona->numero_documento;
+                            $obj["nombre"] = $f->personanatural->primer_apellido . " " . $f->personanatural->segundo_apellido . " " . $f->personanatural->primer_nombre . " " . $f->personanatural->segundo_nombre;
+                            $obj["iglesia"] = $f->iglesia->nombre;
+                            $obj["estado"] = $f->estado_actual;
+                            $obj["situacion"] = $f->situacionfeligres->nombre;
+                            $obj["ocupacion"] = $f->ocupacion;
+                            $obj["profesion"] = $f->profesion;
+                            $feligreses[] = $obj;
+                        }
+                    }
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'LABOR') {
+            $experiencia = Experiencialabor::where('labor_id', $id)->get();
+            if (count($experiencia) > 0) {
+                $feligreses = null;
+                foreach ($experiencia as $exp) {
+                    $f = $exp->feligres;
+                    $obj["id"] = $f->id;
+                    $obj["documento"] = $f->personanatural->persona->tipodocumento->abreviatura . " - " . $f->personanatural->persona->numero_documento;
+                    $obj["nombre"] = $f->personanatural->primer_apellido . " " . $f->personanatural->segundo_apellido . " " . $f->personanatural->primer_nombre . " " . $f->personanatural->segundo_nombre;
+                    $obj["iglesia"] = $f->iglesia->nombre;
+                    $obj["estado"] = $f->estado_actual;
+                    $obj["situacion"] = $f->situacionfeligres->nombre;
+                    $obj["ocupacion"] = $f->ocupacion;
+                    $obj["profesion"] = $f->profesion;
+                    $feligreses[] = $obj;
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'ASOCIACION') {
+            $asociacion = Asociacion::find($id);
+            $dis = $asociacion->distritos;
+            if (count($dis) > 0) {
+                $feligreses = null;
+                foreach ($dis as $d) {
+                    $iglesias = $d->iglesias;
+                    if (count($iglesias) > 0) {
+                        foreach ($iglesias as $igl) {
+                            $feligres = $igl->feligres;
+                            if (count($feligres) > 0) {
+                                foreach ($feligres as $f) {
+                                    $obj["id"] = $f->id;
+                                    $obj["documento"] = $f->personanatural->persona->tipodocumento->abreviatura . " - " . $f->personanatural->persona->numero_documento;
+                                    $obj["nombre"] = $f->personanatural->primer_apellido . " " . $f->personanatural->segundo_apellido . " " . $f->personanatural->primer_nombre . " " . $f->personanatural->segundo_nombre;
+                                    $obj["iglesia"] = $f->iglesia->nombre;
+                                    $obj["estado"] = $f->estado_actual;
+                                    $obj["situacion"] = $f->situacionfeligres->nombre;
+                                    $obj["ocupacion"] = $f->ocupacion;
+                                    $obj["profesion"] = $f->profesion;
+                                    $feligreses[] = $obj;
+                                }
+                            }
+                        }
+                    }
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'CIUDAD') {
+            $ciudad = Ciudad::find($id);
+            $iglesias = $ciudad->iglesias;
+            if (count($iglesias) > 0) {
+                $feligreses = null;
+                foreach ($iglesias as $igl) {
+                    $feligres = $igl->feligres;
+                    if (count($feligres) > 0) {
+                        foreach ($feligres as $f) {
+                            $obj["id"] = $f->id;
+                            $obj["documento"] = $f->personanatural->persona->tipodocumento->abreviatura . " - " . $f->personanatural->persona->numero_documento;
+                            $obj["nombre"] = $f->personanatural->primer_apellido . " " . $f->personanatural->segundo_apellido . " " . $f->personanatural->primer_nombre . " " . $f->personanatural->segundo_nombre;
+                            $obj["iglesia"] = $f->iglesia->nombre;
+                            $obj["estado"] = $f->estado_actual;
+                            $obj["situacion"] = $f->situacionfeligres->nombre;
+                            $obj["ocupacion"] = $f->ocupacion;
+                            $obj["profesion"] = $f->profesion;
+                            $feligreses[] = $obj;
+                        }
+                    }
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'IGLESIA') {
+            $iglesias = Iglesia::find($id);
+            $feligres = $iglesias->feligres;
+            if (count($feligres) > 0) {
+                $feligreses = null;
+                foreach ($feligres as $f) {
+                    $obj["id"] = $f->id;
+                    $obj["documento"] = $f->personanatural->persona->tipodocumento->abreviatura . " - " . $f->personanatural->persona->numero_documento;
+                    $obj["nombre"] = $f->personanatural->primer_apellido . " " . $f->personanatural->segundo_apellido . " " . $f->personanatural->primer_nombre . " " . $f->personanatural->segundo_nombre;
+                    $obj["iglesia"] = $f->iglesia->nombre;
+                    $obj["estado"] = $f->estado_actual;
+                    $obj["situacion"] = $f->situacionfeligres->nombre;
+                    $obj["ocupacion"] = $f->ocupacion;
+                    $obj["profesion"] = $f->profesion;
+                    $feligreses[] = $obj;
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
         }
     }
 

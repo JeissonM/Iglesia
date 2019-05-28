@@ -40,4 +40,8 @@ class Periodo extends Model {
         return $this->hasMany('App\Agendaasociacion');
     }
 
+    
+    public function listapredicacions() {
+        return $this->hasMany('App\Periodo');
+    }
 }

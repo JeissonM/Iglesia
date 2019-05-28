@@ -6,6 +6,9 @@ use App\Iglesia;
 use App\Zona;
 use App\Distrito;
 use App\Ciudad;
+use App\Pastor;
+use App\Asociacion;
+use App\Union;
 use App\Auditoriafeligresia;
 use App\Http\Requests\IglesiaRequest;
 use Illuminate\Support\Facades\Auth;
@@ -220,6 +223,162 @@ class IglesiaController extends Controller {
             return redirect()->route('iglesia.index');
         }
 //        }
+    }
+
+    public function directorioiglesia() {
+        $iglesias = Iglesia::all();
+        $ciudades = Ciudad::all()->pluck('nombre', 'id');
+        $distritos = Distrito::all()->pluck('nombre', 'id');
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $uniones = Union::all()->pluck('nombre', 'id');
+        foreach ($iglesias as $i) {
+            $p = Pastor::where('distrito_id', $i->distrito_id)->first();
+            $pastor = null;
+            if ($p != null) {
+                $pastor = $p->personanatural->primer_nombre . " " . $p->personanatural->segundo_nombre . " " . $p->personanatural->primer_apellido . " " . $p->personanatural->segundo_apellido;
+            }
+            $i->pastor = $pastor;
+        }
+        return view('comunicaciones.directorio_iglesia.list')
+                        ->with('location', 'comunicaciones')
+                        ->with('iglesias', $iglesias)
+                        ->with('distritos', $distritos)
+                        ->with('uniones', $uniones)
+                        ->with('asociaciones', $asociaciones)
+                        ->with('ciudades', $ciudades);
+    }
+
+    /**
+     * show all resource from a distrito,ciudad,asociacion o union.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function iglesias($id, $tipo) {
+        if ($tipo == 'DISTRITO') {
+            $distrito = Distrito::find($id);
+            $iglesias = $distrito->iglesias;
+        }
+        if ($tipo == 'UNION') {
+            $union = Union::find($id);
+            $asoc = $union->asociacions;
+            if (count($asoc) > 0) {
+                $iglesias = null;
+                foreach ($asoc as $aso) {
+                    $dis = $aso->distritos;
+                    if (count($dis) > 0) {
+                        foreach ($dis as $d) {
+                            $i = null;
+                            $i = $d->iglesias;
+                            $iglesias[] = $i;
+                        }
+                        if ($iglesias != null) {
+                            $iglesiasf = null;
+                            foreach ($iglesias as $igle) {
+                                foreach ($igle as $value) {
+                                    $p = Pastor::where('distrito_id', $value->distrito_id)->first();
+                                    $pastor = null;
+                                    if ($p != null) {
+                                        $pastor = $p->personanatural->primer_nombre . " " . $p->personanatural->segundo_nombre . " " . $p->personanatural->primer_apellido . " " . $p->personanatural->segundo_apellido;
+                                    }
+                                    $obj["pastor"] = $pastor;
+                                    $obj["id"] = $value->id;
+                                    $obj["value"] = $value->nombre;
+                                    $obj["sitio"] = $value->sitioweb;
+                                    $obj["correo"] = $value->email;
+                                    $obj["tipo"] = $value->tipo;
+                                    $obj["ciudad"] = $value->ciudad->nombre;
+                                    $obj["distrito"] = $value->distrito->nombre;
+                                    if ($value->activa == 1) {
+                                        $obj["estado"] = "ACTIVA";
+                                    } else {
+                                        $obj["estado"] = "INACTIVA";
+                                    }
+                                    $iglesiasf[] = $obj;
+                                }
+                            }
+                        }
+                    }
+                }
+                return json_encode($iglesiasf);
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'ASOCIACION') {
+            $asociacion = Asociacion::find($id);
+            $dis = $asociacion->distritos;
+            if (count($dis) > 0) {
+                $iglesias = null;
+                foreach ($dis as $d) {
+                    $i = null;
+                    $i = $d->iglesias;
+                    $iglesias[] = $i;
+                }
+                if ($iglesias != null) {
+                    $iglesiasf = null;
+                    foreach ($iglesias as $igle) {
+                        foreach ($igle as $value) {
+                            $p = Pastor::where('distrito_id', $value->distrito_id)->first();
+                            $pastor = null;
+                            if ($p != null) {
+                                $pastor = $p->personanatural->primer_nombre . " " . $p->personanatural->segundo_nombre . " " . $p->personanatural->primer_apellido . " " . $p->personanatural->segundo_apellido;
+                            }
+                            $obj["pastor"] = $pastor;
+                            $obj["id"] = $value->id;
+                            $obj["value"] = $value->nombre;
+                            $obj["sitio"] = $value->sitioweb;
+                            $obj["correo"] = $value->email;
+                            $obj["tipo"] = $value->tipo;
+                            $obj["ciudad"] = $value->ciudad->nombre;
+                            $obj["distrito"] = $value->distrito->nombre;
+                            if ($value->activa == 1) {
+                                $obj["estado"] = "ACTIVA";
+                            } else {
+                                $obj["estado"] = "INACTIVA";
+                            }
+                            $iglesiasf[] = $obj;
+                        }
+                    }
+                    return json_encode($iglesiasf);
+                } else {
+                    return "null";
+                }
+            } else {
+                return "null";
+            }
+        }
+        if ($tipo == 'CIUDAD') {
+            $ciudad = Ciudad::find($id);
+            $iglesias = $ciudad->iglesias;
+        }
+        if (count($iglesias) > 0) {
+            $iglesiasf = null;
+            foreach ($iglesias as $value) {
+                $p = Pastor::where('distrito_id', $value->distrito_id)->first();
+                $pastor = null;
+                if ($p != null) {
+                    $pastor = $p->personanatural->primer_nombre . " " . $p->personanatural->segundo_nombre . " " . $p->personanatural->primer_apellido . " " . $p->personanatural->segundo_apellido;
+                }
+                $obj["pastor"] = $pastor;
+                $obj["id"] = $value->id;
+                $obj["value"] = $value->nombre;
+                $obj["sitio"] = $value->sitioweb;
+                $obj["correo"] = $value->email;
+                $obj["tipo"] = $value->tipo;
+                $obj["ciudad"] = $value->ciudad->nombre;
+                $obj["distrito"] = $value->distrito->nombre;
+                if ($value->activa == 1) {
+                    $obj["estado"] = "ACTIVA";
+                } else {
+                    $obj["estado"] = "INACTIVA";
+                }
+                $iglesiasf[] = $obj;
+            }
+            return json_encode($iglesiasf);
+        } else {
+            return "null";
+        }
     }
 
 }

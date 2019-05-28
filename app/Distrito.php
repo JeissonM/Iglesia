@@ -43,4 +43,8 @@ class Distrito extends Model
     public function pastors() {
         return $this->hasMany('App\Pastor');
     }
+    
+    public function listapredicacions() {
+        return $this->hasMany('App\Periodo');
+    }
 }

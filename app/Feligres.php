@@ -63,5 +63,9 @@ class Feligres extends Model {
     public function historicosituacions() {
         return $this->hasMany('App\Historicosituacion');
     }
+    
+    public function lppredicadoriglesias() {
+        return $this->hasMany('App\Lppredicadoriglesia');
+    }
 
 }

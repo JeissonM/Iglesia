@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Asociacion;
 use App\Zona;
 use App\Ciudad;
+use App\Pastor;
 use App\Http\Requests\DistritoRequest;
 use App\Auditoriafeligresia;
 use Illuminate\Support\Facades\Auth;
@@ -175,7 +176,7 @@ class DistritoController extends Controller {
             }
         }
     }
-    
+
     /**
      * show all resource from a distrito.
      *
@@ -188,8 +189,23 @@ class DistritoController extends Controller {
         if (count($iglesias) > 0) {
             $iglesiasf = null;
             foreach ($iglesias as $value) {
+                $p = Pastor::where('distrito_id', $value->distrito_id)->first();
+                $pastor = null;
+                if ($p != null) {
+                    $pastor = $p->personanatural->primer_nombre . " " . $p->personanatural->segundo_nombre . " " . $p->personanatural->primer_apellido . " " . $p->personanatural->segundo_apellido;
+                }
+                $obj["pastor"] = $pastor;
                 $obj["id"] = $value->id;
                 $obj["value"] = $value->nombre;
+                $obj["sitio"] = $value->sitioweb;
+                $obj["correo"] = $value->email;
+                $obj["ciudad"] = $value->ciudad->nombre;
+                $obj["distrito"] = $value->distrito->nombre;
+                if($value->activa == 1){
+                     $obj["estado"] = "ACTIVA";
+                }else{
+                    $obj["estado"] = "INACTIVA";
+                }
                 $iglesiasf[] = $obj;
             }
             return json_encode($iglesiasf);

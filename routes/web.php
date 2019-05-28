@@ -174,3 +174,37 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::post('situacion/actualizar/operaciones/consultar/traer', 'SituacionfeligresController@getfeligres')->name('situacion.getfeligres');
     Route::post('situacion/actualizar/situacion/estado', 'SituacionfeligresController@actualizar')->name('situacion.actualizar');
 });
+
+//GRUPO DE RUTAS PARA LA GESTIÓN DOCUMENTAL
+Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function() {
+    //LISTA DE PREDICACION
+    Route::resource('listapredicacion', 'ListapredicacionController');
+    Route::get('listapredicacion/{id}/crear/lista', 'ListapredicacionController@create')->name('listapredicacion.crear');
+    Route::get('listapredicacion/{id}/delete', 'ListapredicacionController@destroy')->name('listapredicacion.delete');
+    Route::post('listapredicacion/store/configurar', 'ListapredicacionController@store2')->name('listapredicacion.store2');
+    Route::get('listapredicacion/{id}/crear/lista/items', 'ListapredicacionController@create2')->name('listapredicacion.crear2');
+    Route::get('listapredicacion/{id}/crear/lista/items/{iditem}/delete', 'ListapredicacionController@delete2')->name('listapredicacion.delete2');
+    //ITINERARIO DE CULTO
+    Route::resource('itinerario', 'ItinerarioController');
+    Route::get('itinerario/{id}/delete', 'ItinerarioController@destroy')->name('itinerario.delete');
+    Route::get('itinerario/{asosciacion}/consultar/getdistritos', 'ItinerarioController@getDistritos')->name('itinerario.getdistritos');
+    //ITINERARIO DETALLES
+    Route::resource('itinerariodetalle', 'ItinerariodetalleController');
+    Route::get('itinerariodetalle/{id}/delete', 'ItinerariodetalleController@destroy')->name('itinerariodetalle.delete');
+    Route::get('itinerariodetalle/{id}/inicio', 'ItinerariodetalleController@index')->name('itinerariodetalle.inicio');
+});
+
+//GRUPO DE RUTAS PARA LA COMUNICACIÓN
+Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
+    //AGENDA ASOCIACIÓN
+    Route::resource('agendaasociacion', 'AgendaasociacionController');
+    Route::get('agendaasociacion/{id}/delete', 'AgendaasociacionController@destroy')->name('agendaasociacion.delete');
+    Route::get('agendaasociacion/{id}/estado/cambiar', 'AgendaasociacionController@estado')->name('agendaasociacion.estado');
+    //DIRECTORIO IGLESIA
+    Route::get('iglesia/directorio/listar', 'IglesiaController@directorioiglesia')->name('iglesia.directorio');
+    Route::get('iglesia/{id}/{tipo}/directorio/getiglesias', 'IglesiaController@iglesias')->name('iglesia.getiglesias');
+    //DIRECTORIO FELIGRES
+    Route::get('feligres/directorio/feligres/listar', 'FeligresController@directoriofeligres')->name('feligres.directorio');
+    Route::get('feligres/{id}/{tipo}/directorio/feligres/getfeligres', 'FeligresController@feligres')->name('feligres.getifeligres');
+    Route::get('feligres/{id}/directorio/feligres/ver', 'FeligresController@ver')->name('feligres.ver');
+});
