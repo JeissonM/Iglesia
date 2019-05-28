@@ -184,6 +184,11 @@
                                         <div><span>EXPERIENCIA</span><span class="ink animate"></span></div>
                                     </a>
                                     @endif
+                                    @if(session()->exists('PAG_SEGUIMIENTO-UBICACION'))
+                                    <a data-toggle="modal" data-target="#consultar3" class="btn bg-deep-orange waves-effect">
+                                        <div><span>SEGUIMIENTO DE UBICACIÓN DEL FELIGRÉS</span><span class="ink animate"></span></div>
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -256,6 +261,38 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Consultar3 -->
+<div class="modal fade" id="consultar3" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">CONSULTAR FELIGRÉS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row clearfix">
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" id="idc3" class="form-control" placeholder="Escriba la identificación a consultar" name="id"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <button onclick="enviar3()" class="btn bg-orange waves-effect btn-block">CONSULTAR FELIGRES</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -265,6 +302,10 @@
 
     function enviar() {
         location.href = url + "feligresia/disciplina/" + $("#idc").val() + "/inicio";
+    }
+
+    function enviar3() {
+        location.href = url + "feligresia/seguimientoubucacion/" + $("#idc3").val() + "/consultar/seguimiento";
     }
 </script>
 @endsection

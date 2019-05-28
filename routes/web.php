@@ -173,6 +173,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     Route::get('situacion/list/index2', 'SituacionfeligresController@index2')->name('situacion.index2');
     Route::post('situacion/actualizar/operaciones/consultar/traer', 'SituacionfeligresController@getfeligres')->name('situacion.getfeligres');
     Route::post('situacion/actualizar/situacion/estado', 'SituacionfeligresController@actualizar')->name('situacion.actualizar');
+    //SEGUIMIENTO DE UBICACION DE LOS MIEMBROS
+    Route::resource('seguimientoubucacion', 'SeguimientoubucacionController');
+    Route::get('seguimientoubucacion/{id}/delete', 'SeguimientoubucacionController@destroy')->name('seguimientoubucacion.delete');
+    Route::get('seguimientoubucacion/{id}/consultar/seguimiento', 'SeguimientoubucacionController@index')->name('seguimientoubucacion.index');
 });
 
 //GRUPO DE RUTAS PARA LA GESTIÓN DOCUMENTAL

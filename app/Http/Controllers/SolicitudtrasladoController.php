@@ -141,6 +141,7 @@ class SolicitudtrasladoController extends Controller {
         if ($ad != null) {
             $solicitud['ad'] = $ad->documento;
         }
+        $feligres->disciplinas;
         return view('feligresia.feligresia.traslados.show')
                         ->with('location', 'feligresia')
                         ->with('iglesiadestino', $iglesiadestino)
