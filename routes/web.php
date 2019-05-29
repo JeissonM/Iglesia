@@ -211,4 +211,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::get('feligres/directorio/feligres/listar', 'FeligresController@directoriofeligres')->name('feligres.directorio');
     Route::get('feligres/{id}/{tipo}/directorio/feligres/getfeligres', 'FeligresController@feligres')->name('feligres.getifeligres');
     Route::get('feligres/{id}/directorio/feligres/ver', 'FeligresController@ver')->name('feligres.ver');
+    //PEDIOS DE ORACIÓN
+    Route::resource('pedidosoracion', 'PedidosoracionController');
+    Route::get('pedidosoracion/{id}/delete', 'PedidosoracionController@destroy')->name('pedidosoracion.delete');
+    //Route::get('agendaasociacion/{id}/estado/cambiar', 'AgendaasociacionController@estado')->name('agendaasociacion.estado');
+   
 });

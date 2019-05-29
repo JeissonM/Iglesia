@@ -51,7 +51,7 @@ class Feligres extends Model {
     public function agendajuntapuntos() {
         return $this->hasMany('App\Agendajuntapunto');
     }
-    
+
     public function disciplinas() {
         return $this->hasMany('App\Disciplina');
     }
@@ -63,9 +63,13 @@ class Feligres extends Model {
     public function historicosituacions() {
         return $this->hasMany('App\Historicosituacion');
     }
-    
+
     public function lppredicadoriglesias() {
         return $this->hasMany('App\Lppredicadoriglesia');
+    }
+
+    public function pedidosoracions() {
+        return $this->hasMany('App\Pedidosoracion');
     }
 
 }
