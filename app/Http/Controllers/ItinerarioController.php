@@ -33,7 +33,11 @@ class ItinerarioController extends Controller {
      */
     public function create() {
         $asociaciones = Asociacion::all()->pluck('nombre', 'id');
-        $periodos = Periodo::all()->pluck('etiqueta', 'id');
+        $per = Periodo::all()->sortByDesc('id');
+        $periodos = null;
+        foreach ($per as $pe) {
+            $periodos[$pe->id] = $pe->etiqueta . " - " . $pe->fechainicio . " - " . $pe->fechafin;
+        }
         return view('gestion_documental.itinerario.create')
                         ->with('location', 'gestion-documental')
                         ->with('periodos', $periodos)
