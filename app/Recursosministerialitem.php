@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ministerio extends Model {
+class Recursosministerialitem extends Model {
 
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Ministerio extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'created_at', 'updated_at'
+        'id', 'recurso', 'recursosministerial_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -24,12 +24,8 @@ class Ministerio extends Model {
             //
     ];
 
-    public function cargogenerals() {
-        return $this->hasMany('App\Cargogeneral');
-    }
-    
-    public function recursosministerials() {
-        return $this->hasMany('App\Recursosministerial');
+    public function recursosministerial() {
+        return $this->belongsTo('App\Recursosministerial');
     }
 
 }
