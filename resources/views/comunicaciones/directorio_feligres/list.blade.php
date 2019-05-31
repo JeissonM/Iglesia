@@ -90,19 +90,19 @@
                 <h4 class="modal-title" id="defaultModalLabel">CONSULTA POR CIUDADES</h4>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="form-line">
-                            <label class="control-label">Ciudad de Ubicación</label>
-                            <select class="form-control select2"  style="width: 100%;" id="ciudad_id" name="ciudad_id" onchange="getIglesiasd('CIUDAD')"/>
-                            <option value="">--Seleccione una opción--</option>
-                            @foreach($ciudades as $key=>$value)
-                            <option value="{{$key}}">{{$value}}</option>
-                            @endforeach
-                            </select>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <label class="control-label">Ciudad de Ubicación</label>
+                                <select class="form-control"  style="width: 100%;" id="ciudad_id" name="ciudad_id" onchange="getIglesiasd('CIUDAD')"/>
+                                <option value="">--Seleccione una opción--</option>
+                                @foreach($ciudades as $key=>$value)
+                                <option value="{{$key}}">{{$value}}</option>
+                                @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
@@ -150,7 +150,7 @@
                     <div class="form-group">
                         <div class="form-line">
                             <label class="control-label">Iglesia</label>
-                            <select class="form-control select2"  style="width: 100%;" id="iglesia_id" name="iglesia_id" onchange="getIglesiasd('IGLESIA')"/>
+                            <select class="form-control"  style="width: 100%;" id="iglesia_id" name="iglesia_id" onchange="getIglesiasd('IGLESIA')"/>
                             <option value="">--Seleccione una opción--</option>
                             @foreach($iglesias as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
@@ -178,7 +178,7 @@
                     <div class="form-group">
                         <div class="form-line">
                             <label class="control-label">Asociación</label>
-                            <select class="form-control select2"  style="width: 100%;" id="asociacion_id" name="union_id" onchange="getIglesiasd('ASOCIACION')"/>
+                            <select class="form-control"  style="width: 100%;" id="asociacion_id" name="union_id" onchange="getIglesiasd('ASOCIACION')"/>
                             <option value="">--Seleccione una opción--</option>
                             @foreach($asociaciones as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
@@ -206,7 +206,7 @@
                     <div class="form-group">
                         <div class="form-line">
                             <label class="control-label">Labor</label>
-                            <select class="form-control select2"  style="width: 100%;" id="asociacion_id" name="labor_id" onchange="getIglesiasd('LABOR')"/>
+                            <select class="form-control"  style="width: 100%;" id="asociacion_id" name="labor_id" onchange="getIglesiasd('LABOR')"/>
                             <option value="">--Seleccione una opción--</option>
                             @foreach($labor as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
@@ -241,8 +241,6 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    $(document).ready(function () {
-    });
     $('.select2').select2();
 
     function getIglesiasd(tipo) {

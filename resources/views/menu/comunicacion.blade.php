@@ -38,7 +38,7 @@
                     </a>
                     @endif
                     @if(session()->exists('PAG_JARDIN-ORACION'))
-                    <a disabled="disabled" class="btn bg-green waves-effect">
+                    <a href="{{route('pedidosoracion.index')}}" class="btn bg-green waves-effect">
                         <div><span>JARDÍN DE ORACIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif

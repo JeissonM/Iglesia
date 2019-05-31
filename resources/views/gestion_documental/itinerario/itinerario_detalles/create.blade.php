@@ -72,30 +72,20 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Hora Inicial</label>
-                                        <br/><select class="form-control show-tick select2" name="horainicial" required="required">
-                                            <option value="">--Seleccione una opción--</option>
-                                            @foreach($h as $key=>$value)
-                                            <option value="{{$key}}">{{$value}}</option>
-                                            @endforeach
-                                        </select>
+                                        <br/><input class="form-control" type="text" maxlength="5" minlength="5" placeholder="Hora en formato 24h Ej: 14:05 " required="required" name="horainicial">                                                               
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input class="form-control" type="number" max="50" placeholder="Orden de inicio" required="required" name="orden">
+                                        <br/><input class="form-control" type="number" max="50" placeholder="Orden de inicio con respecto a los demás momentos o eventos" required="required" name="orden">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Hora Finial</label>
-                                        <br/><select class="form-control show-tick select2" name="horafinal" required="required">
-                                            <option value="">--Seleccione una opción--</option>
-                                            @foreach($h as $key=>$value)
-                                            <option value="{{$key}}">{{$value}}</option>
-                                            @endforeach
-                                        </select>
+                                        <br/><input class="form-control" type="text" maxlength="5" minlength="5" placeholder="Hora en formato 24h Ej: 14:05 " required="required" name="horafinal">                              
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +111,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS ITINERARIOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Agregue nuevos itinerarios,</strong>Administre los eventos, reuniones, etc; para un período y una iglesia.
+                <strong>Agregue nuevos detalles,</strong> Administre los detalles del itineratio seleccionado.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

@@ -40,4 +40,8 @@ class Ciudad extends Model {
         return $this->hasMany('App\Iglesia');
     }
 
+    public function pedidosoracions() {
+        return $this->hasMany('App\Pedidosoracion');
+    }
+
 }

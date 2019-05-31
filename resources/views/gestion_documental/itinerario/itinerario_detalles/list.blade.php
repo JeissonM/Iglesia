@@ -71,8 +71,8 @@
                             <tr>
                                 <td>{{$i->orden}}</td>
                                 <td>{{$i->descripcion}}</td>
-                                <td>{{$i->horainicial[0].$i->horainicial[1].":".$i->horainicial[2].$i->horainicial[3]}}</td>
-                                <td>{{$i->horafinal[0].$i->horafinal[1].":".$i->horafinal[2].$i->horafinal[3]}}</td>
+                                <td>{{$i->horainicial}}</td>
+                                <td>{{$i->horafinal}}</td>
                                 <td>{{$i->created_at}}</td>
                                 <td>{{$i->updated_at}}</td>
                                 <td>

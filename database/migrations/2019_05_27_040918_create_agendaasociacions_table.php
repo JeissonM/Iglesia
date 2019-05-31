@@ -20,7 +20,6 @@ class CreateAgendaasociacionsTable extends Migration {
             $table->foreign('asociacion_id')->references('id')->on('asociacions')->onDelete('cascade');
             $table->bigInteger('periodo_id')->unsigned();
             $table->foreign('periodo_id')->references('id')->on('periodos')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
