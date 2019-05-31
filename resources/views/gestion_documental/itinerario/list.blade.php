@@ -51,6 +51,7 @@
                                 <td>{{$i->updated_at}}</td>
                                 <td>
                                     <a href="{{ route('itinerariodetalle.inicio',$i->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Continuar"><i class="material-icons">arrow_forward</i></a>
+                                    <a href="{{ route('itinerario.show',$i->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Evento"><i class="material-icons">remove_red_eye</i></a>
                                     <a href="{{ route('itinerario.edit',$i->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Itinerario"><i class="material-icons">mode_edit</i></a>
                                     <a href="{{ route('itinerario.delete',$i->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Itinerario"><i class="material-icons">delete</i></a>
                                 </td>
@@ -71,7 +72,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS ITINERARIOS</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los eventos, reunios, etc; de las iglesias para un periodo seleccionado.
+                <strong>Detalles: </strong>Administre los eventos, reuniones, etc; de las iglesias para un periodo seleccionado.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

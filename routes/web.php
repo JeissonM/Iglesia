@@ -214,6 +214,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     //PEDIOS DE ORACIÓN
     Route::resource('pedidosoracion', 'PedidosoracionController');
     Route::get('pedidosoracion/{id}/delete', 'PedidosoracionController@destroy')->name('pedidosoracion.delete');
-    //Route::get('agendaasociacion/{id}/estado/cambiar', 'AgendaasociacionController@estado')->name('agendaasociacion.estado');
-   
+    Route::post('pedidosoracion/store/configurar', 'PedidosoracionController@cambiarestado')->name('pedidosoracion.store2');
 });

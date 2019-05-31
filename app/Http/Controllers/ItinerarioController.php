@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Itinerario;
 use App\Asociacion;
-use App\Distrito;
-use App\Iglesia;
+use App\Itinerariodetalle;
 use App\Periodo;
 use App\Auditoriagestiondocumental;
 use App\Http\Requests\ItinerarioRequest;
@@ -77,8 +76,13 @@ class ItinerarioController extends Controller {
      * @param  \App\Itinerario  $itinerario
      * @return \Illuminate\Http\Response
      */
-    public function show(Itinerario $itinerario) {
-        //
+    public function show($id) {
+        $itinerario = Itinerario::find($id);
+        $detalles = Itinerariodetalle::where('itinerario_id', $id)->orderBy('orden','asc')->get();
+        return view('gestion_documental.itinerario.show')
+                        ->with('location', 'gestion-documental')
+                        ->with('itinerario', $itinerario)
+                        ->with('detalles', $detalles);
     }
 
     /**

@@ -20,7 +20,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ route('agendaasociacion.create') }}">Agregar Nuevo Pedido</a></li>
+                            <li><a href="{{ route('pedidosoracion.create') }}">Agregar Nuevo Pedido</a></li>
                             <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
@@ -32,10 +32,12 @@
                         <thead>
                             <tr>
                                 <th>PERSONA</th>
+                                <th>IGLESIA</th>
                                 <th>PEDIDO</th>
                                 <th>CORREO</th>
                                 <th>CIUDAD</th>
                                 <th>ESTADO</th>
+                                <th>CREADO</th>
                                 <th>MODIFICADO</th>
                                 <th>ACCIONES</th>
                             </tr>
@@ -44,9 +46,11 @@
                             @foreach($pedidos as $i)
                             <tr>
                                 @if($i->persona == null)
-                                <td>{{$i->feligres->personanatrual->primer_nombre." "$i->feligres->personanatural->segundo_nombre." ".$i->feligres->personanatural->primer_apellido." "$i->feligres->personanatural->segundo_apellido}}</td>
+                                <td>{{$i->feligres->personanatural->primer_nombre." ".$i->feligres->personanatural->segundo_nombre." ".$i->feligres->personanatural->primer_apellido." ".$i->feligres->personanatural->segundo_apellido}}</td>
+                                <td>{{$i->feligres->iglesia->nombre}}</td>
                                 @else
                                 <td>{{$i->persona}}</td>
+                                <td>--</td>
                                 @endif
                                 <td>{{$i->pedido}}</td>
                                 <td>{{$i->correo}}</td>
@@ -55,10 +59,10 @@
                                 <td>{{$i->created_at}}</td>
                                 <td>{{$i->updated_at}}</td>
                                 <td>
-                                    @if($i->feligres->identificacion == $id)
-                                    <a href="{{ route('agendaasociacion.edit',$i->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Itinerario"><i class="material-icons">mode_edit</i></a>
+                                    <a onclick="estado(this.id)" id="{{$i}}" data-toggle="modal" data-target="#mdEstado" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Estado"><i class="material-icons">mode_edit</i></a>                     
+                                    @if($i->feligres->personanatural->persona->numero_documento == $id)
+                                    <a href="{{ route('pedidosoracion.delete',$i->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Pedido"><i class="material-icons">delete</i></a> 
                                     @endif
-                                    <a href="{{ route('agendaasociacion.delete',$i->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Itinerario"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -74,13 +78,53 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS AGENDAS</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS PEDIDO DE ORACIÓN</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los documentos para una asociación y un período.
+                <strong>Detalles: </strong>Administre los pedidos de oración.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Cambiar Estado -->
+<div class="modal fade" id="mdEstado" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">CAMBIAR ESTADO DEL PEDIDO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row clearfix">
+                    <form class="form-horizontal" role='form' method="POST" action="{{route('pedidosoracion.store2')}}" >
+                        @csrf 
+                        <input type="hidden" name="pedido_id" id="pedido_id" />
+                        <div class="col-md-12">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label class="control-label">Estado</label>
+                                        <br/><select class="form-control show-tick select2" name="estado" id="select-estado">
+                                            <option value="">--Seleccion una Opción--</option> 
+                                            <option value="CREADO">CREADO</option>
+                                            <option value="ESTAMOS ORANDO">ESTAMOS ORANDO</option>
+                                            <option value="FINALIZADO">FINALIZADO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="margin-top: 30px;">
+                                <div class="form-group">
+                                    <button type="submit" class="btn bg-green waves-effect">ACEPTAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
             </div>
         </div>
     </div>
@@ -90,5 +134,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
     });
+    function estado(id) {
+        var pedido = JSON.parse(id);
+        var e = pedido.estado
+        var id = pedido.id;
+        $("#pedido_id").val(id);
+        $("#select-estado option[value='" + e + "']").attr('selected', true);
+    }
 </script>
 @endsection
