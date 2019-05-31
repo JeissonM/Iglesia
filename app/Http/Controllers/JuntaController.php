@@ -566,4 +566,80 @@ class JuntaController extends Controller {
         return json_encode($response);
     }
 
+    /*
+     * actas de las reuniones de la junta de una igleisa
+     */
+
+    public function indexActa() {
+        $u = Auth::user();
+        $p = Persona::where('numero_documento', $u->identificacion)->first();
+        if ($p !== null) {
+            $pn = Personanatural::where('persona_id', $p->id)->first();
+            if ($pn !== null) {
+                $f = Feligres::where([['personanatural_id', $pn->id], ['estado_actual', 'ACTIVO']])->first();
+                if ($f !== null) {
+                    $per = Periodo::all()->sortByDesc('id');
+                    $periodos = null;
+                    foreach ($per as $pe) {
+                        $periodos[$pe->id] = $pe->etiqueta . " - " . $pe->fechainicio . " - " . $pe->fechafin;
+                    }
+                    return view('gestion_documental.acta_junta.gdlist')
+                                    ->with('location', 'gestion-documental')
+                                    ->with('f', $f)
+                                    ->with('periodos', $periodos);
+                } else {
+                    flash('No tiene permisos para acceder a esta función.')->warning();
+                    return redirect()->route('admin.gestiondocumental');
+                }
+            } else {
+                flash('No tiene permisos para acceder a esta función.')->warning();
+                return redirect()->route('admin.gestiondocumental');
+            }
+        } else {
+            flash('No tiene permisos para acceder a esta función.')->warning();
+            return redirect()->route('admin.gestiondocumental');
+        }
+    }
+
+    /*
+     * muestra actas de reuniones de junta
+     */
+
+    public function reunionesActa($feligres_id, $periodo_id) {
+        $f = Feligres::find($feligres_id);
+        $p = Periodo::find($periodo_id);
+        $junta = Junta::where([['iglesia_id', $f->iglesia_id], ['periodo_id', $p->id]])->first();
+        $reuniones = $agendas = null;
+        if ($junta != null) {
+            $reuniones = Reunionjunta::where('junta_id', $junta->id)->get();
+            $agendas = Agendajunta::where('junta_id', $junta->id)->get();
+        }
+        return view('gestion_documental.acta_junta.gdcontinuar')
+                        ->with('location', 'gestion-documental')
+                        ->with('f', $f)
+                        ->with('p', $p)
+                        ->with('junta', $junta)
+                        ->with('reuniones', $reuniones)
+                        ->with('agendas', $agendas);
+    }
+    
+    /*
+     * reunionjunta ver acta para gestión documental
+     */
+
+    public function reunionjuntaveracta($f, $p, $j, $r) {
+        $feligres = Feligres::find($f);
+        $periodo = Periodo::find($p);
+        $junta = Junta::find($j);
+        $reunion = Reunionjunta::find($r);
+        $reunion->agendajunta;
+        $reunion->actajunta;
+        return view('gestion_documental.acta_junta.gdreunionjuntaver')
+                        ->with('location', 'gestion-documental')
+                        ->with('f', $feligres)
+                        ->with('p', $periodo)
+                        ->with('j', $junta)
+                        ->with('r', $reunion);
+    }
+
 }

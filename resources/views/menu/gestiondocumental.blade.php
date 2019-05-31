@@ -32,6 +32,16 @@
                         <div><span>LISTA DE PREDICACIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_ACTA-GESTION-DOCUMENTAL'))
+                    <a href="{{route('junta.indexacta')}}" class="btn bg-blue waves-effect">
+                        <div><span>ACTAS DE LAS REUNIONES DE LA JUNTA</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
+                    @if(session()->exists('PAG_RECURSOS-MINISTERIALES'))
+                    <a href="{{route('recursosministeriales.index')}}" class="btn bg-blue waves-effect">
+                        <div><span>RECURSOS MINISTERIALES</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

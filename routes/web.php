@@ -196,6 +196,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     Route::resource('itinerariodetalle', 'ItinerariodetalleController');
     Route::get('itinerariodetalle/{id}/delete', 'ItinerariodetalleController@destroy')->name('itinerariodetalle.delete');
     Route::get('itinerariodetalle/{id}/inicio', 'ItinerariodetalleController@index')->name('itinerariodetalle.inicio');
+    //ACTAS DE JUNTA
+    Route::get('junta/actas', 'JuntaController@indexActa')->name('junta.indexacta');
+    Route::get('junta/actas/{feligres}/{periodo}/reuniones', 'JuntaController@reunionesActa')->name('junta.reunionesacta');
+    Route::get('junta/actas/{feligres}/{periodo}/{junta}/reuniones/{reunion}/junta/ver/gd', 'JuntaController@reunionjuntaveracta')->name('junta.reunionjuntaveracta');
+    //RECURSOS MINISTERIALES
+    Route::resource('recursosministeriales', 'RecursosministerialController');
+    Route::get('recursosministeriales/{id}/delete', 'RecursosministerialController@destroy')->name('recursosministeriales.delete');
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN

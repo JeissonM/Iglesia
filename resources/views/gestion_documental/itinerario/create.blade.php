@@ -104,7 +104,7 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-orange">
+        <div class="modal-content modal-col-blue">
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS ITINERARIOS</h4>
             </div>
