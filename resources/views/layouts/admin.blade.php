@@ -411,7 +411,10 @@
         <!-- JQuery Steps Plugin Js -->
         <script src="{{ asset('js/jquery-steps/jquery.steps.js')}}"></script>
         <script src="{{ asset('js/pages/forms/form-wizard.js')}}"></script>
+        <!-- TinyMCE -->
+        <script src="{{ asset('js/tinymce/tinymce.js')}}"></script>
         <script type="text/javascript">
+
                                 var url = "<?php echo config('app.url'); ?>/";
 
                                 function copiar(text) {

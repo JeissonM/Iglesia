@@ -42,6 +42,11 @@
                         <div><span>RECURSOS MINISTERIALES</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_MULTIMEDIA-MINISTERIAL'))
+                    <a href="{{route('multimediaministerial.index')}}" class="btn bg-blue waves-effect">
+                        <div><span>MULTIMEDIA MINISTERIAL (INFORME DE PROGRAMAS, EVENTOS, ALBUM DE FOTOGRAFÍAS O VÍDEOS, ETC)</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

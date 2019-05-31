@@ -20,7 +20,7 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ route('recursosministeriales.create') }}">Agregar Nuevo Recurso</a></li>
+                            <li><a data-toggle="modal" data-target="#mdModal2">Agregar Nuevo Recurso</a></li>
                             <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
                         </ul>
                     </li>
@@ -46,7 +46,7 @@
                                     @if(count($r->recursosministerialitems)>0)
                                     <ul>
                                         @foreach($r->recursosministerialitems as $i)
-                                        <li><a href="{{asset('docs/recursos/'.$i->documento)}}" target="_blank">{{$i->documento}}</a></li>
+                                        <li><a href="{{asset('docs/recursos/'.$i->recurso)}}" target="_blank">{{$i->recurso}}</a></li>
                                         @endforeach
                                     </ul>
                                     @else
@@ -54,8 +54,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('recursosministeriales.edit',$l->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Documentos"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('recursosministeriales.delete',$l->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Recurso"><i class="material-icons">delete</i></a>
+                                    <a href="{{ route('recursosministeriales.edit',$r->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Documentos"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('recursosministeriales.delete',$r->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Recurso"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -82,10 +82,40 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="mdModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-blue">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">SELECCIONE PERÍODO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-line">
+                        <select class="form-control show-tick select2" name="periodo_id" id="p" required="">
+                            @foreach($periodos as $key=>$value)
+                            <option value="{{$key}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                <button type="button" class="btn btn-link waves-effect" onclick="continuar()">CONTINUAR</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
     });
+
+    function continuar() {
+        location.href = url + "gestiondocumental/recursosministeriales/" + $("#p").val() + "/create";
+    }
 </script>
 @endsection

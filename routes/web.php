@@ -97,6 +97,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //MINISTERIOS EXTRAOFICIALES DE LA IGLESIA
     Route::resource('ministerioextra', 'MinisterioextraController');
     Route::get('ministerioextra/{id}/delete', 'MinisterioextraController@destroy')->name('ministerioextra.delete');
+    Route::get('ministerioextra/{id}/miembros', 'MinisterioextraController@miembros')->name('ministerioextra.miembros');
+    Route::get('ministerioextra/{ministerio}/{miembro}/delete', 'MinisterioextraController@destroy2')->name('ministerioextra.delete2');
+    Route::post('ministerioextra/miembros/crear', 'MinisterioextraController@miembroscrear')->name('ministerioextra.miembroscrear');
+    //MINISTERIOS EXTRAOFICIALES DE LA IGLESIA CREACIÓN Y ADMINISTRACIÓN
+    Route::resource('ministerionooficial', 'MinisterionooficialController');
+    Route::get('ministerionooficial/{id}/delete', 'MinisterionooficialController@destroy')->name('ministerionooficial.delete');
     //PERIODO
     Route::resource('periodo', 'PeriodoController');
     Route::get('periodo/{id}/delete', 'PeriodoController@destroy')->name('periodo.delete');
@@ -203,6 +209,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     //RECURSOS MINISTERIALES
     Route::resource('recursosministeriales', 'RecursosministerialController');
     Route::get('recursosministeriales/{id}/delete', 'RecursosministerialController@destroy')->name('recursosministeriales.delete');
+    Route::get('recursosministeriales/{periodo}/create', 'RecursosministerialController@create')->name('recursosministeriales.create2');
+    Route::post('recursosministeriales/create/edit/items', 'RecursosministerialController@store2')->name('recursosministeriales.store2');
+    Route::get('recursosministeriales/items/{recurso}/{id}/delete', 'RecursosministerialController@destroy2')->name('recursosministeriales.delete2');
+    //MULTIMEDIA MINISTERIAL
+    Route::resource('multimediaministerial', 'MultimediaministerialController');
+    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial.lista');
+    Route::get('multimediaministerial/{id}/delete', 'MultimediaministerialController@destroy')->name('multimediaministerial.delete');
+    Route::get('multimediaministerial/{ministerio}/create', 'MultimediaministerialController@create')->name('multimediaministerial.create2');
+    Route::post('multimediaministerial/create/edit/items', 'MultimediaministerialController@store2')->name('multimediaministerial.store2');
+    Route::get('multimediaministerial/items/{recurso}/{id}/delete', 'MultimediaministerialController@destroy2')->name('multimediaministerial.delete2');
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN
