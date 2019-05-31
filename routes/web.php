@@ -214,7 +214,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     Route::get('recursosministeriales/items/{recurso}/{id}/delete', 'RecursosministerialController@destroy2')->name('recursosministeriales.delete2');
     //MULTIMEDIA MINISTERIAL
     Route::resource('multimediaministerial', 'MultimediaministerialController');
-    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial.lista');
+    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial .lista');
     Route::get('multimediaministerial/{id}/delete', 'MultimediaministerialController@destroy')->name('multimediaministerial.delete');
     Route::get('multimediaministerial/{ministerio}/create', 'MultimediaministerialController@create')->name('multimediaministerial.create2');
     Route::post('multimediaministerial/create/edit/items', 'MultimediaministerialController@store2')->name('multimediaministerial.store2');
