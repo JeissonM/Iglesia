@@ -242,4 +242,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::resource('pedidosoracion', 'PedidosoracionController');
     Route::get('pedidosoracion/{id}/delete', 'PedidosoracionController@destroy')->name('pedidosoracion.delete');
     Route::post('pedidosoracion/store/configurar', 'PedidosoracionController@cambiarestado')->name('pedidosoracion.store2');
+    //ANUNCIOS
+    Route::resource('anuncios', 'AnuncioController');
+    Route::get('anuncios/{id}/delete', 'AnuncioController@destroy')->name('anuncios.delete');
+    Route::get('anuncios/{id}/estado/cambiar/estado', 'AnuncioController@estado')->name('anuncios.estado');
 });

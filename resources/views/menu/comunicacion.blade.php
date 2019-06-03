@@ -42,6 +42,11 @@
                         <div><span>JARDÍN DE ORACIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_ANUNCIOS'))
+                    <a href="{{route('anuncios.index')}}" class="btn bg-green waves-effect">
+                        <div><span>ANUNCIOS</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

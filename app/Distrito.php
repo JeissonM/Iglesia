@@ -47,4 +47,8 @@ class Distrito extends Model
     public function listapredicacions() {
         return $this->hasMany('App\Periodo');
     }
+    
+    public function anuncios() {
+        return $this->hasMany('App\Anuncio');
+    }
 }

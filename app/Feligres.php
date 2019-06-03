@@ -75,5 +75,9 @@ class Feligres extends Model {
     public function pedidosoracions() {
         return $this->hasMany('App\Pedidosoracion');
     }
+    
+    public function anuncios() {
+        return $this->hasMany('App\Anuncio');
+    }
 
 }

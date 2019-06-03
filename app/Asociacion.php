@@ -43,5 +43,9 @@ class Asociacion extends Model {
     public function agendaasociacions() {
         return $this->hasMany('App\Agendaasociacion');
     }
+    
+    public function anuncios() {
+        return $this->hasMany('App\Anuncio');
+    }
 
 }

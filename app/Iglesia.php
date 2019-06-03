@@ -55,5 +55,9 @@ class Iglesia extends Model {
     public function itinerarios() {
         return $this->hasMany('App\Itinerario');
     }
+    
+    public function anuncios() {
+        return $this->hasMany('App\Anuncio');
+    }
 
 }
