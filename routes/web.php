@@ -212,13 +212,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     Route::get('recursosministeriales/{periodo}/create', 'RecursosministerialController@create')->name('recursosministeriales.create2');
     Route::post('recursosministeriales/create/edit/items', 'RecursosministerialController@store2')->name('recursosministeriales.store2');
     Route::get('recursosministeriales/items/{recurso}/{id}/delete', 'RecursosministerialController@destroy2')->name('recursosministeriales.delete2');
+    Route::get('recursosministeriales/lista/recursos/visualizacion/index', 'RecursosministerialController@visualizacionindex')->name('recursosministeriales.visualizacionindex');
+    Route::get('recursosministeriales/lista/recursos/visualizacion/index/{id}/ver', 'RecursosministerialController@visualizacionver')->name('recursosministeriales.visualizacionver');
     //MULTIMEDIA MINISTERIAL
     Route::resource('multimediaministerial', 'MultimediaministerialController');
-    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial .lista');
+    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial.lista');
     Route::get('multimediaministerial/{id}/delete', 'MultimediaministerialController@destroy')->name('multimediaministerial.delete');
     Route::get('multimediaministerial/{ministerio}/create', 'MultimediaministerialController@create')->name('multimediaministerial.create2');
     Route::post('multimediaministerial/create/edit/items', 'MultimediaministerialController@store2')->name('multimediaministerial.store2');
     Route::get('multimediaministerial/items/{recurso}/{id}/delete', 'MultimediaministerialController@destroy2')->name('multimediaministerial.delete2');
+    Route::get('multimediaministerial/lista/multimedia/visualizacion/index', 'MultimediaministerialController@visualizacionindex')->name('multimediaministerial.visualizacionindex');
+    Route::get('multimediaministerial/lista/multimedia/visualizacion/index/{id}/ver', 'MultimediaministerialController@visualizacionver')->name('multimediaministerial.visualizacionver');
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN

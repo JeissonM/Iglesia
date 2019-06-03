@@ -22,6 +22,8 @@
         <link href="{{asset('plugins/pnotify/dist/pnotify.css')}}" rel="stylesheet">
         <link href="{{asset('plugins/pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
         <link href="{{asset('plugins/pnotify/dist/pnotify.nonblock.css')}}" rel="stylesheet">
+        <!-- JQuery Nestable Css -->
+        <link href="{{asset('css/plugins/nestable/jquery-nestable.css')}}" rel="stylesheet" />
     </head>
     <body class="theme-teal">
         <!-- Page Loader -->
@@ -413,6 +415,9 @@
         <script src="{{ asset('js/pages/forms/form-wizard.js')}}"></script>
         <!-- TinyMCE -->
         <script src="{{ asset('js/tinymce/tinymce.js')}}"></script>
+        <!-- Jquery Nestable -->
+        <script src="{{ asset('js/nestable/jquery.nestable.js')}}"></script>
+        <script src="{{ asset('js/pages/ui/sortable-nestable.js')}}"></script>
         <script type="text/javascript">
 
                                 var url = "<?php echo config('app.url'); ?>/";

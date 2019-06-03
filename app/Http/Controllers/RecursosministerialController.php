@@ -14,6 +14,7 @@ use App\Miembrojunta;
 use App\Http\Requests\RecursoministerialRequest;
 use App\Auditoriagestiondocumental;
 use App\Recursosministerialitem;
+use App\Ministerio;
 
 class RecursosministerialController extends Controller {
 
@@ -266,6 +267,21 @@ class RecursosministerialController extends Controller {
             flash("El recurso no pudo ser eliminado!")->error();
             return redirect()->route('recursosministeriales.edit', $recurso);
         }
+    }
+
+    public function visualizacionindex() {
+        $m = Ministerio::all();
+        return view('gestion_documental.recursos_ministeriales.visualizacion')
+                        ->with('location', 'gestion-documental')
+                        ->with('ms', $m);
+    }
+
+    public function visualizacionver($id) {
+        $m = Ministerio::find($id);
+        $m->recursosministerials;
+        return view('gestion_documental.recursos_ministeriales.visualizacionver')
+                        ->with('location', 'gestion-documental')
+                        ->with('m', $m);
     }
 
 }

@@ -243,4 +243,19 @@ class MultimediaministerialController extends Controller {
                         ->with('m', $m);
     }
 
+    public function visualizacionindex() {
+        $m = Ministerioextra::all();
+        return view('gestion_documental.multimedia_ministerial.visualizacion')
+                        ->with('location', 'gestion-documental')
+                        ->with('ms', $m);
+    }
+
+    public function visualizacionver($id) {
+        $m = Ministerioextra::find($id);
+        $m->multimediaministerials;
+        return view('gestion_documental.multimedia_ministerial.visualizacionver')
+                        ->with('location', 'gestion-documental')
+                        ->with('m', $m);
+    }
+
 }
