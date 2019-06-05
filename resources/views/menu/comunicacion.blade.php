@@ -55,6 +55,9 @@
                         <div><span>ENCONTRAR UNA IGLESIA - GESTIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    <a href="{{route('anuncios.visualizar')}}" class="btn bg-green waves-effect">
+                        <div><span>DIRECTORIO CONTRACTUAL</span><span class="ink animate"></span></div>
+                    </a>
                 </div>
             </div>
         </div>
