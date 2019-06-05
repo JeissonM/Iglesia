@@ -50,6 +50,11 @@
                     <a href="{{route('anuncios.visualizar')}}" class="btn bg-green waves-effect">
                         <div><span>VER ANUNCIOS</span><span class="ink animate"></span></div>
                     </a>
+                    @if(session()->exists('PAG_IGLESIAMAPA'))
+                    <a href="{{route('iglesiamapa.index')}}" class="btn bg-green waves-effect">
+                        <div><span>ENCONTRAR UNA IGLESIA - GESTIÓN</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

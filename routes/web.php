@@ -247,4 +247,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::get('anuncios/{id}/delete', 'AnuncioController@destroy')->name('anuncios.delete');
     Route::get('anuncios/{id}/estado/cambiar/estado', 'AnuncioController@estado')->name('anuncios.estado');
     Route::get('anuncios/proyector/visualizar/index', 'AnuncioController@visualizar')->name('anuncios.visualizar');
+    //ENCONTRAR UNA IGLESIA
+    Route::resource('iglesiamapa', 'IglesiamapaController');
+    Route::get('iglesiamapa/{id}/delete', 'IglesiamapaController@destroy')->name('iglesiamapa.delete');
 });
