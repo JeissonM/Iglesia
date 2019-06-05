@@ -2,9 +2,10 @@
 @section('breadcrumb')
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
-    <li><a href="{{route('admin.comunicacion')}}">Comunicaciones</a></li>
-    <li><a href="{{route('agendaasociacion.index')}}">Agenda</a></li>
-    <li class="active"><a>Cambiar Documento</a></li>
+    <li><a href="{{route('admin.gestiondocumental')}}">Gestión Documental</a></li>
+    <li><a href="{{route('admin.editorial')}}">Editorial</a></li>
+    <li><a href="{{route('categorialibro.index')}}">Categoría</a></li>
+    <li class="active"><a>Editar Categoría</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,7 +14,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    AGENDA - EDITAR UNA AGENDA<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
+                    CATEGORÍA - EDITAR UNA CATEGORÍA<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -31,33 +32,34 @@
                     @component('layouts.errors')
                     @endcomponent
                 </div>
-                <h1 class="card-inside-title">DATOS DE LA AGENDA: {{$agenda->id}}</h1>
+                <h1 class="card-inside-title">DATOS DE LA CATEGORIÁ: {{$categoria->nombre}}</h1>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <form class="form-horizontal" role='form' method="POST" action="{{route('agendaasociacion.update',$agenda->id)}}" enctype= "multipart/form-data">
+                        <form class="form-horizontal" role='form' method="POST" action="{{route('categorialibro.update',$categoria->id)}}">
                             @csrf
                             <input name="_method" type="hidden" value="PUT" />
-                            <input type="hidden" name="id" value="{{$agenda->id}}" />
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <label class="control-label">Documento</label>
-                                        <br/><input class="form-control" type="file"  required="required" name="documento">
+                                        <br/><input class="form-control" type="text" placeholder="Nombre de la categoría" required="required" name="nombre" value="{{$categoria->nombre}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><input class="form-control" type="text" placeholder="Titulo" name="descripcion" value="{{$categoria->descripcion}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <br/><br/><a href="{{route('agendaasociacion.index')}}" class="btn bg-red waves-effect">Cancelar</a>
+                                    <br/><br/><a href="{{route('categorialibro.index')}}" class="btn bg-red waves-effect">Cancelar</a>
                                     <button class="btn bg-indigo waves-effect" type="reset">Limpiar Formulario</button>
                                     <button class="btn bg-green waves-effect" type="submit">Guardar</button>
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="form-group">
-                        <h4 class="text-left text-danger">Documento Actual.</h4>
-                        <iframe src="{{asset('docs/agenda/'.$agenda->documento)}}" width="100%" height="400px"></iframe>
                     </div>
                 </div>
             </div>
@@ -68,12 +70,12 @@
 <!-- Modal -->
 <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content modal-col-green">
+        <div class="modal-content modal-col-blue">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS AGENDAS</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LAS CATEGORÍAS</h4>
             </div>
             <div class="modal-body">
-                <strong>Cambie los documento de la agenda,</strong> Administre los documentos para una asociación y un período.
+                <strong>Edite los datos de la categoría,</strong> Administre las categorías de los libros.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

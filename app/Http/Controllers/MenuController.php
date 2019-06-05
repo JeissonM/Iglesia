@@ -64,7 +64,7 @@ class MenuController extends Controller {
                         ->with('location', 'feligresia')
                         ->with('feligres', $feligres);
     }
-    
+
     /**
      * Show the form for make operations width a resource.
      *
@@ -110,6 +110,15 @@ class MenuController extends Controller {
      */
     public function comunicacion() {
         return view('menu.comunicacion')->with('location', 'comunicacion');
+    }
+
+    /**
+     * Show the view menu editorial
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editorial() {
+        return view('menu.editorial')->with('location', 'gestion-documental');
     }
 
 }

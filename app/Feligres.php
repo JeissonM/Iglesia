@@ -80,4 +80,8 @@ class Feligres extends Model {
         return $this->hasMany('App\Anuncio');
     }
 
+    public function sermons() {
+        return $this->hasMany('App\Sermon');
+    }
+
 }

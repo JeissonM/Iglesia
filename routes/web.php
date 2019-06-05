@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('inicio', 'HomeController@inicio')->name('inicio');
     Route::get('gestiondocumental', 'MenuController@gestiondocumental')->name('admin.gestiondocumental');
     Route::get('comunicacion', 'MenuController@comunicacion')->name('admin.comunicacion');
+    Route::get('editorial', 'MenuController@editorial')->name('admin.editorial');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DE USUARIOS
@@ -223,6 +224,20 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     Route::get('multimediaministerial/items/{recurso}/{id}/delete', 'MultimediaministerialController@destroy2')->name('multimediaministerial.delete2');
     Route::get('multimediaministerial/lista/multimedia/visualizacion/index', 'MultimediaministerialController@visualizacionindex')->name('multimediaministerial.visualizacionindex');
     Route::get('multimediaministerial/lista/multimedia/visualizacion/index/{id}/ver', 'MultimediaministerialController@visualizacionver')->name('multimediaministerial.visualizacionver');
+    //CATEGORIA LIBRO
+    Route::resource('categorialibro', 'CategorialibroController');
+    Route::get('categorialibro/{id}/delete', 'CategorialibroController@destroy')->name('categorialibro.delete');
+    //LIBRO
+    Route::resource('libro', 'LibroController');
+    Route::get('libro/{id}/delete', 'LibroController@destroy')->name('libro.delete');
+    Route::get('libro/{id}/cambiar/documento', 'LibroController@edit_doc')->name('libro.editdoc');
+    Route::put('libro/{id}/documento', 'LibroController@documento')->name('libro.documento');
+    Route::get('libro/cambiar/{id}/imagen', 'LibroController@edit_img')->name('libro.editimg');
+    Route::put('libro/{id}/imagen', 'LibroController@imagen')->name('libro.imagen');
+    //SERMONES
+    Route::resource('sermon', 'SermonController');
+    Route::get('sermon/{id}/delete', 'SermonController@destroy')->name('sermon.delete');
+    
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN
