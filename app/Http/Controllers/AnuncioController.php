@@ -223,4 +223,52 @@ class AnuncioController extends Controller {
         }
     }
 
+    public function visualizar() {
+        $u = Auth::user();
+        $feligreses = null;
+        $ff=null;
+        $ps = Persona::where('numero_documento', $u->identificacion)->get();
+        if (count($ps) > 0) {
+            foreach ($ps as $p) {
+                $pns = $p->personanaturals;
+                if (count($pns) > 0) {
+                    foreach ($pns as $pn) {
+                        $feligres = $pn->feligres;
+                        if (count($feligres) > 0) {
+                            foreach ($feligres as $f) {
+                                $feligreses[] = $f;
+                                $ff=$f;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $anuncios = [
+            'LOCAL' => null,
+            'DISTRITO' => null,
+            'ASOCIACION' => null
+        ];
+        if (count($feligreses) > 0) {
+            foreach ($feligreses as $f) {
+                $anl = Anuncio::where([['tipo', 'LOCAL'], ['estado', 'VIGENTE'], ['iglesia_id', $f->iglesia_id]])->get();
+                if (count($anl) > 0) {
+                    $anuncios['LOCAL'] = $anl;
+                }
+                $and = Anuncio::where([['tipo', 'DISTRITO'], ['estado', 'VIGENTE'], ['distrito_id', $f->iglesia->distrito_id]])->get();
+                if (count($and) > 0) {
+                    $anuncios['DISTRITO'] = $and;
+                }
+                $ana = Anuncio::where([['tipo', 'ASOCIACION'], ['estado', 'VIGENTE'], ['asociacion_id', $f->iglesia->distrito->asociacion_id]])->get();
+                if (count($ana) > 0) {
+                    $anuncios['ASOCIACION'] = $ana;
+                }
+            }
+        }
+        return view('comunicaciones.anuncios.proyector')
+                        ->with('location', 'comunicacion')
+                        ->with('anuncios', $anuncios)
+                        ->with('f', $f);
+    }
+
 }

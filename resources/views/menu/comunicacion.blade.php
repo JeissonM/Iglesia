@@ -44,9 +44,12 @@
                     @endif
                     @if(session()->exists('PAG_ANUNCIOS'))
                     <a href="{{route('anuncios.index')}}" class="btn bg-green waves-effect">
-                        <div><span>ANUNCIOS</span><span class="ink animate"></span></div>
+                        <div><span>ANUNCIOS GESTIÓN</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    <a href="{{route('anuncios.visualizar')}}" class="btn bg-green waves-effect">
+                        <div><span>VER ANUNCIOS</span><span class="ink animate"></span></div>
+                    </a>
                 </div>
             </div>
         </div>

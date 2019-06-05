@@ -246,4 +246,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::resource('anuncios', 'AnuncioController');
     Route::get('anuncios/{id}/delete', 'AnuncioController@destroy')->name('anuncios.delete');
     Route::get('anuncios/{id}/estado/cambiar/estado', 'AnuncioController@estado')->name('anuncios.estado');
+    Route::get('anuncios/proyector/visualizar/index', 'AnuncioController@visualizar')->name('anuncios.visualizar');
 });
