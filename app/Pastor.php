@@ -35,9 +35,13 @@ class Pastor extends Model {
     public function iglesia() {
         return $this->belongsTo('App\Iglesia');
     }
-    
+
     public function juntas() {
         return $this->hasMany('App\Junta');
+    }
+
+    public function sermons() {
+        return $this->hasMany('App\Sermon');
     }
 
 }

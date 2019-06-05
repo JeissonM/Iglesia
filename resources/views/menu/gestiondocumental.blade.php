@@ -42,6 +42,16 @@
                         <div><span>RECURSOS MINISTERIALES</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    @if(session()->exists('PAG_EDITORIAL'))
+                    <a href="{{route('admin.editorial')}}" class="btn bg-blue waves-effect">
+                        <div><span>EDITORIAL</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
+                    @if(session()->exists('PAG_SERMON'))
+                    <a href="{{route('sermon.index')}}" class="btn bg-blue waves-effect">
+                        <div><span>SERMONES</span><span class="ink animate"></span></div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>
