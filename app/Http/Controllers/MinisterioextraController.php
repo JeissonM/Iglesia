@@ -8,6 +8,10 @@ use App\Http\Requests\MinisterioextraRequest;
 use App\Tipoministerio;
 use App\Auditoriafeligresia;
 use Illuminate\Support\Facades\Auth;
+use App\Persona;
+use App\Personanatural;
+use App\Feligres;
+use App\Ministerionooficialmiembros;
 
 class MinisterioextraController extends Controller {
 
@@ -17,10 +21,29 @@ class MinisterioextraController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $ministerios = Ministerioextra::all();
-        return view('feligresia.ministerios.ministerioextra.list')
-                        ->with('location', 'feligresia')
-                        ->with('ministerios', $ministerios);
+        $u = Auth::user();
+        $p = Persona::where('numero_documento', $u->identificacion)->first();
+        if ($p != null) {
+            $pn = Personanatural::where('persona_id', $p->id)->first();
+            if ($pn != null) {
+                $feligres = Feligres::where('personanatural_id', $pn->id)->first();
+                if ($feligres != null) {
+                    $ministerios = Ministerionooficialmiembros::where('feligres_id', $feligres->id)->get();
+                    return view('feligresia.ministerios.ministerioextra.list')
+                                    ->with('location', 'feligresia')
+                                    ->with('ministerios', $ministerios);
+                } else {
+                    flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+                    return redirect()->route('admin.feligresia');
+                }
+            } else {
+                flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+                return redirect()->route('admin.feligresia');
+            }
+        } else {
+            flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+            return redirect()->route('admin.feligresia');
+        }
     }
 
     /**
@@ -29,10 +52,30 @@ class MinisterioextraController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $tipos = Tipoministerio::all()->pluck('nombre', 'id');
-        return view('feligresia.ministerios.ministerioextra.create')
-                        ->with('location', 'feligresia')
-                        ->with('tipos', $tipos);
+        $u = Auth::user();
+        $p = Persona::where('numero_documento', $u->identificacion)->first();
+        if ($p != null) {
+            $pn = Personanatural::where('persona_id', $p->id)->first();
+            if ($pn != null) {
+                $feligres = Feligres::where('personanatural_id', $pn->id)->first();
+                if ($feligres != null) {
+                    $tipos = Tipoministerio::all()->pluck('nombre', 'id');
+                    return view('feligresia.ministerios.ministerioextra.create')
+                                    ->with('location', 'feligresia')
+                                    ->with('tipos', $tipos)
+                                    ->with('f', $feligres);
+                } else {
+                    flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+                    return redirect()->route('admin.feligresia');
+                }
+            } else {
+                flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+                return redirect()->route('admin.feligresia');
+            }
+        } else {
+            flash('Usted no tiene permisos para ingresar a esta función.')->warning();
+            return redirect()->route('admin.feligresia');
+        }
     }
 
     /**
@@ -44,11 +87,18 @@ class MinisterioextraController extends Controller {
     public function store(MinisterioextraRequest $request) {
         $ministerio = new Ministerioextra($request->all());
         foreach ($ministerio->attributesToArray() as $key => $value) {
-            $ministerio->$key = strtoupper($value);
+            if ($key != 'presentacion') {
+                $ministerio->$key = strtoupper($value);
+            }
         }
         $result = $ministerio->save();
         if ($result) {
             $u = Auth::user();
+            $item = new Ministerionooficialmiembros();
+            $item->feligres_id = $request->feligres_id;
+            $item->funcion = "AUTOR";
+            $item->ministerioextra_id = $ministerio->id;
+            $item->save();
             $aud = new Auditoriafeligresia();
             $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
             $aud->operacion = "INSERTAR";
@@ -101,7 +151,11 @@ class MinisterioextraController extends Controller {
         $m = new Ministerioextra($ministerioextra->attributesToArray());
         foreach ($ministerioextra->attributesToArray() as $key => $value) {
             if (isset($request->$key)) {
-                $ministerioextra->$key = strtoupper($request->$key);
+                if ($key != 'presentacion') {
+                    $ministerioextra->$key = strtoupper($request->$key);
+                } else {
+                    $ministerioextra->$key = $request->$key;
+                }
             }
         }
         $result = $ministerioextra->save();
@@ -159,6 +213,86 @@ class MinisterioextraController extends Controller {
             return redirect()->route('ministerioextra.index');
         }
 //        }
+    }
+
+    public function miembros($id) {
+        $m = Ministerioextra::find($id);
+        $m->ministerionooficialmiembros;
+        return view('feligresia.ministerios.ministerioextra.miembros')
+                        ->with('location', 'feligresia')
+                        ->with('m', $m);
+    }
+
+    public function miembroscrear(Request $request) {
+        $miembro = new Ministerionooficialmiembros($request->all());
+        foreach ($miembro->attributesToArray() as $key => $value) {
+            $miembro->$key = strtoupper($value);
+        }
+        $p = Persona::where('numero_documento', $request->feligres)->first();
+        if ($p != null) {
+            $pn = Personanatural::where('persona_id', $p->id)->first();
+            if ($pn != null) {
+                $feligres = Feligres::where('personanatural_id', $pn->id)->first();
+                if ($feligres != null) {
+                    $miembro->feligres_id = $feligres->id;
+                    $result = $miembro->save();
+                    if ($result) {
+                        $u = Auth::user();
+                        $aud = new Auditoriafeligresia();
+                        $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+                        $aud->operacion = "INSERTAR";
+                        $str = "CREACIÓN DE MIEMBRO DE MINISTERIO EXTRA-OFICIAL. DATOS: ";
+                        foreach ($miembro->attributesToArray() as $key => $value) {
+                            $str = $str . ", " . $key . ": " . $value;
+                        }
+                        $aud->detalles = $str;
+                        $aud->save();
+                        flash("El miembro fue almacenado de forma exitosa!")->success();
+                        return redirect()->route('ministerioextra.miembros', $request->ministerioextra_id);
+                    } else {
+                        flash("El miembro no pudo ser almacenado. Error: " . $result)->error();
+                        return redirect()->route('ministerioextra.miembros', $request->ministerioextra_id);
+                    }
+                } else {
+                    flash('La identificación indicada no es un feligrés.')->warning();
+                    return redirect()->route('ministerioextra.miembros', $request->ministerioextra_id);
+                }
+            } else {
+                flash('La identificación indicada no es un feligrés.')->warning();
+                return redirect()->route('ministerioextra.miembros', $request->ministerioextra_id);
+            }
+        } else {
+            flash('La identificación indicada no es un feligrés.')->warning();
+            return redirect()->route('ministerioextra.miembros', $request->ministerioextra_id);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Ministerioextra  $miembro
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy2($ministerio, $id) {
+        $miembro = Ministerionooficialmiembros::find($id);
+        $result = $miembro->delete();
+        if ($result) {
+            $u = Auth::user();
+            $aud = new Auditoriafeligresia();
+            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+            $aud->operacion = "ELIMINAR";
+            $str = "ELIMINACIÓN DE MIEMBRO DE MINISTERIO EXTRA. DATOS: ";
+            foreach ($miembro->attributesToArray() as $key => $value) {
+                $str = $str . ", " . $key . ": " . $value;
+            }
+            $aud->detalles = $str;
+            $aud->save();
+            flash("El miembro fue eliminado de forma exitosa!")->success();
+            return redirect()->route('ministerioextra.miembros', $ministerio);
+        } else {
+            flash("El miembro no pudo ser eliminado. Error: " . $result)->error();
+            return redirect()->route('ministerioextra.miembros', $ministerio);
+        }
     }
 
 }

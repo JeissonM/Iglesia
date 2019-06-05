@@ -31,5 +31,9 @@ class Ministerio extends Model {
     public function recursosministerials() {
         return $this->hasMany('App\Recursosministerial');
     }
+    
+    public function multimediaministerials() {
+        return $this->hasMany('App\Multimediaministerial');
+    }
 
 }

@@ -24,7 +24,7 @@ class PedidosoracionController extends Controller {
         $u = Auth::user();
         $id = $u->identificacion;
         return view('comunicaciones.pedidos_oracion.list')
-                        ->with('location', 'comunicaciones')
+                        ->with('location', 'comunicacion')
                         ->with('pedidos', $pedidos)
                         ->with('id', $id);
     }
@@ -37,7 +37,7 @@ class PedidosoracionController extends Controller {
     public function create() {
         $ciudades = Ciudad::all()->pluck('nombre', 'id');
         return view('comunicaciones.pedidos_oracion.create')
-                        ->with('location', 'comunicaciones')
+                        ->with('location', 'comunicacion')
                         ->with('ciudades', $ciudades);
     }
 

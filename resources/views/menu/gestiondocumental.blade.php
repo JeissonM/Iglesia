@@ -50,8 +50,22 @@
                     @if(session()->exists('PAG_SERMON'))
                     <a href="{{route('sermon.index')}}" class="btn bg-blue waves-effect">
                         <div><span>SERMONES</span><span class="ink animate"></span></div>
-                    </a>
-                    @endif
+                        @endif
+                        @if(session()->exists('PAG_MULTIMEDIA-MINISTERIAL'))
+                        <a href="{{route('multimediaministerial.index')}}" class="btn bg-blue waves-effect">
+                            <div><span>MULTIMEDIA MINISTERIAL (INFORME DE PROGRAMAS, EVENTOS, ALBUM DE FOTOGRAFÍAS O VÍDEOS, ETC)</span><span class="ink animate"></span></div>
+                        </a>
+                        @endif
+                        @if(session()->exists('PAG_VISUALIZACION-MULTIMEDIA-MINISTERIOS'))
+                        <a href="{{route('multimediaministerial.visualizacionindex')}}" class="btn bg-blue waves-effect">
+                            <div><span>MULTIMEDIA MINISTERIAL - VISUALIZACIÓN</span><span class="ink animate"></span></div>
+                        </a>
+                        @endif
+                        @if(session()->exists('PAG_RECURSOS-MINISTERIALES-VISUALIZACION'))
+                        <a href="{{route('recursosministeriales.visualizacionindex')}}" class="btn bg-blue waves-effect">
+                            <div><span>RECURSOS MINISTERIALES - VISUALIZACIÓN</span><span class="ink animate"></span></div>
+                        </a>
+                        @endif
                 </div>
             </div>
         </div>

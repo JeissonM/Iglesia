@@ -23,6 +23,7 @@ class MinisterioextraRequest extends FormRequest {
     public function rules() {
         return [
             'nombre' => 'required|max:255|min:5',
+            'descripcion' => 'required|max:250|min:5',
             'tipoministerio_id' => 'required'
         ];
     }

@@ -47,13 +47,21 @@ class Iglesia extends Model {
     public function juntas() {
         return $this->hasMany('App\Junta');
     }
-    
+
     public function lppredicadoriglesias() {
         return $this->hasMany('App\Lppredicadoriglesia');
     }
 
     public function itinerarios() {
         return $this->hasMany('App\Itinerario');
+    }
+
+    public function anuncios() {
+        return $this->hasMany('App\Anuncio');
+    }
+
+    public function iglesiamapa() {
+        return $this->hasOne('App\Iglesiamapa');
     }
 
 }

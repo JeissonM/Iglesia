@@ -12,7 +12,7 @@ class Ministerioextra extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'tipoministerio_id', 'created_at', 'updated_at'
+        'id', 'nombre', 'descripcion', 'presentacion', 'tipoministerio_id', 'created_at', 'updated_at'
     ];
 
     /**
@@ -26,6 +26,14 @@ class Ministerioextra extends Model {
 
     public function tipoministerio() {
         return $this->belongsTo('App\Tipoministerio');
+    }
+
+    public function ministerionooficialmiembros() {
+        return $this->hasMany('App\Ministerionooficialmiembros');
+    }
+
+    public function multimediaministerials() {
+        return $this->hasMany('App\Multimediaministerial');
     }
 
 }

@@ -98,6 +98,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //MINISTERIOS EXTRAOFICIALES DE LA IGLESIA
     Route::resource('ministerioextra', 'MinisterioextraController');
     Route::get('ministerioextra/{id}/delete', 'MinisterioextraController@destroy')->name('ministerioextra.delete');
+    Route::get('ministerioextra/{id}/miembros', 'MinisterioextraController@miembros')->name('ministerioextra.miembros');
+    Route::get('ministerioextra/{ministerio}/{miembro}/delete', 'MinisterioextraController@destroy2')->name('ministerioextra.delete2');
+    Route::post('ministerioextra/miembros/crear', 'MinisterioextraController@miembroscrear')->name('ministerioextra.miembroscrear');
+    //MINISTERIOS EXTRAOFICIALES DE LA IGLESIA CREACIÓN Y ADMINISTRACIÓN
+    Route::resource('ministerionooficial', 'MinisterionooficialController');
+    Route::get('ministerionooficial/{id}/delete', 'MinisterionooficialController@destroy')->name('ministerionooficial.delete');
     //PERIODO
     Route::resource('periodo', 'PeriodoController');
     Route::get('periodo/{id}/delete', 'PeriodoController@destroy')->name('periodo.delete');
@@ -204,6 +210,20 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     //RECURSOS MINISTERIALES
     Route::resource('recursosministeriales', 'RecursosministerialController');
     Route::get('recursosministeriales/{id}/delete', 'RecursosministerialController@destroy')->name('recursosministeriales.delete');
+    Route::get('recursosministeriales/{periodo}/create', 'RecursosministerialController@create')->name('recursosministeriales.create2');
+    Route::post('recursosministeriales/create/edit/items', 'RecursosministerialController@store2')->name('recursosministeriales.store2');
+    Route::get('recursosministeriales/items/{recurso}/{id}/delete', 'RecursosministerialController@destroy2')->name('recursosministeriales.delete2');
+    Route::get('recursosministeriales/lista/recursos/visualizacion/index', 'RecursosministerialController@visualizacionindex')->name('recursosministeriales.visualizacionindex');
+    Route::get('recursosministeriales/lista/recursos/visualizacion/index/{id}/ver', 'RecursosministerialController@visualizacionver')->name('recursosministeriales.visualizacionver');
+    //MULTIMEDIA MINISTERIAL
+    Route::resource('multimediaministerial', 'MultimediaministerialController');
+    Route::get('multimediaministerial/{id}/lista/multimedia', 'MultimediaministerialController@lista')->name('multimediaministerial.lista');
+    Route::get('multimediaministerial/{id}/delete', 'MultimediaministerialController@destroy')->name('multimediaministerial.delete');
+    Route::get('multimediaministerial/{ministerio}/create', 'MultimediaministerialController@create')->name('multimediaministerial.create2');
+    Route::post('multimediaministerial/create/edit/items', 'MultimediaministerialController@store2')->name('multimediaministerial.store2');
+    Route::get('multimediaministerial/items/{recurso}/{id}/delete', 'MultimediaministerialController@destroy2')->name('multimediaministerial.delete2');
+    Route::get('multimediaministerial/lista/multimedia/visualizacion/index', 'MultimediaministerialController@visualizacionindex')->name('multimediaministerial.visualizacionindex');
+    Route::get('multimediaministerial/lista/multimedia/visualizacion/index/{id}/ver', 'MultimediaministerialController@visualizacionver')->name('multimediaministerial.visualizacionver');
     //CATEGORIA LIBRO
     Route::resource('categorialibro', 'CategorialibroController');
     Route::get('categorialibro/{id}/delete', 'CategorialibroController@destroy')->name('categorialibro.delete');
@@ -237,4 +257,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::resource('pedidosoracion', 'PedidosoracionController');
     Route::get('pedidosoracion/{id}/delete', 'PedidosoracionController@destroy')->name('pedidosoracion.delete');
     Route::post('pedidosoracion/store/configurar', 'PedidosoracionController@cambiarestado')->name('pedidosoracion.store2');
+    //ANUNCIOS
+    Route::resource('anuncios', 'AnuncioController');
+    Route::get('anuncios/{id}/delete', 'AnuncioController@destroy')->name('anuncios.delete');
+    Route::get('anuncios/{id}/estado/cambiar/estado', 'AnuncioController@estado')->name('anuncios.estado');
+    Route::get('anuncios/proyector/visualizar/index', 'AnuncioController@visualizar')->name('anuncios.visualizar');
+    //ENCONTRAR UNA IGLESIA
+    Route::resource('iglesiamapa', 'IglesiamapaController');
+    Route::get('iglesiamapa/{id}/delete', 'IglesiamapaController@destroy')->name('iglesiamapa.delete');
 });

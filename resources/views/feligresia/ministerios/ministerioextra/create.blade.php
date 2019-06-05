@@ -37,17 +37,22 @@
                     <div class="col-md-12">
                         <form class="form-horizontal" method="POST" action="{{route('ministerioextra.store')}}">
                             @csrf
-                            <div class="col-md-12">
+                            <input type="hidden" name="feligres_id" value="{{$f->id}}" />
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <br/><input type="text" class="form-control" placeholder="Escriba el nombre del ministerio" name="nombre" required="required" />
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <br/><input type="text" class="form-control" placeholder="Descripción del ministerio" name="descripcion"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label>Tipo de Ministerio</label>
@@ -56,6 +61,14 @@
                                             <option value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <br/><label>Presentación (Palabras del ministerio, saludo, historia, etc) Es opcional</label>
+                                        <textarea id="tinymce" name="presentacion"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -93,5 +106,25 @@
 @section('script')
 <script>
     $('.select2').select2();
+
+    $(function () {
+        //TinyMCE
+        tinymce.init({
+            selector: "textarea#tinymce",
+            theme: "modern",
+            height: 300,
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons',
+            image_advtab: true
+        });
+        tinymce.suffix = ".min";
+        tinyMCE.baseURL = '../../../public/js/tinymce';
+    });
 </script>
 @endsection

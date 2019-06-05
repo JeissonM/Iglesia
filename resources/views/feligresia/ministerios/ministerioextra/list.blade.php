@@ -34,25 +34,30 @@
                             <tr>
                                 <th>ID</th>
                                 <th>NOMBRE</th>
-                                <th>DESCRIPCIÓN</th>
                                 <th>TIPO MINISTERIO</th>
-                                <th>CREADO</th>
-                                <th>MODIFICADO</th>
+                                <th>MIEMBROS</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($ministerios as $ministerio)
                             <tr>
-                                <td>{{$ministerio->id}}</td>
-                                <td>{{$ministerio->nombre}}</td>
-                                <td>{{$ministerio->descripcion}}</td>
-                                <td>{{$ministerio->tipoministerio->nombre}}</td>
-                                <td>{{$ministerio->created_at}}</td>
-                                <td>{{$ministerio->updated_at}}</td>
+                                <td>{{$ministerio->ministerioextra->id}}</td>
+                                <td>{{$ministerio->ministerioextra->nombre}}</td>
+                                <td>{{$ministerio->ministerioextra->tipoministerio->nombre}}</td>
                                 <td>
-                                    <a href="{{ route('ministerioextra.edit',$ministerio->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Ministerio"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('ministerioextra.delete',$ministerio->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Ministerio"><i class="material-icons">delete</i></a>
+                                @if(count($ministerio->ministerioextra->ministerionooficialmiembros)>0)
+                                <ul>
+                                @foreach($ministerio->ministerioextra->ministerionooficialmiembros as $m)
+                                <li>{{$m->feligres->personanatural->primer_nombre." ".$m->feligres->personanatural->segundo_nombre." ".$m->feligres->personanatural->primer_apellido." ".$m->feligres->personanatural->segundo_apellido}}</li>
+                                @endforeach
+                                </ul>
+                                @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('ministerioextra.edit',$ministerio->ministerioextra->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Ministerio"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('ministerioextra.miembros',$ministerio->ministerioextra->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Miembros del Ministerio"><i class="material-icons">person</i></a>
+                                    <a href="{{ route('ministerioextra.delete',$ministerio->ministerioextra->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Ministerio"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -71,7 +76,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS MINISTERIOS EXTRA-OFICIALES DE LA IGLESIA(MINISTERIOS INDEPENDIENTES)</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Los ministerios extra-oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia pero que no hacen parte de su estructura organizacional ni responden legalmente a nombre de la iglesia. Ente ellos están: ministerios musicales, ministerios de servicios comunitarios, ministerios independientes, etc. 
+                <strong>Detalles: </strong>Los ministerios extra-oficiales de la iglesia son los departamentos ministeriales que trabajan en la misión de la iglesia pero que no hacen parte de su estructura organizacional ni responden legalmente a nombre de la iglesia. Entre ellos están: ministerios musicales, ministerios de servicios comunitarios, ministerios independientes, etc. 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
