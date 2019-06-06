@@ -137,24 +137,50 @@ class CategorialaborController extends Controller {
             flash("La categoria <strong>" . $categoria->nombre . "</strong> no pudo ser eliminada porque tiene labores asociados.")->warning();
             return redirect()->route('tipoministerio.index');
         } else {
-        $result = $categoria->delete();
-        if ($result) {
-            $aud = new Auditoriafeligresia();
-            $u = Auth::user();
-            $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
-            $aud->operacion = "ELIMINAR";
-            $str = "ELIMINACIÓN DE CATEGORIA LABOR. DATOS ELIMINADOS: ";
-            foreach ($categoria->attributesToArray() as $key => $value) {
-                $str = $str . ", " . $key . ": " . $value;
+            $result = $categoria->delete();
+            if ($result) {
+                $aud = new Auditoriafeligresia();
+                $u = Auth::user();
+                $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
+                $aud->operacion = "ELIMINAR";
+                $str = "ELIMINACIÓN DE CATEGORIA LABOR. DATOS ELIMINADOS: ";
+                foreach ($categoria->attributesToArray() as $key => $value) {
+                    $str = $str . ", " . $key . ": " . $value;
+                }
+                $aud->detalles = $str;
+                $aud->save();
+                flash("La categoría <strong>" . $categoria->nombre . "</strong> fue eliminado de forma exitosa!")->success();
+                return redirect()->route('categorialabor.index');
+            } else {
+                flash("La categoría <strong>" . $categoria->nombre . "</strong> no pudo ser eliminado. Error: " . $result)->error();
+                return redirect()->route('categorialabor.index');
             }
-            $aud->detalles = $str;
-            $aud->save();
-            flash("La categoría <strong>" . $categoria->nombre . "</strong> fue eliminado de forma exitosa!")->success();
-            return redirect()->route('categorialabor.index');
-        } else {
-            flash("La categoría <strong>" . $categoria->nombre . "</strong> no pudo ser eliminado. Error: " . $result)->error();
-            return redirect()->route('categorialabor.index');
         }
+    }
+
+    /**
+     * show all resource from a categorialabor.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function labores($id) {
+        $categoria = Categorialabor::find($id);
+        if ($categoria != null) {
+            $labores = $categoria->labors;
+            if (count($labores) > 0) {
+                $laboresf = null;
+                foreach ($labores as $value) {
+                    $obj["id"] = $value->id;
+                    $obj["value"] = $value->nombre;
+                    $laboresf[] = $obj;
+                }
+                return json_encode($laboresf);
+            } else {
+                return "null";
+            }
+        } else {
+            return "null";
         }
     }
 

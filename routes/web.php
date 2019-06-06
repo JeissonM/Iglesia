@@ -113,9 +113,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //CATEGORÍA DE LABOR
     Route::resource('categorialabor', 'CategorialaborController');
     Route::get('categorialabor/{id}/delete', 'CategorialaborController@destroy')->name('categorialabor.delete');
+    Route::get('categorialabor/{id}/categoria/labores', 'CategorialaborController@labores')->name('categorialabor.labores');
     //LABOR
     Route::resource('labor', 'LaborController');
     Route::get('labor/{id}/delete', 'LaborController@destroy')->name('labor.delete');
+    Route::get('labor/{id}/feligreses/listar', 'LaborController@feligreses')->name('labor.feligreses');
     //ESTADO CIVIL
     Route::resource('estadocivil', 'EstadocivilController');
     Route::get('estadocivil/{id}/delete', 'EstadocivilController@destroy')->name('estadocivil.delete');
@@ -265,4 +267,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     //ENCONTRAR UNA IGLESIA
     Route::resource('iglesiamapa', 'IglesiamapaController');
     Route::get('iglesiamapa/{id}/delete', 'IglesiamapaController@destroy')->name('iglesiamapa.delete');
+    //DIRECTORIO CONTRACTUAL
+    Route::get('directoriocontractual', 'DirectoriocontractualController@index')->name('directoriocontractual.index');
+    Route::get('directoriocontractual/{id}/show', 'DirectoriocontractualController@show')->name('directoriocontractual.ver');
 });
