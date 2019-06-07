@@ -66,7 +66,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS VALORES</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los documentos para una asociación y un período.
+                <strong>Detalles: </strong>Administre los valores de la iglesia.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

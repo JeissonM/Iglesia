@@ -377,7 +377,7 @@ class FeligresController extends Controller {
         $asociaciones = Asociacion::all()->pluck('nombre', 'id');
         $labor = Labor::all()->pluck('nombre', 'id');
         return view('comunicaciones.directorio_feligres.list')
-                        ->with('location', 'comunicaciones')
+                        ->with('location', 'comunicacion')
                         ->with('feligreses', $feligreses)
                         ->with('iglesias', $iglesias)
                         ->with('distritos', $distritos)

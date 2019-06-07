@@ -166,4 +166,36 @@ class LaborController extends Controller {
 //        }
     }
 
+    /**
+     * show all resource from a labor.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function feligreses($id) {
+        $labor = Labor::find($id);
+        if ($labor != null) {
+            $felis = $labor->experiencialabors;
+            if (count($felis) > 0) {
+                $feligreses = null;
+                foreach ($felis as $f) {
+                    $o['id'] = $f->feligres_id;
+                    $o['d'] = $f->feligres->personanatural->persona->tipodocumento->abreviatura . " - " . $f->feligres->personanatural->persona->numero_documento;
+                    $o["f"] = $f->feligres->personanatural->primer_nombre . " " . $f->feligres->personanatural->segundo_nombre . " " . $f->feligres->personanatural->primer_apellido . " " . $f->feligres->personanatural->segundo_apellido;
+                    $o['i'] = $f->feligres->iglesia->nombre;
+                    $o['e'] = $f->feligres->estado_actual;
+                    $o['t'] = $f->feligres->personanatural->persona->telefono . " - " . $f->feligres->personanatural->persona->celular;
+                    $o['o'] = $f->feligres->personanatural->ocupacion;
+                    $o['p'] = $f->feligres->personanatural->profesion;
+                    $feligreses[] = $o;
+                }
+                return json_encode($feligreses);
+            } else {
+                return "null";
+            }
+        } else {
+            return "null";
+        }
+    }
+
 }

@@ -73,7 +73,7 @@
                 <h4 class="modal-title" id="defaultModalLabel">SOBRE LA MISIÓN</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los documentos para una asociación y un período.
+                <strong>Detalles: </strong>Administre la misión de la iglesia.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

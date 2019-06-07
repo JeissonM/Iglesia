@@ -240,7 +240,7 @@ class IglesiaController extends Controller {
             $i->pastor = $pastor;
         }
         return view('comunicaciones.directorio_iglesia.list')
-                        ->with('location', 'comunicaciones')
+                        ->with('location', 'comunicacion')
                         ->with('iglesias', $iglesias)
                         ->with('distritos', $distritos)
                         ->with('uniones', $uniones)

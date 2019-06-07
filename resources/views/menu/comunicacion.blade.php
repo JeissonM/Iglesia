@@ -60,6 +60,9 @@
                         <div><span>INSTITUCIONAL</span><span class="ink animate"></span></div>
                     </a>
                     @endif
+                    <a href="{{route('directoriocontractual.index')}}" class="btn bg-green waves-effect">
+                        <div><span>DIRECTORIO CONTRACTUAL</span><span class="ink animate"></span></div>
+                    </a>
                 </div>
             </div>
         </div>

@@ -68,8 +68,8 @@
                                 <td>{{$f->iglesia->nombre}}</td>
                                 <td>{{$f->estado_actual}}</td>
                                 <td>{{$f->situacionfeligres->nombre}}</td>
-                                <td>{{$f->ocupacion}}</td>
-                                <td>{{$f->profesion}}</td>
+                                <td>{{$f->personanatural->ocupacion}}</td>
+                                <td>{{$f->personanatural->profesion}}</td>
                                 <td>
                                     <a href="{{ route('feligres.ver',$f->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Feligrés"><i class="material-icons">remove_red_eye</i></a>
                                 </td>

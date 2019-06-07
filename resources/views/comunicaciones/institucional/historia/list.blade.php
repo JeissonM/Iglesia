@@ -71,10 +71,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LA MISIÓN</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LA HISTORIA</h4>
             </div>
             <div class="modal-body">
-                <strong>Detalles: </strong>Administre los documentos para una asociación y un período.
+                <strong>Detalles: </strong> Administre la reseña historica de la iglesia.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>
