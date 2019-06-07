@@ -121,4 +121,13 @@ class MenuController extends Controller {
         return view('menu.editorial')->with('location', 'gestion-documental');
     }
 
+    /**
+     * Show the view menu institucional
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function institucional() {
+        return view('menu.institucional')->with('location', 'comunicacion');
+    }
+
 }

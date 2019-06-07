@@ -24,7 +24,7 @@ class Libro extends Model {
             //
     ];
 
-    public function categoria() {
+    public function categorialibro() {
         return $this->belongsTo('App\Categorialibro');
     }
 

@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <div class="form-line">
                                         <label class="control-label">Imagen</label>
-                                        <br/><input class="form-control" type="file" placeholder="Imagen" required="required" name="imagen">
+                                        <br/><input class="form-control" type="file" placeholder="Imagen" name="imagen">
                                     </div>
                                 </div>
                             </div>

@@ -28,34 +28,33 @@
                 </ul>
             </div>
             <div class="body">
-                <div class="table-responsive">
-                    <table id="tabla" class="table table-bordered table-striped table-hover table-responsive table-condensed dataTable js-exportable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>NOMBRE</th>
-                                <th>DESCRIPCIÓN</th>
-                                <th>CREADO</th>
-                                <th>MODIFICADO</th>
-                                <th>ACCIONES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($libros as $i)
-                            <tr>
-                                <td>{{$i->titulo}}</td>
-                                <td>{{$i->anio}}</td>
-                                <td>{{$i->created_at}}</td>
-                                <td>{{$i->updated_at}}</td>
-                                <td>
-                                    <a href="{{ route('libro.editdoc',$i->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Documento"><i class="material-icons">library_books</i></a>
-                                    <a href="{{ route('libro.editimg',$i->id)}}" class="btn bg-lime waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Imagen"><i class="material-icons">recent_actors</i></a>
-                                    <a href="{{ route('libro.edit',$i->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Libro"><i class="material-icons">mode_edit</i></a>
-                                    <a href="{{ route('libro.delete',$i->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Libro"><i class="material-icons">delete</i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="row">
+                    @foreach($libros as $m)
+                    <div class="col-sm-6 col-md-3">
+                        <div class="thumbnail">
+                            @if($m->imagen == 'no')
+                            <img src="{{asset('img/banner01.jpg')}}">
+                            @else
+                            <img src="{{asset('docs/img_libros/'.$m->imagen)}}">
+                            @endif
+                            <div class="caption">
+                                <h3>{{$m->titulo}}</h3>
+                                <p>{{$m->resumen}}</p>
+                                <p><b>CATEGORÍA:</b> {{$m->categorialibro->nombre}}</p>
+                                @foreach($libros->autores as $a)
+                                <p><b>AUTOR:</b> {{$a->autor}}</p>
+                                @endforeach
+                                <p>
+                                    <a href="{{ route('libro.editdoc',$m->id)}}" class="btn bg-blue waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Documento"><i class="material-icons">library_books</i></a>
+                                    <a href="{{ route('libro.editimg',$m->id)}}" class="btn bg-lime waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Imagen"><i class="material-icons">recent_actors</i></a>
+                                    <a href="{{ route('libro.show',$m->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Ver Libro"><i class="material-icons">remove_red_eye</i></a>
+                                    <a href="{{ route('libro.edit',$m->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Libro"><i class="material-icons">mode_edit</i></a>
+                                    <a href="{{ route('libro.delete',$m->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Libro"><i class="material-icons">delete</i></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -83,4 +82,4 @@
     $(document).ready(function () {
     });
 </script>
-@endsection
+@endsection                         

@@ -157,6 +157,7 @@ class AgendaasociacionController extends Controller {
 //        } else {
             $result = $agenda->delete();
             if ($result) {
+                unlink(public_path() . "/docs/agenda/" . $agenda->documento);
                 $aud = new Auditoriacomunicacion();
                 $u = Auth::user();
                 $aud->usuario = "ID: " . $u->identificacion . ",  USUARIO: " . $u->nombres . " " . $u->apellidos;
