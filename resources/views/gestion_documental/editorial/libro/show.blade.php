@@ -2,9 +2,10 @@
 @section('breadcrumb')
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
-    <li><a href="{{route('admin.gestiondocumental')}}">Gestión Documental</a></li>
-    <li><a href="{{route('sermon.index')}}">Sermones</a></li>
-    <li class="active"><a>Ver Sermón</a></li>
+      <li><a href="{{route('admin.gestiondocumental')}}">Gestión Documental</a></li>
+    <li><a href="{{route('admin.editorial')}}">Editorial</a></li>
+    <li><a href="{{route('libro.index')}}">Libros</a></li>
+    <li class="active"><a>Ver Libro</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,7 +14,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    SERMÓN - VER SERMÓN<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
+                    LIBRO - VER LIBRO<small>Haga clic en el botón de 3 puntos de la derecha de este título para obtener ayuda.</small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -31,40 +32,36 @@
                     @component('layouts.errors')
                     @endcomponent
                 </div>
-                <h2> DATOS DEL SERMÓN</h2>
+                <h2> DATOS DEL LIBRO</h2>
                 </br><div class="row clearfix">
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <tbody>
                                 <tr class="read">
                                     <td class="contact"><b>Titulo</b></td>
-                                    <td class="subject">{{$sermon->titulo}}</td>
+                                    <td class="subject">{{$libro->titulo}}</td>
                                 </tr>
                                 <tr class="read">
-                                    <td class="contact"><b>Descripción</b></td>
-                                    <td class="subject">{{$sermon->descripcion}}</td>
+                                    <td class="contact"><b>Resumen</b></td>
+                                    <td class="subject">{{$libro->resumen}}</td>
                                 </tr>
                                 <tr class="read">
-                                    <td class="contact"><b>Tipo</b></td>
-                                    <td class="subject">{{$sermon->tipo}}</td>
+                                    <td class="contact"><b>Categoría</b></td>
+                                    <td class="subject">{{$libro->categorialibro->nombre}}</td>
                                 </tr>
+                                @foreach($libro->autores as $a)
                                 <tr class="read">
-                                    <td class="contact"><b>Tipo de Autor</b></td>
-                                    <td class="subject">{{$sermon->tipoautor}}</td>
+                                    <td class="contact"><b>Autor</b></td>
+                                    <td class="subject">{{$a->autor}}</td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                            @if($sermon->tipo == 'PDF')
-                            <iframe src="{{asset('multimedia/sermones/'.$sermon->archivo)}}" width="100%" height="1200px"></iframe>
-                            @elseif($sermon->tipo == 'AUDIO')
-                            <audio controls src="{{asset('multimedia/sermones/'.$sermon->archivo)}}" width="100%"></audio>
-                            @else
-                            <video controls src="{{asset('multimedia/sermones/'.$sermon->archivo)}}" width="100%"></video>
-                            @endif
+                            <iframe src="{{asset('docs/libros/'.$libro->documento)}}" width="100%" height="1200px"></iframe>
                     </div>
                 </div>
             </div>
@@ -77,10 +74,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS SERMONES</h4>
+                <h4 class="modal-title" id="defaultModalLabel">SOBRE LOS LIBROS</h4>
             </div>
             <div class="modal-body">
-                <strong>Ver sermon.</strong> Administre los sermones.
+                <strong>Cambie los documento del libro,</strong> Administre los libros.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ACEPTAR</button>

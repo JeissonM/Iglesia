@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('gestiondocumental', 'MenuController@gestiondocumental')->name('admin.gestiondocumental');
     Route::get('comunicacion', 'MenuController@comunicacion')->name('admin.comunicacion');
     Route::get('editorial', 'MenuController@editorial')->name('admin.editorial');
+    Route::get('institucional', 'MenuController@institucional')->name('admin.institucional');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DE USUARIOS
@@ -271,4 +272,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::get('directoriocontractual/{id}/show', 'DirectoriocontractualController@show')->name('directoriocontractual.ver');
     //NOTIFICACIONES
     Route::resource('notificaciones', 'NotificacionController');
+    //MISION
+    Route::resource('mision', 'MisionController');
+    Route::get('mision/{id}/delete', 'MisionController@destroy')->name('mision.delete');
+    //VISION
+    Route::resource('vision', 'VisionController');
+    Route::get('vision/{id}/delete', 'VisionController@destroy')->name('vision.delete');
+    //VALORES
+    Route::resource('valor', 'ValorController');
+    Route::get('valor/{id}/delete', 'ValorController@destroy')->name('valor.delete');
+    //HISTORIA
+    Route::resource('historia', 'HistoriaController');
+    Route::get('historia/{id}/delete', 'HistoriaController@destroy')->name('historia.delete');
 });

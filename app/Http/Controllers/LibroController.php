@@ -102,8 +102,12 @@ class LibroController extends Controller {
      * @param  \App\Libro  $libro
      * @return \Illuminate\Http\Response
      */
-    public function show(Libro $libro) {
-        //
+    public function show($id) {
+        $libro = Libro::find($id);
+        $libro->autores = $libro->autors;
+        return view('gestion_documental.editorial.libro.show')
+                        ->with('location', 'gestion-documental')
+                        ->with('libro', $libro);
     }
 
     /**
