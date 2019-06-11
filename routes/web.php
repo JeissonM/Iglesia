@@ -240,7 +240,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'gestiondocumental'], function
     //SERMONES
     Route::resource('sermon', 'SermonController');
     Route::get('sermon/{id}/delete', 'SermonController@destroy')->name('sermon.delete');
-    
 });
 
 //GRUPO DE RUTAS PARA LA COMUNICACIÓN
@@ -271,6 +270,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     //DIRECTORIO CONTRACTUAL
     Route::get('directoriocontractual', 'DirectoriocontractualController@index')->name('directoriocontractual.index');
     Route::get('directoriocontractual/{id}/show', 'DirectoriocontractualController@show')->name('directoriocontractual.ver');
+    //NOTIFICACIONES
+    Route::resource('notificaciones', 'NotificacionController');
     //MISION
     Route::resource('mision', 'MisionController');
     Route::get('mision/{id}/delete', 'MisionController@destroy')->name('mision.delete');

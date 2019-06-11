@@ -48,6 +48,8 @@ class User extends Authenticatable {
         return $this->hasMany('App\Multimediaministerial');
     }
 
+    public function notificacions() {
+        return $this->hasMany('App\Notificacion');
     public function contactos() {
         return $this->hasMany('App\Contacto');
     }
