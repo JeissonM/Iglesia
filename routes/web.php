@@ -283,4 +283,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     //HISTORIA
     Route::resource('historia', 'HistoriaController');
     Route::get('historia/{id}/delete', 'HistoriaController@destroy')->name('historia.delete');
+    //CONTACTO
+    Route::resource('contacto', 'ContactoController');
+    Route::get('contacto/{id}/delete', 'ContactoController@destroy')->name('contacto.delete');
+    //CHAT
+    Route::resource('chat', 'ChatController');
+    Route::get('chat/{id}/delete', 'ChatController@destroy')->name('chat.delete');
 });

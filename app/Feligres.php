@@ -67,7 +67,7 @@ class Feligres extends Model {
     public function lppredicadoriglesias() {
         return $this->hasMany('App\Lppredicadoriglesia');
     }
-    
+
     public function ministerionooficialmiembros() {
         return $this->hasMany('App\Ministerionooficialmiembros');
     }
@@ -75,13 +75,17 @@ class Feligres extends Model {
     public function pedidosoracions() {
         return $this->hasMany('App\Pedidosoracion');
     }
-    
+
     public function anuncios() {
         return $this->hasMany('App\Anuncio');
     }
 
     public function sermons() {
         return $this->hasMany('App\Sermon');
+    }
+
+    public function contactos() {
+        return $this->hasMany('App\Contacto');
     }
 
 }

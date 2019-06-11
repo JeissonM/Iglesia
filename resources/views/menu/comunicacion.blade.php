@@ -63,6 +63,9 @@
                     <a href="{{route('directoriocontractual.index')}}" class="btn bg-green waves-effect">
                         <div><span>DIRECTORIO CONTRACTUAL</span><span class="ink animate"></span></div>
                     </a>
+                    <a href="{{route('contacto.index')}}" class="btn bg-green waves-effect">
+                        <div><span>CHAT</span><span class="ink animate"></span></div>
+                    </a>
                 </div>
             </div>
         </div>
