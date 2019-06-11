@@ -43,9 +43,13 @@ class User extends Authenticatable {
     public function recursosministerials() {
         return $this->hasMany('App\Recursosministerial');
     }
-    
+
     public function multimediaministerials() {
         return $this->hasMany('App\Multimediaministerial');
+    }
+
+    public function notificacions() {
+        return $this->hasMany('App\Notificacion');
     }
 
 }

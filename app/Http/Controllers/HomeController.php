@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Grupousuario;
 use Illuminate\Support\Facades\Auth;
+use App\Notificacion;
 
 class HomeController extends Controller {
 
@@ -39,6 +40,18 @@ class HomeController extends Controller {
                     session([$pagina->nombre => $pagina->nombre]);
                 }
             }
+            $not = Notificacion::where([['user_id', $user->id], ['estado', 'SIN LEER']])->get();
+            $notificaciones = null;
+            $total = 0;
+            $total = count($not);
+            if ($total > 0) {
+                foreach ($not as $n) {
+                    $notificaciones[] = $n;
+                }
+            }
+            session(['notificaciones' => $notificaciones]);
+            session(['total' => $total]);
+            //dd(session()->get('notificaciones'));
             return view('home')->with('location', 'inicio');
         } elseif ($total > 1) {
             return view('auth.rol')->with('grupos', $grupos->pluck('nombre', 'id'));
@@ -54,6 +67,7 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function confirmaRol() {
+        $user = Auth::user();
         $grupo = Grupousuario::find($_POST["grupo"]);
         $paginas = $grupo->paginas;
         $modulos = $grupo->modulos;
@@ -64,6 +78,17 @@ class HomeController extends Controller {
         foreach ($modulos as $value) {
             session([$value->nombre => $value->nombre]);
         }
+        $not = Notificacion::where([['user_id', $user->id], ['estado', 'SIN LEER']])->get();
+        $notificaciones = null;
+        $total = 0;
+        $total = count($not);
+        if ($total > 0) {
+            foreach ($not as $n) {
+                $notificaciones[] = $n;
+            }
+        }
+        session(['notificaciones' => $notificaciones]);
+        session(['total' => $total]);
         return view('home')->with('location', 'inicio');
     }
 
@@ -73,6 +98,18 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function inicio() {
+        $user = Auth::user();
+        $not = Notificacion::where([['user_id', $user->id], ['estado', 'SIN LEER']])->get();
+        $notificaciones = null;
+        $total = 0;
+        $total = count($not);
+        if ($total > 0) {
+            foreach ($not as $n) {
+                $notificaciones[] = $n;
+            }
+        }
+        session(['notificaciones' => $notificaciones]);
+        session(['total' => $total]);
         return view('home')->with('location', 'inicio');
     }
 
