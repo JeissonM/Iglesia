@@ -29,7 +29,7 @@
             <div class="body">
                 <ul class="list-group">
                     @foreach($chats as $i)
-                    <li class="list-group-item">{{$i->name}}<span class="badge bg-pink"><a class="btn bg-indigo waves-effect btn-xs" href="{{route('chat.show',$i->id)}}"  data-toggle="tooltip" data-placement="top" title="chat"><i class="material-icons">forum</i></a></span></li>
+                    <li class="list-group-item">{{$i->name}}<a class="badge bg-teal waves-effect " href="{{route('chat.show',$i->id)}}"  data-toggle="tooltip" data-placement="top" title="chat"><i class="material-icons" style="font-size: 15px;">forum</i></a></li>
                     @endforeach
                 </ul>
             </div>
