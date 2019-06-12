@@ -50,7 +50,14 @@ class ChatController extends Controller {
      */
     public function store(Request $request) {
         $mensaje = new Chatmensaje($request->all());
-        dd($mensaje);
+        $result = $mensaje->save();
+        if ($result) {
+            flash("El mensaje fue enviado de forma exitosa!")->success();
+            return redirect()->route('chat.show', $request->contacto_id);
+        } else {
+            flash("El mensaje no pudo ser enviado. Error: " . $result)->warning();
+            return redirect()->route('chat.show', $request->contacto_id);
+        }
     }
 
     /**
