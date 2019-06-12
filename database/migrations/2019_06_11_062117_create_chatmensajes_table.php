@@ -14,7 +14,7 @@ class CreateChatmensajesTable extends Migration {
     public function up() {
         Schema::create('chatmensajes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mensaje');
+            $table->text('mensaje');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('chat_id')->unsigned();

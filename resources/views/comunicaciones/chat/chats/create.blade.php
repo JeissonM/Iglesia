@@ -58,18 +58,18 @@
         border-radius: 5px;
         position: relative;
         padding: 5px 10px;
-        background: #d2d6de;
-        border: 1px solid #d2d6de;
+        background: #f3f3f3;
+        border: 1px solid #f3f3f3;
         margin: 5px 0 0 50px;
-        color: #444;
+        color: #000000;
     }
     .direct-chat-name {
         font-weight: 600;
     }
     .direct-chat-danger .right>.direct-chat-text {
-        background: #dd4b39;
-        border-color: #dd4b39;
-        color: #fff;
+        background: #dcf8c6;
+        border-color: #dcf8c6;
+        color: #000000 !important;
     }
     .right .direct-chat-text {
         margin-right: 50px;
@@ -80,10 +80,10 @@
         border-radius: 5px;
         position: relative;
         padding: 5px 10px;
-        background: #d2d6de;
-        border: 1px solid #d2d6de;
+        background: #f3f3f3;
+        border: 1px solid #f3f3f3;
         margin: 5px 0 0 50px;
-        color: #444;
+        color: #000000 !important;
     }
     .direct-chat-msg:before, .direct-chat-msg:after {
         content: " ";
@@ -101,7 +101,7 @@
         right: 100%;
         top: 15px;
         border: solid transparent;
-        border-right-color: #d2d6de;
+        border-right-color: #f3f3f3;
         content: ' ';
         height: 0;
         width: 0;
@@ -111,10 +111,10 @@
         right: auto;
         left: 100%;
         border-right-color: transparent;
-        border-left-color: #d2d6de;
+        border-left-color: #f3f3f3;
     }
     .direct-chat-danger .right>.direct-chat-text:after, .direct-chat-danger .right>.direct-chat-text:before {
-        border-left-color: #dd4b39;
+        border-left-color: #dcf8c6;
     }
     .direct-chat-text:before {
         border-width: 6px;
@@ -155,12 +155,6 @@
                 <div class="box box-danger direct-chat direct-chat-danger">
                     <div class="box-header with-border">
                         <h3 class="box-title">Chat</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="Minimizar"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="Cerrar"><i class="fa fa-times"></i></button>
-                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -175,8 +169,9 @@
                                     <span class="direct-chat-timestamp pull-left">{{$t->created_at}}</span>
                                 </div>
                                 <img class="direct-chat-img" src="{{ asset('img/user.png')}}" alt="Message User Image"><!-- /.direct-chat-img -->
-                                <div class="direct-chat-text">
+                                <div class="direct-chat-text" style="text-align: right;">
                                     {{$t->mensaje}}
+                                    <a href="{{route('chat.delete',$t->id)}}" style="text-align: left !important"><i class="material-icons" style="font-size: 17px; color: red">delete</i></a>
                                 </div>
                             </div>
                             @else
@@ -188,6 +183,7 @@
                                 <img class="direct-chat-img" src="{{ asset('img/user.png')}}" alt="Message User Image">
                                 <div class="direct-chat-text">
                                     {{$t->mensaje}}
+                                    <a href="{{route('chat.delete',$t->id)}}" style="text-align: left !important"><i class="material-icons" style="font-size: 17px; color: red">delete</i></a>
                                 </div>
                             </div>
                             @endif
@@ -202,9 +198,13 @@
                             <input type="hidden" name="chat_id" id="pqr_id" value="{{$chat->id}}"/>
                             <input type="hidden" name="user_id" id="res_id" value="{{Auth::user()->id}}"/>
                             <div class="input-group">
-                                <input type="text" name="mensaje" placeholder="Mensaje ..." class="form-control">
+                                <div class="col-md-12" style="margin-top: 18px;">
+                                    <div class="form-line">
+                                        <input type="text" name="mensaje" placeholder="Mensaje ..." class="form-control">
+                                    </div>
+                                </div>
                                 <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-danger btn-flat">Enviar</button>
+                                    <button type="submit" class="btn bg-teal btn-flat">Enviar</button>
                                 </span>
                             </div>
                         </form>
