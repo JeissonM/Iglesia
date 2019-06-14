@@ -177,6 +177,13 @@
                         <li><a href="{{route('admin.comunicacion')}}"><i class="material-icons">ring_volume</i><span>Comunicación</span></a></li>
                         @endif
                         @endif
+                        @if(session()->exists('MOD_AUDITORIA'))
+                        @if($location=='auditoria')
+                        <li class="active"><a href="{{route('admin.auditoria')}}"><i class="material-icons">check_circle</i><span>Auditoría</span></a></li>
+                        @else
+                        <li><a href="{{route('admin.auditoria')}}"><i class="material-icons">check_circle</i><span>Auditoría</span></a></li>
+                        @endif
+                        @endif
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="material-icons">input</i><span>Salir</span></a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
