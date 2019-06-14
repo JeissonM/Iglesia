@@ -84,8 +84,8 @@
                                         @if(session()->get('total')>0)
                                         @foreach(session()->get('notificaciones') as $n)
                                         <li>
-                                            <a href="{{$n->action}}">
-                                                <div class="icon-circle bg-light-green">
+                                            <a onclick="changeState(this.id)" id="{{$n->id}}" href="{{$n->action}}">
+                                                <div class="icon-circle bg-light-blue">
                                                     <i class="material-icons">{{$n->icono}}</i>
                                                 </div>
                                                 <div class="menu-info">
@@ -370,6 +370,16 @@
                                         text: text,
                                         type: type,
                                         styling: 'bootstrap3'
+                                    });
+                                }
+
+                                function changeState(id) {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: url + "comunicacion/notificaciones/" + id + "/change",
+                                        data: {},
+                                    }).done(function (msg) {
+                                        return;
                                     });
                                 }
         </script>

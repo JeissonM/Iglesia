@@ -89,4 +89,22 @@ class NotificacionController extends Controller {
         //
     }
 
+    public function change($id) {
+        $user = Auth::user();
+        $n = Notificacion::find($id);
+        $n->estado = "LEIDA";
+        $n->save();
+        $not = Notificacion::where([['user_id', $user->id], ['estado', 'SIN LEER']])->get();
+        $notificaciones = null;
+        $total = 0;
+        $total = count($not);
+        if ($total > 0) {
+            foreach ($not as $n) {
+                $notificaciones[] = $n;
+            }
+        }
+        session(['notificaciones' => $notificaciones]);
+        session(['total' => $total]);
+    }
+
 }

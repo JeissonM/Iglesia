@@ -273,6 +273,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::get('directoriocontractual/{id}/show', 'DirectoriocontractualController@show')->name('directoriocontractual.ver');
     //NOTIFICACIONES
     Route::resource('notificaciones', 'NotificacionController');
+    Route::get('notificaciones/{id}/change', 'NotificacionController@change')->name('notificaciones.change');
     //MISION
     Route::resource('mision', 'MisionController');
     Route::get('mision/{id}/delete', 'MisionController@destroy')->name('mision.delete');

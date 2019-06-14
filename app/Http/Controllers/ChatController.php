@@ -12,6 +12,7 @@ use App\Feligres;
 use App\Auditoriacomunicacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Notificacion;
 
 class ChatController extends Controller {
 
@@ -66,8 +67,26 @@ class ChatController extends Controller {
      */
     public function store(Request $request) {
         $mensaje = new Chatmensaje($request->all());
+        $cont = $id = "";
+        if ($request->user_id == $mensaje->chat->user_id) {
+            $cont = $mensaje->chat->user->nombres;
+            $id = $mensaje->chat->user2_id;
+        } else {
+            $user = User::find($mensaje->chat->user2_id);
+            $cont = $user->nombres;
+            $id = $mensaje->chat->user_id;
+        }
+        $n = new Notificacion();
+        $n->titulo = "MENSAJE NUEVO DE " . $cont;
+        $n->icono = "chat";
+        $n->estado = "SIN LEER";
+        $n->user_id = $id;
+        $hoy = getdate();
+        $n->fecha = $hoy['year'] . "-" . $hoy['mon'] . "-" . $hoy['mday'] . " " . $hoy['hours'] . ":" . $hoy['minutes'] . ":" . $hoy['seconds'];
+        $n->action = config('app.url') . "/comunicacion/chat/NULL/" . $mensaje->chat_id . "/show/chat";
         $result = $mensaje->save();
         if ($result) {
+            $n->save();
             return redirect()->route('chat.chatshow', ["NULL", $mensaje->chat_id]);
         } else {
             flash("El mensaje no pudo ser enviado. Error: " . $result)->warning();
@@ -107,7 +126,6 @@ class ChatController extends Controller {
             } else {
                 $persona = Persona::where('numero_documento', $exist->user->identificacion)->first();
                 $personanatural = Personanatural::where('persona_id', $persona->id)->first();
-                $feligres = Feligres::where('personanatural_id', $personanatural->id)->first();
                 $contacto = Contacto::find($exist->contacto_id);
                 $cont = $personanatural->primer_nombre . " " . $personanatural->segundo_nombre . " " . $personanatural->primer_apellido . " " . $personanatural->segundo_apellido;
             }
