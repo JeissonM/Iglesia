@@ -53,7 +53,7 @@
                                 <td>{{$a->feligres->personanatural->persona->celular}}</td>
                                 <td>{{$a->feligres->personanatural->persona->mail}}</td>
                                 <td>
-                                    <a href="{{ route('chat.show',$a->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Estado"><i class="material-icons">arrow_forward</i></a>
+                                    <a href="{{ route('chat.chatshow',[$a->id,'NULL'])}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Estado"><i class="material-icons">arrow_forward</i></a>
                                     <a href="{{ route('contacto.delete',$a->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Contacto"><i class="material-icons">delete</i></a>
                                 </td>
                             </tr>

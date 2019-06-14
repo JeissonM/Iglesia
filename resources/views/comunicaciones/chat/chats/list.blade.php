@@ -3,6 +3,7 @@
 <ol class="breadcrumb breadcrumb-bg-blue-grey" style="margin-bottom: 30px;">
     <li><a href="{{route('inicio')}}">Inicio</a></li>
     <li><a href="{{route('admin.comunicacion')}}">Comunicaciones</a></li>
+    <li><a href="{{route('contacto.index')}}">Contactos</a></li>
     <li class="active"><a href="{{route('chat.index')}}">Chats</a></li>
 </ol>
 @endsection
@@ -14,22 +15,11 @@
                 <h2>
                     CHATS<small>Haga clic en el botón de 3 puntos de la derecha de este título para agregar un nuevo registro.</small>
                 </h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="{{ route('chat.index') }}">Chats</a></li>
-                            <li><a data-toggle="modal" data-target="#mdModal">Ayuda</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
             <div class="body">
                 <ul class="list-group">
                     @foreach($chats as $i)
-                    <li class="list-group-item">{{$i->name}}<a class="badge bg-teal waves-effect " href="{{route('chat.show',$i->id)}}"  data-toggle="tooltip" data-placement="top" title="chat"><i class="material-icons" style="font-size: 15px;">forum</i></a></li>
+                    <li class="list-group-item">{{$i->name}}<a class="badge btn-danger waves-effect " href="{{route('chat.chatdelete',$i->id)}}"  data-toggle="tooltip" data-placement="top" title="Eliminar Chat"><i class="material-icons" style="font-size: 15px;">delete</i></a><a class="badge bg-teal waves-effect " href="{{route('chat.chatshow',["NULL",$i->id])}}"  data-toggle="tooltip" data-placement="top" title="chat"><i class="material-icons" style="font-size: 15px;">forum</i></a></li>
                     @endforeach
                 </ul>
             </div>

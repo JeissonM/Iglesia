@@ -18,6 +18,7 @@ class CreateChatsTable extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('contacto_id')->unsigned();
             $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
+            $table->bigInteger('user2_id');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class Chat extends Model {
      * @var array
      */
     protected $fillable = [
-        'id', 'user_id', 'contacto_id', 'created_at', 'updated_at'
+        'id', 'user_id', 'contacto_id', 'user2_id', 'created_at', 'updated_at'
     ];
 
     /**
