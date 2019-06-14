@@ -50,7 +50,14 @@ class ChatController extends Controller {
      */
     public function store(Request $request) {
         $mensaje = new Chatmensaje($request->all());
-        dd($mensaje);
+        $result = $mensaje->save();
+        if ($result) {
+            flash("El mensaje fue enviado de forma exitosa!")->success();
+            return redirect()->route('chat.show', $request->contacto_id);
+        } else {
+            flash("El mensaje no pudo ser enviado. Error: " . $result)->warning();
+            return redirect()->route('chat.show', $request->contacto_id);
+        }
     }
 
     /**
@@ -114,8 +121,16 @@ class ChatController extends Controller {
      * @param  \App\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chat $chat) {
-        //
+    public function destroy($id) {
+        $mensaje = Chatmensaje::find($id);
+        $contacto = $mensaje->chat->contacto_id;
+        $result = $mensaje->delete();
+        if ($result) {
+            return redirect()->route('chat.show', $contacto);
+        } else {
+            flash("El mensaje no pudo ser eliminado. Error: " . $result)->error();
+            return redirect()->route('chat.show', $contacto);
+        }
     }
 
 }

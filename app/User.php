@@ -51,7 +51,7 @@ class User extends Authenticatable {
     public function notificacions() {
         return $this->hasMany('App\Notificacion');
     }
-    
+
     public function contactos() {
         return $this->hasMany('App\Contacto');
     }
