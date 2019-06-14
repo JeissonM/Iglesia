@@ -130,4 +130,13 @@ class MenuController extends Controller {
         return view('menu.institucional')->with('location', 'comunicacion');
     }
 
+    /**
+     * Show the view menu auditoria
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function auditoria() {
+        return view('menu.auditoria')->with('location', 'auditoria');
+    }
+
 }

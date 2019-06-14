@@ -60,6 +60,19 @@
             </div>
         </div>
         @endif
+        @if(session()->exists('MOD_AUDITORIA'))
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box bg-blue-grey hover-zoom-effect hover-expand-effect">
+                <div class="icon">
+                    <a href="{{route('admin.auditoria')}}"><i class="material-icons">check_circle</i></a>
+                </div>
+                <div class="content">
+                    <div class="text">AUDITORÍA</div>
+                    <div class="number">DEL SISTEMA</div>
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-red hover-zoom-effect hover-expand-effect">
                 <div class="icon">

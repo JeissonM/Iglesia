@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('comunicacion', 'MenuController@comunicacion')->name('admin.comunicacion');
     Route::get('editorial', 'MenuController@editorial')->name('admin.editorial');
     Route::get('institucional', 'MenuController@institucional')->name('admin.institucional');
+    Route::get('auditoria', 'MenuController@auditoria')->name('admin.auditoria');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DE USUARIOS
@@ -292,4 +293,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     Route::get('chat/{id}/delete', 'ChatController@destroy')->name('chat.delete');
     Route::get('chat/{id}/delete/chat', 'ChatController@destroyChat')->name('chat.chatdelete');
     Route::get('chat/{contacto}/{chat}/show/chat', 'ChatController@show')->name('chat.chatshow');
+});
+
+//GRUPO DE RUTAS PARA LA AUDITORÍA
+Route::group(['middleware' => 'auth', 'prefix' => 'auditoria'], function() {
+    //RUTA GENÉRICA
+    Route::get('menu/{modulo}/index', 'AuditoriaController@index')->name('auditoria.index');
+    Route::post('menu/index/filtro/consultar', 'AuditoriaController@filtro')->name('auditoria.filtro');
+    Route::get('menu/index/filtro/consultar/{modulo}/{fecha1}/{fecha2}/txt', 'AuditoriaController@txt')->name('auditoria.txt');
 });
