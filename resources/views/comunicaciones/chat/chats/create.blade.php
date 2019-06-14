@@ -183,8 +183,9 @@
                     <div class="box-footer">
                         <form id="form" class="form-horizontal" role='form' method="POST" action="{{route('chat.store')}}" enctype= "multipart/form-data">
                             @csrf 
-                            <input type="hidden" name="contacto_id" id="pqr_id" value="{{$contacto->id}}"/>
-                            <input type="hidden" name="chat_id" id="pqr_id" value="{{$chat->id}}"/>
+                            <input type="hidden" name="contacto_id"  value="{{$contacto->id}}"/>
+                            <input type="hidden" name="user2_id"  value="{{$contacto->user_id}}"/>
+                            <input type="hidden" name="chat_id"  value="{{$chat->id}}"/>
                             <input type="hidden" name="user_id" id="res_id" value="{{Auth::user()->id}}"/>
                             <div class="input-group">
                                 <div class="col-md-12" style="margin-top: 18px;">

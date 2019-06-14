@@ -291,6 +291,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'comunicacion'], function() {
     //CHAT
     Route::resource('chat', 'ChatController');
     Route::get('chat/{id}/delete', 'ChatController@destroy')->name('chat.delete');
+    Route::get('chat/{id}/delete/chat', 'ChatController@destroyChat')->name('chat.chatdelete');
+    Route::get('chat/{contacto}/{chat}/show/chat', 'ChatController@show')->name('chat.chatshow');
 });
 
 //GRUPO DE RUTAS PARA LA AUDITORÍA
