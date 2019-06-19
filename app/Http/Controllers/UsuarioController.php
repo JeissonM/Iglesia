@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UsuarioRequest;
 use App\User;
-use App\Grupousuario;
 use App\Pagina;
 use App\Modulo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Auditoriausuario;
+use App\Asociacion;
+use App\Iglesia;
+use App\Grupousuario;
 
 class UsuarioController extends Controller {
 
@@ -203,6 +205,87 @@ class UsuarioController extends Controller {
                     return redirect()->route('admin.usuarios');
                 }
             }
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function automatico() {
+        $asociaciones = Asociacion::all()->pluck('nombre', 'id');
+        $roles = Grupousuario::all()->pluck('nombre', 'id');
+        return view('usuarios.usuarios.automatico')
+                        ->with('asociaciones', $asociaciones)
+                        ->with('roles', $roles)
+                        ->with('location', 'usuarios');
+    }
+
+    public function automaticostore(Request $request) {
+        $i = Iglesia::find($request->iglesia_destino);
+        if ($i != null) {
+            $miembros = $i->feligres;
+            if (count($miembros) > 0) {
+                $usuarios = null;
+                foreach ($miembros as $m) {
+                    $u = null;
+                    $u = User::where('identificacion', $m->personanatural->persona->numero_documento)->first();
+                    if ($u == null) {
+                        $u = new User();
+                        $pn = $m->personanatural;
+                        $u->identificacion = $pn->persona->numero_documento;
+                        $u->nombres = $pn->primer_nombre . " " . $pn->segundo_nombre;
+                        $u->apellidos = $pn->primer_apellido . " " . $pn->segundo_apellido;
+                        $u->email = $pn->persona->mail;
+                        $u->estado = "ACTIVO";
+                        $u->password = Hash::make('00000000');
+                        $usuarios[] = $u;
+                    }
+                }
+                if ($usuarios != null) {
+                    $hoy = getdate();
+                    $response[] = "**********************************************************************************";
+                    $response[] = " GENERACIÓN MASIVA DE USUARIOS PARA LA IGLESIA " . $i->nombre . ". FECHA: " . $hoy["year"] . "/" . $hoy["mon"] . "/" . $hoy["mday"];
+                    $response[] = "**********************************************************************************";
+                    $response[] = "                                                                        ";
+                    $response[] = "                                                                        ";
+                    foreach ($usuarios as $us) {
+                        if ($us->save()) {
+                            $us->grupousuarios()->sync($request->rol);
+                            $response[] = "     IDENTIFICACIÓN: " . $us->identificacion;
+                            $response[] = "     USUARIO: " . $us->nombres . " " . $us->apellidos;
+                            $response[] = "[OK] USUARIO CREADO CON ÉXITO";
+                            $response[] = "__________________________________________________________________________________";
+                        } else {
+                            $response[] = "     IDENTIFICACIÓN: " . $us->identificacion;
+                            $response[] = "     USUARIO: " . $us->nombres . " " . $us->apellidos;
+                            $response[] = "[xx] EL USUARIO NO PUDO SER CREADO.";
+                            $response[] = "__________________________________________________________________________________";
+                        }
+                    }
+                    $archivo = "LOG_GENERACION_USUARIOS_IGELSIA_" . $i->nombre . "_" . "_" . $hoy["year"] . $hoy["mon"] . $hoy["mday"] . $hoy["hours"] . $hoy["minutes"] . $hoy["seconds"] . ".txt";
+                    $file = fopen(public_path() . "/docs/usuarios/" . $archivo, 'w+');
+                    foreach ($response as $value) {
+                        fwrite($file, $value . PHP_EOL);
+                    }
+                    fclose($file);
+                    $r['archivo'] = $archivo;
+                    $r['resultado'] = $response;
+                    return view('usuarios.usuarios.automaticoresultado')
+                                    ->with('location', 'usuarios')
+                                    ->with('response', $r);
+                } else {
+                    flash("No hay miembros en la igelsia " . $i->nombre . " sin usuario.")->error();
+                    return redirect()->route('usuario.automatico');
+                }
+            } else {
+                flash("No hay miembros en la igelsia " . $i->nombre)->error();
+                return redirect()->route('usuario.automatico');
+            }
+        } else {
+            flash("No se pudo establecer la iglesia seleccionada para realizar el proceso!")->error();
+            return redirect()->route('usuario.automatico');
         }
     }
 

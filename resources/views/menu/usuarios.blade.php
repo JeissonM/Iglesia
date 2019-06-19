@@ -51,7 +51,7 @@
                     </a> 
                     @endif
                     @if(session()->exists('PAG_AUTOMATICO'))
-                    <a class="btn bg-brown waves-effect" disabled='disabled'>
+                    <a href="{{route('usuario.automatico')}}" class="btn bg-brown waves-effect">
                         <div><span>USUARIO AUTOMÁTICO</span><span class="ink animate"></span></div>
                     </a> 
                     @endif

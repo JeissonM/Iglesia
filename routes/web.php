@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'usuarios'], function() {
     Route::get('usuario/{id}/delete', 'UsuarioController@destroy')->name('usuario.delete');
     Route::post('operaciones', 'UsuarioController@operaciones')->name('usuario.operaciones');
     Route::post('usuario/contrasenia/cambiar/admin/finalizar', 'UsuarioController@cambiarPass')->name('usuario.cambiarPass');
+    Route::get('usuario/gestion/crear/automatico', 'UsuarioController@automatico')->name('usuario.automatico');
+    Route::post('usuario/gestion/crear/automatico/store', 'UsuarioController@automaticostore')->name('usuario.automaticostore');
 });
 
 //GRUPO DE RUTAS PARA LA ADMINISTRACIÓN DEL MÓDULO DE FELIGRESÍA
@@ -129,6 +131,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'feligresia'], function() {
     //FELIGRESES
     Route::resource('feligres', 'FeligresController');
     Route::get('feligres/{id}/delete', 'FeligresController@destroy')->name('feligres.delete');
+    Route::get('feligres/{identificacion}/listar/consultar', 'FeligresController@getFeligres')->name('feligres.feligres');
     //PASTORES
     Route::resource('pastor', 'PastorController');
     Route::get('pastor/{id}/delete', 'PastorController@destroy')->name('pastor.delete');

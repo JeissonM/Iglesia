@@ -30,7 +30,7 @@
                     @component('layouts.errors')
                     @endcomponent
                 </div>
-                <h1 class="card-inside-title">DATOS DEL USUARIO</h1>
+                <h1 class="card-inside-title">BUSCAR FELIGRÉS</h1>
                 <div class="row clearfix">
                     <div class="col-md-12" style="margin-top: 20px;">
                         <div class="col-md-6">
@@ -41,16 +41,25 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn bg-brown btn-block waves-effect" disabled="disabled">Traer Persona</button>
+                            <button type="button" onclick="getPersona()" class="btn bg-brown btn-block waves-effect">Traer Feligrés</button>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <label class="control-label">Seleccione Feligrés</label>
+                                    <select id='feligres_id' class="form-control show-tick" onchange="mostrar()" required='required' name='feligres_id'></select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <h1 class="card-inside-title">DATOS DEL USUARIO</h1>
                         <form class="form-horizontal" method="POST" action="{{route('usuario.store')}}">
                             @csrf
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <br/><input type="text" class="form-control" placeholder="Escriba el número de identificación del usuario, con éste tendrá acceso al sistema" name="identificacion" required="required" />
+                                        <br/><input type="text" class="form-control" placeholder="Escriba el número de identificación del usuario, con éste tendrá acceso al sistema" name="identificacion" id="identificacion" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -70,7 +79,6 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-
                                 <div class="form-group">
                                     <div class="form-line">
                                         <br/><label>Estado del Usuario</label>
@@ -130,5 +138,63 @@
 @section('script')
 <script>
     $('.select2').select2();
+
+    var origen = false;
+    var array = null;
+
+    function getPersona() {
+        var id = $("#id").val();
+        if (id.length === 0) {
+            notify('Alerta', 'Debe ingresar identificación para continuar...', 'warning');
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: url + "feligresia/feligres/" + id + "/listar/consultar",
+                data: {},
+            }).done(function (msg) {
+                var m = JSON.parse(msg);
+                if (m.error == "NO") {
+                    $('#feligres_id option').each(function () {
+                        $(this).remove();
+                    });
+                    array = m.data;
+                    origen = true;
+                    $("#feligres_id").append("<option value='0'>-- Seleccione una opción --</option>");
+                    $.each(m.data, function (index, item) {
+                        $("#feligres_id").append("<option value='" + item.id + "'>" + item.personanatural.primer_nombre + " " + item.personanatural.segundo_nombre + " " + item.personanatural.primer_apellido + " " + item.personanatural.segundo_apellido + "  --  FECHA REGISTRO: " + item.created_at + "</option>");
+                    });
+                } else {
+                    notify('Atención', m.mensaje, m.tipo);
+                    $('#feligres_id option').each(function () {
+                        $(this).remove();
+                    });
+                    array = null;
+                    $("#identificacion").val("");
+                    $("#txt_nombres").val("");
+                    $("#txt_apellidos").val("");
+                    $("#txt_email").val("");
+                }
+            });
+        }
+    }
+
+    function mostrar() {
+        $("#identificacion").val("");
+        $("#txt_nombres").val("");
+        $("#txt_apellidos").val("");
+        $("#txt_email").val("");
+        var id = $("#feligres_id").val();
+        if (origen) {
+            $.each(array, function (index, item) {
+                if (item.id == id) {
+                    $("#identificacion").val(item.personanatural.persona.numero_documento);
+                    $("#txt_nombres").val(item.personanatural.primer_nombre + " " + item.personanatural.segundo_nombre);
+                    $("#txt_apellidos").val(item.personanatural.primer_apellido + " " + item.personanatural.segundo_apellido);
+                    $("#txt_email").val(item.personanatural.persona.mail);
+                }
+            });
+        }
+    }
+
 </script>
 @endsection

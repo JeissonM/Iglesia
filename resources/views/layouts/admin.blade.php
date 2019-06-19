@@ -129,8 +129,8 @@
                                 <li><a href="{{route('inicio')}}"><i class="material-icons">home</i>Inicio</a></li>
                                 <li role="seperator" class="divider"></li>
                                 <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="material-icons">input</i>Salir</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form2').submit();"><i class="material-icons">input</i>Salir</a>
+                                    <form id="logout-form2" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>

@@ -531,4 +531,40 @@ class FeligresController extends Controller {
         }
     }
 
+    public function getFeligres($id) {
+        $response['error'] = "NO";
+        $personas = Persona::where('numero_documento', 'like', '%' . $id . '%')->get();
+        $data = null;
+        if (count($personas) > 0) {
+            foreach ($personas as $p) {
+                $pns = $p->personanaturals;
+                if (count($pns) > 0) {
+                    foreach ($pns as $pn) {
+                        $fls = $pn->feligres;
+                        if (count($fls) > 0) {
+                            foreach ($fls as $f) {
+                                $f->personanatural->persona;
+                                $data[] = $f;
+                            }
+                        }
+                    }
+                }
+            }
+            $response = [
+                'error' => 'NO',
+                'mensaje' => null,
+                'tipo' => null,
+                'data' => $data
+            ];
+        } else {
+            $response = [
+                'error' => 'SI',
+                'mensaje' => 'No hay resultados para la identificación consultada...',
+                'tipo' => 'error',
+                'data' => null
+            ];
+        }
+        return json_encode($response);
+    }
+
 }
