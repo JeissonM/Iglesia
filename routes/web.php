@@ -12,8 +12,30 @@
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    $anun = \DB::select("SELECT * FROM anuncios WHERE imagen<>'NO' AND estado='VIGENTE'");
+    $anuncios = null;
+    if ($anun != null) {
+        foreach ($anun as $a) {
+            $data = null;
+            $data['anuncio'] = $a;
+            if ($a->tipo == 'LOCAL') {
+                $data['relacion'] = \DB::select("SELECT * FROM iglesias WHERE id=" . $a->iglesia_id);
+            }
+            if ($a->tipo == 'DISTRITO') {
+                $data['relacion'] = \DB::select("SELECT * FROM distritos WHERE id=" . $a->distrito_id);
+            }
+            if ($a->tipo == 'ASOCIACION') {
+                $data['relacion'] = \DB::select("SELECT * FROM asociacions WHERE id=" . $a->asociacion_id);
+            }
+            $anuncios[] = $data;
+        }
+    }
+    //dd($anuncios);
+    return view('welcome')
+                    ->with('anuncios', $anuncios);
 });
+
+Route::get('anuncios/{id}/ver', 'PublicController@anuncio')->name('anuncio');
 
 Auth::routes();
 

@@ -33,10 +33,10 @@
                             <tr>
                                 <th>TIPO</th>
                                 <th>TÍTULO</th>
+                                <th>IGLESIA/DISTRITO/ASOC.</th>
                                 <th>ESTADO</th>
                                 <th>AUTOR</th>
                                 <th>CREADO</th>
-                                <th>MODIFICADO</th>
                                 <th>ACCIONES</th>
                             </tr>
                         </thead>
@@ -46,6 +46,11 @@
                                 <td>{{$a->tipo}}</td>
                                 <td>{{$a->titulo}}</td>
                                 <td>
+                                    @if($a->tipo=='LOCAL') IGL. {{$a->iglesia->nombre}} @endif
+                                    @if($a->tipo=='DISTRITO') DTO. {{$a->distrito->nombre}} @endif
+                                    @if($a->tipo=='ASOCIACION') ASOC. {{$a->asociacion->nombre}} @endif
+                                </td>
+                                <td>
                                 @if($a->estado=='VIGENTE')
                                 <label class="label label-success">{{$a->estado}}</label>
                                 @else
@@ -54,7 +59,6 @@
                                 </td>
                                 <td>{{$a->autor}}</td>
                                 <td>{{$a->created_at}}</td>
-                                <td>{{$a->updated_at}}</td>
                                 <td>
                                     <a href="{{ route('anuncios.estado',$a->id)}}" class="btn bg-green waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Estado"><i class="material-icons">arrow_forward</i></a>
                                     <a href="{{ route('anuncios.edit',$a->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Anuncio"><i class="material-icons">mode_edit</i></a>

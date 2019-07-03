@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="JEISSON MANDON">
-        <title>IASD</title>
+        <title>{{config('app.name')}}</title>
         <!-- core CSS -->
         <link href="{{asset('multi/css/bootstrap.min.css')}}" rel="stylesheet">
         <link href="{{asset('multi/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -22,7 +22,7 @@
         <link rel="shortcut icon" href="{{asset('img/logomi.png')}}">
     </head><!--/head-->
 
-    <body id="home" class="homepage">
+    <body id="home" class="homepage" style="color: #000000;">
 
         <header id="header">
             <nav id="main-menu" class="navbar navbar-default navbar-fixed-top" role="banner">
@@ -34,20 +34,18 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="index.html"><img src="{{asset('multi/images/logo.png')}}" alt="logo"></a>
+                        <a class="navbar-brand" href="{{config('app.url')}}"><img src="{{asset('img/logo2.png')}}" alt="logo"  width="150"></a>
                     </div>
 
                     <div class="collapse navbar-collapse navbar-right">
                         <ul class="nav navbar-nav">
-                            <li class="scroll active"><a href="#home">Home</a></li>
-                            <li class="scroll"><a href="#features">Features</a></li>
-                            <li class="scroll"><a href="#services">Services</a></li>
-                            <li class="scroll"><a href="#portfolio">Portfolio</a></li>
-                            <li class="scroll"><a href="#about">About</a></li>
-                            <li class="scroll"><a href="#meet-team">Team</a></li>
-                            <li class="scroll"><a href="#pricing">Pricing</a></li>
-                            <li class="scroll"><a href="#blog">Blog</a></li> 
-                            <li class="scroll"><a href="#get-in-touch">Contact</a></li>                        
+                            <li class="scroll active"><a href="{{config('app.url')}}">Inicio</a></li>
+                            <li class="scroll"><a href="#features">Institucional</a></li>
+                            <li class="scroll"><a href="#portfolio">Jardín de Oración</a></li>
+                            <li class="scroll"><a href="#about">Recursos Ministeriales</a></li>
+                            <li class="scroll"><a href="#meet-team">Directorio Iglesias</a></li>
+                            <li class="scroll"><a href="#pricing">Cronograma Eventos</a></li>
+                            <li class="scroll"><a href="#blog">Encuentre una Iglesia</a></li>                       
                         </ul>
                     </div>
                 </div><!--/.container-->
@@ -56,36 +54,25 @@
 
         <section id="main-slider">
             <div class="owl-carousel">
-                <div class="item" style="background-image: url(../public/multi/images/slider/bg1.jpg);">
+                @if($anuncios!=null)
+                @foreach($anuncios as $a)
+                <div class="item" style="background-image: url({{asset('docs/anuncios/'.$a['anuncio']->imagen)}});">
                     <div class="slider-inner">
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="carousel-content">
-                                        <h2><span>Multi</span> is the best Onepage html template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et  dolore magna incididunt ut labore aliqua. </p>
-                                        <a class="btn btn-primary btn-lg" href="#">Read More</a>
+                                        <h2><span>Atención</span> {{$a['anuncio']->titulo}}</h2>
+                                        <p>{{$a['relacion'][0]->nombre}}</p>
+                                        <a class="btn btn-primary btn-lg" href="{{route('anuncio',$a['anuncio']->id)}}">Leer más...</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div><!--/.item-->
-                <div class="item" style="background-image: url(../public/multi/images/slider/bg2.jpg);">
-                    <div class="slider-inner">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="carousel-content">
-                                        <h2>Beautifully designed <span>free</span> one page template</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et  dolore magna incididunt ut labore aliqua. </p>
-                                        <a class="btn btn-primary btn-lg" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.item-->
+                @endforeach
+                @endif
             </div><!--/.owl-carousel-->
         </section><!--/#main-slider-->
 
@@ -93,12 +80,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-9">
-                        <h2>Premium quality free onepage template</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                        </p>
+                        <h2>Nuestras Creencias</h2>
+                        <p>Las creencias adventistas tienen el propósito de impregnar toda la vida. Surgen a partir de escrituras que presentan un retrato convincente de Dios, y nos invitan a explorar, experimentar y conocer a Aquel que desea restaurarnos a la plenitud.</p>
                     </div>
                     <div class="col-sm-3 text-right">
-                        <a class="btn btn-primary btn-lg" href="#">Download Now!</a>
+                        <a class="btn btn-primary btn-lg" href="#">Leer más...</a>
                     </div>
                 </div>
             </div>
@@ -965,50 +951,11 @@
             </div>
         </section><!--/#get-in-touch-->
 
-
-        <section id="contact">
-            <div id="google-map" style="height:650px" data-latitude="52.365629" data-longitude="4.871331"></div>
-            <div class="container-wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4 col-sm-offset-8">
-                            <div class="contact-form">
-                                <h3>Contact Info</h3>
-
-                                <address>
-                                    <strong>Twitter, Inc.</strong><br>
-                                    795 Folsom Ave, Suite 600<br>
-                                    San Francisco, CA 94107<br>
-                                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                                </address>
-
-                                <form id="main-contact-form" name="contact-form" method="post" action="#">
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control" placeholder="Name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="subject" class="form-control" placeholder="Subject" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" rows="8" placeholder="Message" required></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Send Message</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section><!--/#bottom-->
-
         <footer id="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        &copy; 2014 Your Company. Designed by <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>
+                        &copy; 2017 IASD. Todos los Derechos Reservados. Desarrollado por <a target="_blank" href="http://facebook.com/jorgejeisson" title="Facebook">Jeisson Mandon</a>
                     </div>
                     <div class="col-sm-6">
                         <ul class="social-icons">

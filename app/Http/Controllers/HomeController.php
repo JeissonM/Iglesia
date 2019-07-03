@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Grupousuario;
 use Illuminate\Support\Facades\Auth;
 use App\Notificacion;
+use App\Anuncio;
 
 class HomeController extends Controller {
 

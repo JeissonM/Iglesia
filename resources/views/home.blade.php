@@ -73,7 +73,7 @@
             </div>
         </div>
         @endif
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-red hover-zoom-effect hover-expand-effect">
                 <div class="icon">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="material-icons">exit_to_app</i></a>
