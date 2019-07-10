@@ -30,12 +30,46 @@ Route::get('/', function () {
             $anuncios[] = $data;
         }
     }
-    //dd($anuncios);
+    $iglesias = \DB::select("SELECT * FROM iglesias");
+    foreach ($iglesias as $i) {
+        $p = \DB::select("SELECT * FROM pastors WHERE distrito_id='" . $i->distrito_id . "'");
+        $pastor = null;
+        if ($p != null) {
+            $pn = \DB::select("SELECT * FROM personanaturals WHERE id='" . $p[0]->personanatural_id . "'");
+            $pastor = $pn[0]->primer_nombre . " " . $pn[0]->segundo_nombre . " " . $pn[0]->primer_apellido . " " . $pn[0]->segundo_apellido;
+        }
+        $i->pastor = $pastor;
+        $i->ciudad=\DB::select("SELECT * FROM ciudads WHERE id='" . $i->ciudad_id . "'");
+        $i->distrito=\DB::select("SELECT * FROM distritos WHERE id='" . $i->distrito_id . "'");
+    }
+    $ministerios=\DB::select("SELECT * FROM ministerioextras LIMIT 6");
+    $ministerios2=\DB::select("SELECT * FROM ministerioextras");
+    $agendas=\DB::select("SELECT * FROM agendaasociacions WHERE estado='ACTIVA'");
+    foreach ($agendas as $a) {
+        $a->asociacion=\DB::select("SELECT * FROM asociacions WHERE id='" . $a->asociacion_id . "'");
+        $a->periodo=\DB::select("SELECT * FROM periodos WHERE id='" . $a->periodo_id . "'");
+    }
+    $ciudades=\DB::select("SELECT * FROM ciudads");
+    foreach ($ciudades as $c) {
+        $estado=\DB::select("SELECT * FROM estados WHERE id='" . $c->estado_id . "'");
+        $c->pais=\DB::select("SELECT * FROM pais WHERE id='" . $estado[0]->pais_id . "'");
+    }
     return view('welcome')
-                    ->with('anuncios', $anuncios);
+                    ->with('anuncios', $anuncios)
+                    ->with('iglesias', $iglesias)
+                    ->with('ministerios', $ministerios)
+                    ->with('ministerios2', $ministerios2)
+                    ->with('agendas', $agendas)
+                    ->with('ciudades', $ciudades);
 });
 
 Route::get('anuncios/{id}/ver', 'PublicController@anuncio')->name('anuncio');
+Route::get('creencias/ver', 'PublicController@creencias')->name('creencias');
+Route::get('institucional/ver', 'PublicController@institucional')->name('institucionalp');
+Route::post('pedidos/oracion/crear', 'PublicController@hacerpedido')->name('hacerpedido');
+Route::post('pedidos/oracion/consultar/rastrear', 'PublicController@consultarpedido')->name('consultarpedido');
+Route::get('ministeriosextra/{id}/ver', 'PublicController@minextraver')->name('minextraver');
+Route::get('ciudadp/{id}/iglesia', 'PublicController@iglesia')->name('public.iglesia');
 
 Auth::routes();
 

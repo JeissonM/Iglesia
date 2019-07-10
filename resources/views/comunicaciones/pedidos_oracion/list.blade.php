@@ -54,14 +54,16 @@
                                 @endif
                                 <td>{{$i->pedido}}</td>
                                 <td>{{$i->correo}}</td>
-                                <td>{{$i->ciudad->nombre}}</td>
+                                <td>@if($i->ciudad_id!=null){{$i->ciudad->nombre}}@else --- @endif</td>
                                 <td>{{$i->estado}}</td>
                                 <td>{{$i->created_at}}</td>
                                 <td>{{$i->updated_at}}</td>
                                 <td>
                                     <a onclick="estado(this.id)" id="{{$i}}" data-toggle="modal" data-target="#mdEstado" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Cambiar Estado"><i class="material-icons">mode_edit</i></a>                     
+                                    @if($i->persona == null)
                                     @if($i->feligres->personanatural->persona->numero_documento == $id)
                                     <a href="{{ route('pedidosoracion.delete',$i->id)}}" class="btn bg-red waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar Pedido"><i class="material-icons">delete</i></a> 
+                                    @endif
                                     @endif
                                 </td>
                             </tr>
