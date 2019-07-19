@@ -200,7 +200,7 @@
                         &copy; 2017 IASD. Todos los Derechos Reservados. <a                                                                                                                                                                                                        href="javascript:void(0);"                                                                                                                                                                                                        >AdminBSB - Material De                                                                                                                                                                                                        sign</a>.
                         </d                                                                                                                                                                                                        iv>
                         <div class="version">
-                            <b>Desarrollado Por: </b> <a href="#">Jeisson Mandón</a>
+                            <b>Desarrollado Por: </b> <a target="_blank" href="https://www.facebook.com/jorgejeisson">Jeisson Mandón</a>
                         </div>
                     </div>
                     <!-- #Footer -->

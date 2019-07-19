@@ -26,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-block bg-pink waves-effect" type="submit">ENVIAR ENLACE A MI CORREO</button>
+                    <button class="btn btn-block bg-teal waves-effect" type="submit">ENVIAR ENLACE A MI CORREO</button>
                 </div>
             </div>
         </form>

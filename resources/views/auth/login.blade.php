@@ -34,10 +34,10 @@
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <button class="btn btn-block bg-pink waves-effect" type="submit">INGRESAR</button>
+                    <button class="btn btn-block bg-teal waves-effect" type="submit">INGRESAR</button>
                 </div>
                 <div class="col-xs-6">
-                    <a href="{{url('/')}}" class="btn btn-block bg-pink waves-effect" >VOLVER</a>
+                    <a href="{{url('/')}}" class="btn btn-block bg-teal waves-effect" >VOLVER</a>
                 </div>
             </div>
             <div class="row m-t-15 m-b--20">

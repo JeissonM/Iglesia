@@ -385,8 +385,8 @@
         <section id="get-in-touch">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title text-center wow fadeInDown">Get in Touch</h2>
-                    <p class="text-center wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                    <h2 class="section-title text-center wow fadeInDown">Ingresar al sistema</h2>
+                    <p class="text-center wow fadeInDown"><a class="btn btn-floating btn-lg btn-default" href="{{route('login')}}">Iniciar Sesión</a></p>
                 </div>
             </div>
         </section><!--/#get-in-touch-->
@@ -394,22 +394,8 @@
         <footer id="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6">
-                        &copy; 2017 IASD. Todos los Derechos Reservados. Desarrollado por <a target="_blank" href="http://facebook.com/jorgejeisson" title="Facebook">Jeisson Mandon</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="social-icons">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                            <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-github"></i></a></li>
-                        </ul>
+                    <div class="col-sm-12">
+                        &copy; 2017 - 2019 IASD. Iglesia Adventista del Séptimo Día, Todos los Derechos Reservados. Desarrollado por <a target="_blank" href="https://www.facebook.com/jorgejeisson" title="Facebook">Jeisson Mandon & Luis Quiróz</a>
                     </div>
                 </div>
             </div>

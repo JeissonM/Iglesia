@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-block bg-pink waves-effect" type="submit">CONTIUAR</button>
+                    <button class="btn btn-block bg-teal waves-effect" type="submit">CONTIUAR</button>
                 </div>
             </div>
         </form>
