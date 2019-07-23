@@ -54,8 +54,8 @@
                     <a href="{{route('admin.comunicacion')}}"><i class="material-icons">ring_volume</i></a>
                 </div>
                 <div class="content">
-                    <div class="text">MINISTERIO</div>
-                    <div class="number">DE COMUNICACIÓN</div>
+                    <div class="text">MINISTERIO DE</div>
+                    <div class="number">COMUNICACIÓN</div>
                 </div>
             </div>
         </div>

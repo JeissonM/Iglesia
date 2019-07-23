@@ -79,7 +79,7 @@
                                 </tr>
                                 <tr class="read">
                                     <td class="contact"><b>Zona</b></td>
-                                    <td class="subject">{{$iglesia->zona->nombre}}</td>
+                                    <td class="subject">@if($iglesia->zona!=null){{$iglesia->zona->nombre}}@endif</td>
                                 </tr>
                                 <tr class="read">
                                     <td class="contact"><b>Creado</b></td>

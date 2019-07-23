@@ -52,7 +52,7 @@
                                 <td>{{$d->email}}</td>
                                 <td>{{$d->sitioweb}}</td>
                                 <td>{{$d->ciudad->nombre}}</td>
-                                <td>{{$d->zona->nombre}}</td>
+                                <td>@if($d->zona!=null){{$d->zona->nombre}}@endif</td>
                                 <td>{{$d->asociacion->nombre}}</td>
                                 <td>
                                     <a href="{{ route('distrito.edit',$d->id)}}" class="btn bg-indigo waves-effect btn-xs" data-toggle="tooltip" data-placement="top" title="Editar Distrito"><i class="material-icons">mode_edit</i></a>
