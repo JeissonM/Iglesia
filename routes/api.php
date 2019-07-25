@@ -18,5 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Route::middleware('cors')->group(function () {
-    Route::apiResource('anunciosapp', 'AnunciosappController');
+Route::apiResource('anunciosapp', 'AnunciosappController');
+Route::get('anunciosapp/vigentes/obtener', 'AnunciosappController@anunciosVigentes');
+Route::get('anunciosapp/vigentes/obtener/{id}/locales/distritales', 'AnunciosappController@anunciosLocales');
+Route::get('anunciosapp/todos/obtener/lista', 'AnunciosappController@anunciosTodos');
 //});
